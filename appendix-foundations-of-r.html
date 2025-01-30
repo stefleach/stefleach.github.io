@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 3 Appendix: Foundations of R | PSYC614: Text and Talk (Quantitative)</title>
+  <meta name="description" content="This is a bookdown created for the quantitative analysis portion of PSYC614 taught by Dr Stefan Leach at Lancaster University." />
+  <meta name="generator" content="bookdown 0.42 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 3 Appendix: Foundations of R | PSYC614: Text and Talk (Quantitative)" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:description" content="This is a bookdown created for the quantitative analysis portion of PSYC614 taught by Dr Stefan Leach at Lancaster University." />
+  <meta name="github-repo" content="rstudio/bookdown-demo" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 3 Appendix: Foundations of R | PSYC614: Text and Talk (Quantitative)" />
+  
+  <meta name="twitter:description" content="This is a bookdown created for the quantitative analysis portion of PSYC614 taught by Dr Stefan Leach at Lancaster University." />
+  
+
+<meta name="author" content="Stefan Leach" />
+
+
+<meta name="date" content="2025-01-30" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="week-13---fundamental-of-natural-language-processing.html"/>
+
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">R Workshop</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> About</a></li>
+<li class="chapter" data-level="2" data-path="week-13---fundamental-of-natural-language-processing.html"><a href="week-13---fundamental-of-natural-language-processing.html"><i class="fa fa-check"></i><b>2</b> Week 13 - Fundamental of Natural Language Processing</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="week-13---fundamental-of-natural-language-processing.html"><a href="week-13---fundamental-of-natural-language-processing.html#collective-data-bank"><i class="fa fa-check"></i><b>2.1</b> Collective Data Bank</a></li>
+<li class="chapter" data-level="2.2" data-path="week-13---fundamental-of-natural-language-processing.html"><a href="week-13---fundamental-of-natural-language-processing.html#sources-of-data"><i class="fa fa-check"></i><b>2.2</b> Sources of Data</a></li>
+<li class="chapter" data-level="2.3" data-path="week-13---fundamental-of-natural-language-processing.html"><a href="week-13---fundamental-of-natural-language-processing.html#harvard-dataverse-repository"><i class="fa fa-check"></i><b>2.3</b> Harvard Dataverse Repository</a></li>
+<li class="chapter" data-level="2.4" data-path="week-13---fundamental-of-natural-language-processing.html"><a href="week-13---fundamental-of-natural-language-processing.html#papers-with-code"><i class="fa fa-check"></i><b>2.4</b> Papers with Code</a></li>
+<li class="chapter" data-level="2.5" data-path="week-13---fundamental-of-natural-language-processing.html"><a href="week-13---fundamental-of-natural-language-processing.html#kaggle"><i class="fa fa-check"></i><b>2.5</b> Kaggle</a></li>
+<li class="chapter" data-level="2.6" data-path="week-13---fundamental-of-natural-language-processing.html"><a href="week-13---fundamental-of-natural-language-processing.html#scientific-articles"><i class="fa fa-check"></i><b>2.6</b> Scientific articles</a></li>
+<li class="chapter" data-level="2.7" data-path="week-13---fundamental-of-natural-language-processing.html"><a href="week-13---fundamental-of-natural-language-processing.html#file-types"><i class="fa fa-check"></i><b>2.7</b> File Types</a>
+<ul>
+<li class="chapter" data-level="2.7.1" data-path="week-13---fundamental-of-natural-language-processing.html"><a href="week-13---fundamental-of-natural-language-processing.html#csv-comma-separated-values"><i class="fa fa-check"></i><b>2.7.1</b> .csv (Comma-Separated Values)</a></li>
+<li class="chapter" data-level="2.7.2" data-path="week-13---fundamental-of-natural-language-processing.html"><a href="week-13---fundamental-of-natural-language-processing.html#xlsx-excel-spreadsheet"><i class="fa fa-check"></i><b>2.7.2</b> .xlsx (Excel Spreadsheet)</a></li>
+<li class="chapter" data-level="2.7.3" data-path="week-13---fundamental-of-natural-language-processing.html"><a href="week-13---fundamental-of-natural-language-processing.html#rds-r-data-file"><i class="fa fa-check"></i><b>2.7.3</b> .rds (R Data File)</a></li>
+<li class="chapter" data-level="2.7.4" data-path="week-13---fundamental-of-natural-language-processing.html"><a href="week-13---fundamental-of-natural-language-processing.html#json-javascript-object-notation"><i class="fa fa-check"></i><b>2.7.4</b> .json (JavaScript Object Notation)</a></li>
+<li class="chapter" data-level="2.7.5" data-path="week-13---fundamental-of-natural-language-processing.html"><a href="week-13---fundamental-of-natural-language-processing.html#txt-plain-text-file"><i class="fa fa-check"></i><b>2.7.5</b> .txt (Plain Text File)</a></li>
+</ul></li>
+<li class="chapter" data-level="2.8" data-path="week-13---fundamental-of-natural-language-processing.html"><a href="week-13---fundamental-of-natural-language-processing.html#accessing-nested-data"><i class="fa fa-check"></i><b>2.8</b> Accessing nested data</a></li>
+<li class="chapter" data-level="2.9" data-path="week-13---fundamental-of-natural-language-processing.html"><a href="week-13---fundamental-of-natural-language-processing.html#cleaning-data"><i class="fa fa-check"></i><b>2.9</b> Cleaning data</a></li>
+<li class="chapter" data-level="2.10" data-path="week-13---fundamental-of-natural-language-processing.html"><a href="week-13---fundamental-of-natural-language-processing.html#identifying-relevant-cases"><i class="fa fa-check"></i><b>2.10</b> Identifying relevant cases</a></li>
+<li class="chapter" data-level="2.11" data-path="week-13---fundamental-of-natural-language-processing.html"><a href="week-13---fundamental-of-natural-language-processing.html#counting-words"><i class="fa fa-check"></i><b>2.11</b> Counting words</a></li>
+<li class="chapter" data-level="2.12" data-path="week-13---fundamental-of-natural-language-processing.html"><a href="week-13---fundamental-of-natural-language-processing.html#using-loops"><i class="fa fa-check"></i><b>2.12</b> Using loops</a></li>
+<li class="chapter" data-level="2.13" data-path="week-13---fundamental-of-natural-language-processing.html"><a href="week-13---fundamental-of-natural-language-processing.html#task-2---putting-your-knowledge-to-the-test"><i class="fa fa-check"></i><b>2.13</b> Task 2 - Putting your knowledge to the test</a></li>
+<li class="chapter" data-level="2.14" data-path="week-13---fundamental-of-natural-language-processing.html"><a href="week-13---fundamental-of-natural-language-processing.html#compile-a-single-dataframe"><i class="fa fa-check"></i><b>2.14</b> Compile a single dataframe</a></li>
+<li class="chapter" data-level="2.15" data-path="week-13---fundamental-of-natural-language-processing.html"><a href="week-13---fundamental-of-natural-language-processing.html#extract-nested-fields"><i class="fa fa-check"></i><b>2.15</b> Extract nested fields</a></li>
+<li class="chapter" data-level="2.16" data-path="week-13---fundamental-of-natural-language-processing.html"><a href="week-13---fundamental-of-natural-language-processing.html#clean"><i class="fa fa-check"></i><b>2.16</b> Clean</a></li>
+<li class="chapter" data-level="2.17" data-path="week-13---fundamental-of-natural-language-processing.html"><a href="week-13---fundamental-of-natural-language-processing.html#pick-out-relevant-cases"><i class="fa fa-check"></i><b>2.17</b> Pick out relevant cases</a></li>
+<li class="chapter" data-level="2.18" data-path="week-13---fundamental-of-natural-language-processing.html"><a href="week-13---fundamental-of-natural-language-processing.html#solutions"><i class="fa fa-check"></i><b>2.18</b> Solutions</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="appendix-foundations-of-r.html"><a href="appendix-foundations-of-r.html"><i class="fa fa-check"></i><b>3</b> Appendix: Foundations of R</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="appendix-foundations-of-r.html"><a href="appendix-foundations-of-r.html#setting-up-your-environment"><i class="fa fa-check"></i><b>3.1</b> Setting up your environment</a>
+<ul>
+<li class="chapter" data-level="3.1.1" data-path="appendix-foundations-of-r.html"><a href="appendix-foundations-of-r.html#installing-r"><i class="fa fa-check"></i><b>3.1.1</b> Installing R</a></li>
+<li class="chapter" data-level="3.1.2" data-path="appendix-foundations-of-r.html"><a href="appendix-foundations-of-r.html#installing-rstudio"><i class="fa fa-check"></i><b>3.1.2</b> Installing RStudio</a></li>
+<li class="chapter" data-level="3.1.3" data-path="appendix-foundations-of-r.html"><a href="appendix-foundations-of-r.html#launching-rstudio-and-setting-up-a-project"><i class="fa fa-check"></i><b>3.1.3</b> Launching RStudio and setting up a project</a></li>
+<li class="chapter" data-level="3.1.4" data-path="appendix-foundations-of-r.html"><a href="appendix-foundations-of-r.html#installing-packages"><i class="fa fa-check"></i><b>3.1.4</b> Installing packages</a></li>
+<li class="chapter" data-level="3.1.5" data-path="appendix-foundations-of-r.html"><a href="appendix-foundations-of-r.html#loading-packages"><i class="fa fa-check"></i><b>3.1.5</b> Loading packages</a></li>
+</ul></li>
+<li class="chapter" data-level="3.2" data-path="appendix-foundations-of-r.html"><a href="appendix-foundations-of-r.html#vectors-factors-matrices-and-data-frames"><i class="fa fa-check"></i><b>3.2</b> Vectors, factors, matrices, and data frames</a>
+<ul>
+<li class="chapter" data-level="3.2.1" data-path="appendix-foundations-of-r.html"><a href="appendix-foundations-of-r.html#vectors"><i class="fa fa-check"></i><b>3.2.1</b> Vectors</a></li>
+<li class="chapter" data-level="3.2.2" data-path="appendix-foundations-of-r.html"><a href="appendix-foundations-of-r.html#factors"><i class="fa fa-check"></i><b>3.2.2</b> Factors</a></li>
+<li class="chapter" data-level="3.2.3" data-path="appendix-foundations-of-r.html"><a href="appendix-foundations-of-r.html#matrices"><i class="fa fa-check"></i><b>3.2.3</b> Matrices</a></li>
+<li class="chapter" data-level="3.2.4" data-path="appendix-foundations-of-r.html"><a href="appendix-foundations-of-r.html#data-frames"><i class="fa fa-check"></i><b>3.2.4</b> Data Frames</a></li>
+<li class="chapter" data-level="3.2.5" data-path="appendix-foundations-of-r.html"><a href="appendix-foundations-of-r.html#accessing-subsets-of-vectors-and-data-frames"><i class="fa fa-check"></i><b>3.2.5</b> Accessing subsets of vectors and data frames</a></li>
+</ul></li>
+<li class="chapter" data-level="3.3" data-path="appendix-foundations-of-r.html"><a href="appendix-foundations-of-r.html#data-manipulation-with-tidyverse"><i class="fa fa-check"></i><b>3.3</b> Data manipulation with tidyverse</a>
+<ul>
+<li class="chapter" data-level="3.3.1" data-path="appendix-foundations-of-r.html"><a href="appendix-foundations-of-r.html#install-and-load-the-tidyverse-package"><i class="fa fa-check"></i><b>3.3.1</b> Install and load the <code>tidyverse</code> package</a></li>
+<li class="chapter" data-level="3.3.2" data-path="appendix-foundations-of-r.html"><a href="appendix-foundations-of-r.html#the-pipe-operator"><i class="fa fa-check"></i><b>3.3.2</b> The pipe operator <code>%&gt;%</code></a></li>
+<li class="chapter" data-level="3.3.3" data-path="appendix-foundations-of-r.html"><a href="appendix-foundations-of-r.html#selecting-columns-with-select"><i class="fa fa-check"></i><b>3.3.3</b> Selecting columns with <code>select()</code></a></li>
+<li class="chapter" data-level="3.3.4" data-path="appendix-foundations-of-r.html"><a href="appendix-foundations-of-r.html#filtering-rows-with-filter"><i class="fa fa-check"></i><b>3.3.4</b> Filtering rows with <code>filter()</code></a></li>
+<li class="chapter" data-level="3.3.5" data-path="appendix-foundations-of-r.html"><a href="appendix-foundations-of-r.html#renaming-variables-with-rename"><i class="fa fa-check"></i><b>3.3.5</b> Renaming variables with <code>rename()</code></a></li>
+<li class="chapter" data-level="3.3.6" data-path="appendix-foundations-of-r.html"><a href="appendix-foundations-of-r.html#recoding-variables-with-recode-and-mutate"><i class="fa fa-check"></i><b>3.3.6</b> Recoding variables with <code>recode()</code> and <code>mutate()</code></a></li>
+<li class="chapter" data-level="3.3.7" data-path="appendix-foundations-of-r.html"><a href="appendix-foundations-of-r.html#creating-new-variables-by-combining-select-with-rowmeans-or-rowsums"><i class="fa fa-check"></i><b>3.3.7</b> Creating new variables by combining <code>select()</code> with <code>rowMeans()</code> or <code>rowSums()</code></a></li>
+</ul></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">PSYC614: Text and Talk (Quantitative)</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="appendix-foundations-of-r" class="section level1 hasAnchor" number="3">
+<h1><span class="header-section-number">Chapter 3</span> Appendix: Foundations of R<a href="appendix-foundations-of-r.html#appendix-foundations-of-r" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<p>These pages serve as peripheral sources of support for those of you who may need to refresh your knowledge of R.</p>
+<div id="setting-up-your-environment" class="section level2 hasAnchor" number="3.1">
+<h2><span class="header-section-number">3.1</span> Setting up your environment<a href="appendix-foundations-of-r.html#setting-up-your-environment" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Setting up your R environment for data analysis involves a series of steps to install R, RStudio, and essential packages. Here’s is a step-by-step guide to help you get started:</p>
+<div id="installing-r" class="section level3 hasAnchor" number="3.1.1">
+<h3><span class="header-section-number">3.1.1</span> Installing R<a href="appendix-foundations-of-r.html#installing-r" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<ol style="list-style-type: decimal">
+<li>Visit the R Project website (<a href="https://www.r-project.org/" class="uri">https://www.r-project.org/</a>).</li>
+<li>Click on the “CRAN” link under “Download and Install R.”</li>
+<li>Choose a CRAN mirror near you.</li>
+<li>Download and install the appropriate version of R for your operating system (Windows, macOS, or Linux).</li>
+<li>Follow the installation instructions for your chosen operating system.</li>
+</ol>
+</div>
+<div id="installing-rstudio" class="section level3 hasAnchor" number="3.1.2">
+<h3><span class="header-section-number">3.1.2</span> Installing RStudio<a href="appendix-foundations-of-r.html#installing-rstudio" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<ol style="list-style-type: decimal">
+<li>Go to the RStudio website (<a href="https://www.rstudio.com/" class="uri">https://www.rstudio.com/</a>).</li>
+<li>Click on the “Products” tab and select “RStudio Desktop.”</li>
+<li>Choose the appropriate version for your operating system (Windows, macOS, or Linux).</li>
+<li>Download and install RStudio by following the installation instructions.</li>
+</ol>
+</div>
+<div id="launching-rstudio-and-setting-up-a-project" class="section level3 hasAnchor" number="3.1.3">
+<h3><span class="header-section-number">3.1.3</span> Launching RStudio and setting up a project<a href="appendix-foundations-of-r.html#launching-rstudio-and-setting-up-a-project" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<ol style="list-style-type: decimal">
+<li>Open RStudio after installation.</li>
+<li>Click on “File” in the top menu, then select “New Project.”</li>
+<li>Choose the project type. For data analysis, select “New Directory” and then “New Project.”</li>
+<li>Specify the project name and location. You can create a new directory or use an existing one.</li>
+<li>Choose an optional version control system (e.g., Git) if you plan to use one.</li>
+<li>Click “Create Project.” This will create a new RStudio project with its own working directory.</li>
+</ol>
+</div>
+<div id="installing-packages" class="section level3 hasAnchor" number="3.1.4">
+<h3><span class="header-section-number">3.1.4</span> Installing packages<a href="appendix-foundations-of-r.html#installing-packages" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>You can install packages by using the <code>install.packages()</code> function, replacing “package_name” with the name of the package you want to install.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="appendix-foundations-of-r.html#cb1-1" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;package_name&quot;</span>)</span></code></pre></div>
+<p>For data analysis, some essential packages include:</p>
+<ul>
+<li><em>tidyverse</em> for data manipulation.</li>
+<li><em>ggplot2</em> for data visualization.</li>
+<li><em>psych</em> for statistical analyses.</li>
+</ul>
+<p>Install these packages using the above method.</p>
+</div>
+<div id="loading-packages" class="section level3 hasAnchor" number="3.1.5">
+<h3><span class="header-section-number">3.1.5</span> Loading packages<a href="appendix-foundations-of-r.html#loading-packages" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>You can load packages using the <code>library()</code> function.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="appendix-foundations-of-r.html#cb2-1" tabindex="-1"></a><span class="co"># Load the packages tidyverse, ggplot2, and psych</span></span>
+<span id="cb2-2"><a href="appendix-foundations-of-r.html#cb2-2" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb2-3"><a href="appendix-foundations-of-r.html#cb2-3" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb2-4"><a href="appendix-foundations-of-r.html#cb2-4" tabindex="-1"></a><span class="fu">library</span>(psych)</span></code></pre></div>
+</div>
+</div>
+<div id="vectors-factors-matrices-and-data-frames" class="section level2 hasAnchor" number="3.2">
+<h2><span class="header-section-number">3.2</span> Vectors, factors, matrices, and data frames<a href="appendix-foundations-of-r.html#vectors-factors-matrices-and-data-frames" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>A solid understanding of data structures is essential as they form the foundation for storing and manipulating data. R provides various data structures that cater to different types of data and analysis needs. In this section, we’ll explore four key data structures: vectors, matrices, data frames, and factors.</p>
+<div id="vectors" class="section level3 hasAnchor" number="3.2.1">
+<h3><span class="header-section-number">3.2.1</span> Vectors<a href="appendix-foundations-of-r.html#vectors" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>A vector is the simplest and most fundamental data structure in R. It is a one-dimensional array that can hold homogeneous elements of the same data type, such as numbers or characters. Vectors are created using the <code>c()</code> function. Here’s an example.</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="appendix-foundations-of-r.html#cb3-1" tabindex="-1"></a><span class="co"># Creating a numeric vector</span></span>
+<span id="cb3-2"><a href="appendix-foundations-of-r.html#cb3-2" tabindex="-1"></a>numeric_vector <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">5</span>)</span>
+<span id="cb3-3"><a href="appendix-foundations-of-r.html#cb3-3" tabindex="-1"></a></span>
+<span id="cb3-4"><a href="appendix-foundations-of-r.html#cb3-4" tabindex="-1"></a><span class="co"># Creating a character vector</span></span>
+<span id="cb3-5"><a href="appendix-foundations-of-r.html#cb3-5" tabindex="-1"></a>character_vector <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;apple&quot;</span>, <span class="st">&quot;banana&quot;</span>, <span class="st">&quot;orange&quot;</span>)</span></code></pre></div>
+</div>
+<div id="factors" class="section level3 hasAnchor" number="3.2.2">
+<h3><span class="header-section-number">3.2.2</span> Factors<a href="appendix-foundations-of-r.html#factors" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Factors are used to represent categorical data and are particularly useful for data that have discrete levels or categories. They are an essential data structure for performing statistical analyses and plotting categorical data. Factors are created using the <code>factor()</code> function.</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="appendix-foundations-of-r.html#cb4-1" tabindex="-1"></a><span class="co"># Creating a factor</span></span>
+<span id="cb4-2"><a href="appendix-foundations-of-r.html#cb4-2" tabindex="-1"></a>gender <span class="ot">&lt;-</span> <span class="fu">factor</span>(<span class="fu">c</span>(<span class="st">&quot;male&quot;</span>, <span class="st">&quot;female&quot;</span>, <span class="st">&quot;male&quot;</span>, <span class="st">&quot;female&quot;</span>))</span></code></pre></div>
+</div>
+<div id="matrices" class="section level3 hasAnchor" number="3.2.3">
+<h3><span class="header-section-number">3.2.3</span> Matrices<a href="appendix-foundations-of-r.html#matrices" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>A matrix is a two-dimensional data structure composed of rows and columns. All elements in a matrix must be of the same data type. Matrices are useful for storing data in a tabular format, such as datasets with equal-length variables. You can create a matrix using the <code>matrix()</code> function.</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="appendix-foundations-of-r.html#cb5-1" tabindex="-1"></a><span class="co"># Creating a matrix</span></span>
+<span id="cb5-2"><a href="appendix-foundations-of-r.html#cb5-2" tabindex="-1"></a>matrix_data <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">12</span>, <span class="at">nrow =</span> <span class="dv">3</span>, <span class="at">ncol =</span> <span class="dv">4</span>)</span></code></pre></div>
+</div>
+<div id="data-frames" class="section level3 hasAnchor" number="3.2.4">
+<h3><span class="header-section-number">3.2.4</span> Data Frames<a href="appendix-foundations-of-r.html#data-frames" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Data frames are perhaps the most commonly used data structure for data analysis. They are similar to matrices but can store columns of different data types, making them versatile for handling real-world datasets. Data frames maintain the tabular structure and are often used to represent datasets with variables and observations. You can create a data frame using the <code>data.frame()</code> function.</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="appendix-foundations-of-r.html#cb6-1" tabindex="-1"></a><span class="co"># Creating a data frame</span></span>
+<span id="cb6-2"><a href="appendix-foundations-of-r.html#cb6-2" tabindex="-1"></a>data_frame <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb6-3"><a href="appendix-foundations-of-r.html#cb6-3" tabindex="-1"></a>  <span class="at">name =</span> <span class="fu">c</span>(<span class="st">&quot;Alice&quot;</span>, <span class="st">&quot;Bob&quot;</span>, <span class="st">&quot;Charlie&quot;</span>),</span>
+<span id="cb6-4"><a href="appendix-foundations-of-r.html#cb6-4" tabindex="-1"></a>  <span class="at">age =</span> <span class="fu">c</span>(<span class="dv">25</span>, <span class="dv">30</span>, <span class="dv">22</span>),</span>
+<span id="cb6-5"><a href="appendix-foundations-of-r.html#cb6-5" tabindex="-1"></a>  <span class="at">score =</span> <span class="fu">c</span>(<span class="dv">95</span>, <span class="dv">85</span>, <span class="dv">78</span>)</span>
+<span id="cb6-6"><a href="appendix-foundations-of-r.html#cb6-6" tabindex="-1"></a>)</span></code></pre></div>
+</div>
+<div id="accessing-subsets-of-vectors-and-data-frames" class="section level3 hasAnchor" number="3.2.5">
+<h3><span class="header-section-number">3.2.5</span> Accessing subsets of vectors and data frames<a href="appendix-foundations-of-r.html#accessing-subsets-of-vectors-and-data-frames" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Values in can be accessed in a number of ways. To access a specific value in a vector, you can use square brackets <code>[]</code> with the integer index.</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="appendix-foundations-of-r.html#cb7-1" tabindex="-1"></a><span class="co"># Create a vector</span></span>
+<span id="cb7-2"><a href="appendix-foundations-of-r.html#cb7-2" tabindex="-1"></a>vector <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">6</span>, <span class="dv">22</span>, <span class="dv">12</span>, <span class="dv">8</span>)</span>
+<span id="cb7-3"><a href="appendix-foundations-of-r.html#cb7-3" tabindex="-1"></a></span>
+<span id="cb7-4"><a href="appendix-foundations-of-r.html#cb7-4" tabindex="-1"></a><span class="co"># Using square brackets and integer index to access the value in the forth position (12)</span></span>
+<span id="cb7-5"><a href="appendix-foundations-of-r.html#cb7-5" tabindex="-1"></a>vector[<span class="dv">4</span>]</span></code></pre></div>
+<p>To access a specific column in a data frame, you can use the <code>$</code> operator or square brackets <code>[]</code> with either the column name or integer index.</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="appendix-foundations-of-r.html#cb8-1" tabindex="-1"></a><span class="co"># Create a data set</span></span>
+<span id="cb8-2"><a href="appendix-foundations-of-r.html#cb8-2" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">variable1 =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">6</span>, <span class="dv">22</span>, <span class="dv">12</span>, <span class="dv">8</span>),</span>
+<span id="cb8-3"><a href="appendix-foundations-of-r.html#cb8-3" tabindex="-1"></a>                   <span class="at">variable2 =</span> <span class="fu">c</span>(<span class="dv">4</span>, <span class="dv">8</span>, <span class="dv">4</span>, <span class="dv">10</span>, <span class="dv">3</span>),</span>
+<span id="cb8-4"><a href="appendix-foundations-of-r.html#cb8-4" tabindex="-1"></a>                   <span class="at">variable3 =</span> <span class="fu">c</span>(<span class="dv">9</span>, <span class="dv">15</span>, <span class="dv">9</span>, <span class="dv">11</span>, <span class="dv">4</span>))</span>
+<span id="cb8-5"><a href="appendix-foundations-of-r.html#cb8-5" tabindex="-1"></a></span>
+<span id="cb8-6"><a href="appendix-foundations-of-r.html#cb8-6" tabindex="-1"></a><span class="co"># Using the $ operator</span></span>
+<span id="cb8-7"><a href="appendix-foundations-of-r.html#cb8-7" tabindex="-1"></a>data<span class="sc">$</span>variable1</span>
+<span id="cb8-8"><a href="appendix-foundations-of-r.html#cb8-8" tabindex="-1"></a></span>
+<span id="cb8-9"><a href="appendix-foundations-of-r.html#cb8-9" tabindex="-1"></a><span class="co"># Using square brackets and variable name</span></span>
+<span id="cb8-10"><a href="appendix-foundations-of-r.html#cb8-10" tabindex="-1"></a>data[<span class="st">&quot;variable1&quot;</span>]</span>
+<span id="cb8-11"><a href="appendix-foundations-of-r.html#cb8-11" tabindex="-1"></a></span>
+<span id="cb8-12"><a href="appendix-foundations-of-r.html#cb8-12" tabindex="-1"></a><span class="co"># Using square brackets and integer index to access the first column (variable)</span></span>
+<span id="cb8-13"><a href="appendix-foundations-of-r.html#cb8-13" tabindex="-1"></a>data[ , <span class="dv">1</span>]</span></code></pre></div>
+<p>To access specific rows in a data frame, you can use integer indexing with square brackets <code>[]</code>.</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="appendix-foundations-of-r.html#cb9-1" tabindex="-1"></a><span class="co"># Create a data set</span></span>
+<span id="cb9-2"><a href="appendix-foundations-of-r.html#cb9-2" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">variable1 =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">6</span>, <span class="dv">22</span>, <span class="dv">12</span>, <span class="dv">8</span>),</span>
+<span id="cb9-3"><a href="appendix-foundations-of-r.html#cb9-3" tabindex="-1"></a>                   <span class="at">variable2 =</span> <span class="fu">c</span>(<span class="dv">4</span>, <span class="dv">8</span>, <span class="dv">4</span>, <span class="dv">10</span>, <span class="dv">3</span>),</span>
+<span id="cb9-4"><a href="appendix-foundations-of-r.html#cb9-4" tabindex="-1"></a>                   <span class="at">variable3 =</span> <span class="fu">c</span>(<span class="dv">9</span>, <span class="dv">15</span>, <span class="dv">9</span>, <span class="dv">11</span>, <span class="dv">4</span>))</span>
+<span id="cb9-5"><a href="appendix-foundations-of-r.html#cb9-5" tabindex="-1"></a></span>
+<span id="cb9-6"><a href="appendix-foundations-of-r.html#cb9-6" tabindex="-1"></a><span class="co"># Using square brackets and integer index to access the forth row</span></span>
+<span id="cb9-7"><a href="appendix-foundations-of-r.html#cb9-7" tabindex="-1"></a>data[<span class="dv">4</span>, ]</span></code></pre></div>
+<p>To access a specific value at the intersection of a row and a column, you can use both row and column indexing with square brackets <code>[]</code>.</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="appendix-foundations-of-r.html#cb10-1" tabindex="-1"></a><span class="co"># Create a data set</span></span>
+<span id="cb10-2"><a href="appendix-foundations-of-r.html#cb10-2" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">variable1 =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">6</span>, <span class="dv">22</span>, <span class="dv">12</span>, <span class="dv">8</span>),</span>
+<span id="cb10-3"><a href="appendix-foundations-of-r.html#cb10-3" tabindex="-1"></a>                   <span class="at">variable2 =</span> <span class="fu">c</span>(<span class="dv">4</span>, <span class="dv">8</span>, <span class="dv">4</span>, <span class="dv">10</span>, <span class="dv">3</span>),</span>
+<span id="cb10-4"><a href="appendix-foundations-of-r.html#cb10-4" tabindex="-1"></a>                   <span class="at">variable3 =</span> <span class="fu">c</span>(<span class="dv">9</span>, <span class="dv">15</span>, <span class="dv">9</span>, <span class="dv">11</span>, <span class="dv">4</span>))</span>
+<span id="cb10-5"><a href="appendix-foundations-of-r.html#cb10-5" tabindex="-1"></a></span>
+<span id="cb10-6"><a href="appendix-foundations-of-r.html#cb10-6" tabindex="-1"></a><span class="co"># Using square brackets and integer index to access the value in the second row of the first column</span></span>
+<span id="cb10-7"><a href="appendix-foundations-of-r.html#cb10-7" tabindex="-1"></a>data[<span class="dv">2</span>, <span class="dv">1</span>]</span></code></pre></div>
+<p>Understanding these data structures and how to manipulate them is crucial for effective data analysis in R. They enable you to store, organize, and manipulate data in various formats, facilitating a wide range of data manipulation, transformation, and visualization tasks. As you progress in your data analysis journey, you’ll often find yourself working extensively with these fundamental data structures to extract insights from your data.</p>
+</div>
+</div>
+<div id="data-manipulation-with-tidyverse" class="section level2 hasAnchor" number="3.3">
+<h2><span class="header-section-number">3.3</span> Data manipulation with tidyverse<a href="appendix-foundations-of-r.html#data-manipulation-with-tidyverse" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>The <code>tidyverse</code> package provides a set of functions that streamline and simplify data manipulation tasks. It follows a consistent grammar that makes it easy to express complex data transformations using a small set of intuitive verbs. Here’s a step-by-step guide to manipulating data using <code>tidyverse</code>.</p>
+<div id="install-and-load-the-tidyverse-package" class="section level3 hasAnchor" number="3.3.1">
+<h3><span class="header-section-number">3.3.1</span> Install and load the <code>tidyverse</code> package<a href="appendix-foundations-of-r.html#install-and-load-the-tidyverse-package" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>If you haven’t already installed and loaded the <code>tidyverse</code> package, do so using these commands.</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="appendix-foundations-of-r.html#cb11-1" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;tidyverse&quot;</span>)</span>
+<span id="cb11-2"><a href="appendix-foundations-of-r.html#cb11-2" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code></pre></div>
+</div>
+<div id="the-pipe-operator" class="section level3 hasAnchor" number="3.3.2">
+<h3><span class="header-section-number">3.3.2</span> The pipe operator <code>%&gt;%</code><a href="appendix-foundations-of-r.html#the-pipe-operator" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>The <code>%&gt;%</code> symbol, known as the pipe operator, is a fundamental feature of the <code>tidyverse</code> ecosystem, which includes packages like dplyr, ggplot2, and more. The pipe operator simplifies and enhances the process of chaining multiple operations together, making your code more readable and efficient.</p>
+<p>The pipe operator is used to take the output of one function and feed it as the input to the next function. Its basic syntax is.</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="appendix-foundations-of-r.html#cb12-1" tabindex="-1"></a>output <span class="ot">&lt;-</span> input <span class="sc">%&gt;%</span></span>
+<span id="cb12-2"><a href="appendix-foundations-of-r.html#cb12-2" tabindex="-1"></a>  <span class="fu">function1</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb12-3"><a href="appendix-foundations-of-r.html#cb12-3" tabindex="-1"></a>  <span class="fu">function2</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb12-4"><a href="appendix-foundations-of-r.html#cb12-4" tabindex="-1"></a>  <span class="fu">function3</span>()</span></code></pre></div>
+</div>
+<div id="selecting-columns-with-select" class="section level3 hasAnchor" number="3.3.3">
+<h3><span class="header-section-number">3.3.3</span> Selecting columns with <code>select()</code><a href="appendix-foundations-of-r.html#selecting-columns-with-select" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Use <code>select()</code> to choose specific columns from your data frame.</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="appendix-foundations-of-r.html#cb13-1" tabindex="-1"></a><span class="co"># Create a data set</span></span>
+<span id="cb13-2"><a href="appendix-foundations-of-r.html#cb13-2" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">variable1 =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">6</span>, <span class="dv">22</span>, <span class="dv">12</span>, <span class="dv">8</span>),</span>
+<span id="cb13-3"><a href="appendix-foundations-of-r.html#cb13-3" tabindex="-1"></a>                   <span class="at">variable2 =</span> <span class="fu">c</span>(<span class="dv">4</span>, <span class="dv">8</span>, <span class="dv">4</span>, <span class="dv">10</span>, <span class="dv">3</span>),</span>
+<span id="cb13-4"><a href="appendix-foundations-of-r.html#cb13-4" tabindex="-1"></a>                   <span class="at">variable3 =</span> <span class="fu">c</span>(<span class="dv">9</span>, <span class="dv">15</span>, <span class="dv">9</span>, <span class="dv">11</span>, <span class="dv">4</span>))</span>
+<span id="cb13-5"><a href="appendix-foundations-of-r.html#cb13-5" tabindex="-1"></a></span>
+<span id="cb13-6"><a href="appendix-foundations-of-r.html#cb13-6" tabindex="-1"></a><span class="co"># Select variable1 and variable2</span></span>
+<span id="cb13-7"><a href="appendix-foundations-of-r.html#cb13-7" tabindex="-1"></a>data <span class="sc">%&gt;%</span></span>
+<span id="cb13-8"><a href="appendix-foundations-of-r.html#cb13-8" tabindex="-1"></a>  <span class="fu">select</span>(variable1, variable2)</span>
+<span id="cb13-9"><a href="appendix-foundations-of-r.html#cb13-9" tabindex="-1"></a></span>
+<span id="cb13-10"><a href="appendix-foundations-of-r.html#cb13-10" tabindex="-1"></a><span class="co"># Select all variables apart from variable1</span></span>
+<span id="cb13-11"><a href="appendix-foundations-of-r.html#cb13-11" tabindex="-1"></a>data <span class="sc">%&gt;%</span></span>
+<span id="cb13-12"><a href="appendix-foundations-of-r.html#cb13-12" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">!</span>variable1)</span></code></pre></div>
+</div>
+<div id="filtering-rows-with-filter" class="section level3 hasAnchor" number="3.3.4">
+<h3><span class="header-section-number">3.3.4</span> Filtering rows with <code>filter()</code><a href="appendix-foundations-of-r.html#filtering-rows-with-filter" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Use <code>filter()</code> to select rows from a data frame based on specific conditions.</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="appendix-foundations-of-r.html#cb14-1" tabindex="-1"></a><span class="co"># Create a data set</span></span>
+<span id="cb14-2"><a href="appendix-foundations-of-r.html#cb14-2" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">variable1 =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">6</span>, <span class="dv">22</span>, <span class="dv">12</span>, <span class="dv">8</span>),</span>
+<span id="cb14-3"><a href="appendix-foundations-of-r.html#cb14-3" tabindex="-1"></a>                   <span class="at">variable2 =</span> <span class="fu">c</span>(<span class="dv">4</span>, <span class="dv">8</span>, <span class="dv">4</span>, <span class="dv">10</span>, <span class="dv">3</span>),</span>
+<span id="cb14-4"><a href="appendix-foundations-of-r.html#cb14-4" tabindex="-1"></a>                   <span class="at">variable3 =</span> <span class="fu">c</span>(<span class="dv">9</span>, <span class="dv">15</span>, <span class="dv">9</span>, <span class="dv">11</span>, <span class="dv">4</span>))</span>
+<span id="cb14-5"><a href="appendix-foundations-of-r.html#cb14-5" tabindex="-1"></a></span>
+<span id="cb14-6"><a href="appendix-foundations-of-r.html#cb14-6" tabindex="-1"></a><span class="co"># Get rows where values in column1 are greater than 10</span></span>
+<span id="cb14-7"><a href="appendix-foundations-of-r.html#cb14-7" tabindex="-1"></a>data <span class="sc">%&gt;%</span></span>
+<span id="cb14-8"><a href="appendix-foundations-of-r.html#cb14-8" tabindex="-1"></a>  <span class="fu">filter</span>(column1 <span class="sc">&gt;</span> <span class="dv">10</span>)</span>
+<span id="cb14-9"><a href="appendix-foundations-of-r.html#cb14-9" tabindex="-1"></a></span>
+<span id="cb14-10"><a href="appendix-foundations-of-r.html#cb14-10" tabindex="-1"></a><span class="co"># Get rows where values in column2 are &quot;apples&quot; </span></span>
+<span id="cb14-11"><a href="appendix-foundations-of-r.html#cb14-11" tabindex="-1"></a>data <span class="sc">%&gt;%</span></span>
+<span id="cb14-12"><a href="appendix-foundations-of-r.html#cb14-12" tabindex="-1"></a>  <span class="fu">filter</span>(column2 <span class="sc">==</span> <span class="st">&quot;apples&quot;</span>)</span>
+<span id="cb14-13"><a href="appendix-foundations-of-r.html#cb14-13" tabindex="-1"></a></span>
+<span id="cb14-14"><a href="appendix-foundations-of-r.html#cb14-14" tabindex="-1"></a><span class="co"># Get rows where values in column3 are not &quot;cars&quot;</span></span>
+<span id="cb14-15"><a href="appendix-foundations-of-r.html#cb14-15" tabindex="-1"></a>data <span class="sc">%&gt;%</span></span>
+<span id="cb14-16"><a href="appendix-foundations-of-r.html#cb14-16" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span>column3 <span class="sc">==</span> <span class="st">&quot;cars&quot;</span>)</span>
+<span id="cb14-17"><a href="appendix-foundations-of-r.html#cb14-17" tabindex="-1"></a></span>
+<span id="cb14-18"><a href="appendix-foundations-of-r.html#cb14-18" tabindex="-1"></a><span class="co"># Get rows where values in column1 are less than 10 and values in column2 are &quot;oranges&quot;</span></span>
+<span id="cb14-19"><a href="appendix-foundations-of-r.html#cb14-19" tabindex="-1"></a>data <span class="sc">%&gt;%</span></span>
+<span id="cb14-20"><a href="appendix-foundations-of-r.html#cb14-20" tabindex="-1"></a>  <span class="fu">filter</span>(column1 <span class="sc">&lt;</span> <span class="dv">10</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb14-21"><a href="appendix-foundations-of-r.html#cb14-21" tabindex="-1"></a>  <span class="fu">filter</span>(column2 <span class="sc">==</span> <span class="st">&quot;oranges&quot;</span>)</span></code></pre></div>
+</div>
+<div id="renaming-variables-with-rename" class="section level3 hasAnchor" number="3.3.5">
+<h3><span class="header-section-number">3.3.5</span> Renaming variables with <code>rename()</code><a href="appendix-foundations-of-r.html#renaming-variables-with-rename" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Use <code>rename()</code> to change the name of columns in a data frame.</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="appendix-foundations-of-r.html#cb15-1" tabindex="-1"></a><span class="co"># Create a data set</span></span>
+<span id="cb15-2"><a href="appendix-foundations-of-r.html#cb15-2" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">variable1 =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">6</span>, <span class="dv">22</span>, <span class="dv">12</span>, <span class="dv">8</span>),</span>
+<span id="cb15-3"><a href="appendix-foundations-of-r.html#cb15-3" tabindex="-1"></a>                   <span class="at">variable2 =</span> <span class="fu">c</span>(<span class="dv">4</span>, <span class="dv">8</span>, <span class="dv">4</span>, <span class="dv">10</span>, <span class="dv">3</span>),</span>
+<span id="cb15-4"><a href="appendix-foundations-of-r.html#cb15-4" tabindex="-1"></a>                   <span class="at">variable3 =</span> <span class="fu">c</span>(<span class="dv">9</span>, <span class="dv">15</span>, <span class="dv">9</span>, <span class="dv">11</span>, <span class="dv">4</span>))</span>
+<span id="cb15-5"><a href="appendix-foundations-of-r.html#cb15-5" tabindex="-1"></a></span>
+<span id="cb15-6"><a href="appendix-foundations-of-r.html#cb15-6" tabindex="-1"></a><span class="co"># Rename variable1 to Variable_1</span></span>
+<span id="cb15-7"><a href="appendix-foundations-of-r.html#cb15-7" tabindex="-1"></a>data <span class="sc">%&gt;%</span></span>
+<span id="cb15-8"><a href="appendix-foundations-of-r.html#cb15-8" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">Variable_1 =</span> variable1)</span></code></pre></div>
+</div>
+<div id="recoding-variables-with-recode-and-mutate" class="section level3 hasAnchor" number="3.3.6">
+<h3><span class="header-section-number">3.3.6</span> Recoding variables with <code>recode()</code> and <code>mutate()</code><a href="appendix-foundations-of-r.html#recoding-variables-with-recode-and-mutate" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Use <code>recode()</code> together with <code>mutate()</code> to change the values of a variable in a data frame.</p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="appendix-foundations-of-r.html#cb16-1" tabindex="-1"></a><span class="co"># Create a data set</span></span>
+<span id="cb16-2"><a href="appendix-foundations-of-r.html#cb16-2" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">variable1 =</span> <span class="fu">c</span>(<span class="st">&quot;apple&quot;</span>, <span class="st">&quot;banana&quot;</span>, <span class="st">&quot;orange&quot;</span>),</span>
+<span id="cb16-3"><a href="appendix-foundations-of-r.html#cb16-3" tabindex="-1"></a>                   <span class="at">variable2 =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">1</span>),</span>
+<span id="cb16-4"><a href="appendix-foundations-of-r.html#cb16-4" tabindex="-1"></a>                   <span class="at">variable3 =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">5</span>, <span class="dv">7</span>))</span>
+<span id="cb16-5"><a href="appendix-foundations-of-r.html#cb16-5" tabindex="-1"></a></span>
+<span id="cb16-6"><a href="appendix-foundations-of-r.html#cb16-6" tabindex="-1"></a><span class="co"># Create a recoded character variable</span></span>
+<span id="cb16-7"><a href="appendix-foundations-of-r.html#cb16-7" tabindex="-1"></a>data<span class="sc">$</span>variable1_r <span class="ot">&lt;-</span> data <span class="sc">%&gt;%</span></span>
+<span id="cb16-8"><a href="appendix-foundations-of-r.html#cb16-8" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">variable1_r =</span> <span class="fu">recode</span>(variable1,</span>
+<span id="cb16-9"><a href="appendix-foundations-of-r.html#cb16-9" tabindex="-1"></a>                              <span class="st">&quot;apple&quot;</span> <span class="ot">=</span> <span class="st">&quot;red&quot;</span>,</span>
+<span id="cb16-10"><a href="appendix-foundations-of-r.html#cb16-10" tabindex="-1"></a>                              <span class="st">&quot;banana&quot;</span> <span class="ot">=</span> <span class="st">&quot;yellow&quot;</span>,</span>
+<span id="cb16-11"><a href="appendix-foundations-of-r.html#cb16-11" tabindex="-1"></a>                              <span class="st">&quot;orange&quot;</span> <span class="ot">=</span> <span class="st">&quot;orange&quot;</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb16-12"><a href="appendix-foundations-of-r.html#cb16-12" tabindex="-1"></a>  <span class="fu">pull</span>(variable1_r)</span>
+<span id="cb16-13"><a href="appendix-foundations-of-r.html#cb16-13" tabindex="-1"></a></span>
+<span id="cb16-14"><a href="appendix-foundations-of-r.html#cb16-14" tabindex="-1"></a><span class="co"># Create a recoded binary variable</span></span>
+<span id="cb16-15"><a href="appendix-foundations-of-r.html#cb16-15" tabindex="-1"></a>data<span class="sc">$</span>variable2_r <span class="ot">&lt;-</span> data <span class="sc">%&gt;%</span></span>
+<span id="cb16-16"><a href="appendix-foundations-of-r.html#cb16-16" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">variable2_r =</span> <span class="fu">recode</span>(variable2,</span>
+<span id="cb16-17"><a href="appendix-foundations-of-r.html#cb16-17" tabindex="-1"></a>                              <span class="dv">0</span> <span class="ot">=</span> <span class="dv">1</span>,</span>
+<span id="cb16-18"><a href="appendix-foundations-of-r.html#cb16-18" tabindex="-1"></a>                              <span class="dv">1</span> <span class="ot">=</span> <span class="dv">0</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb16-19"><a href="appendix-foundations-of-r.html#cb16-19" tabindex="-1"></a>  <span class="fu">pull</span>(variable2_r)</span>
+<span id="cb16-20"><a href="appendix-foundations-of-r.html#cb16-20" tabindex="-1"></a></span>
+<span id="cb16-21"><a href="appendix-foundations-of-r.html#cb16-21" tabindex="-1"></a><span class="co"># Create a reverse scored continuous variable (assuming the original variable ranges from 1-7)</span></span>
+<span id="cb16-22"><a href="appendix-foundations-of-r.html#cb16-22" tabindex="-1"></a>data<span class="sc">$</span>variable3_r <span class="ot">&lt;-</span> <span class="dv">8</span> <span class="sc">-</span> variable3</span></code></pre></div>
+</div>
+<div id="creating-new-variables-by-combining-select-with-rowmeans-or-rowsums" class="section level3 hasAnchor" number="3.3.7">
+<h3><span class="header-section-number">3.3.7</span> Creating new variables by combining <code>select()</code> with <code>rowMeans()</code> or <code>rowSums()</code><a href="appendix-foundations-of-r.html#creating-new-variables-by-combining-select-with-rowmeans-or-rowsums" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Use <code>select()</code> to pull out relevant variables and then <code>rowMeans()</code> to compute a mean score across them or <code>rowSums()</code> to compute a sum score.</p>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="appendix-foundations-of-r.html#cb17-1" tabindex="-1"></a><span class="co"># Create a data set</span></span>
+<span id="cb17-2"><a href="appendix-foundations-of-r.html#cb17-2" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">variable1 =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">6</span>, <span class="dv">22</span>, <span class="dv">12</span>, <span class="dv">8</span>),</span>
+<span id="cb17-3"><a href="appendix-foundations-of-r.html#cb17-3" tabindex="-1"></a>                   <span class="at">variable2 =</span> <span class="fu">c</span>(<span class="dv">4</span>, <span class="dv">8</span>, <span class="dv">4</span>, <span class="dv">10</span>, <span class="dv">3</span>),</span>
+<span id="cb17-4"><a href="appendix-foundations-of-r.html#cb17-4" tabindex="-1"></a>                   <span class="at">variable3 =</span> <span class="fu">c</span>(<span class="dv">9</span>, <span class="dv">15</span>, <span class="dv">9</span>, <span class="dv">11</span>, <span class="dv">4</span>))</span>
+<span id="cb17-5"><a href="appendix-foundations-of-r.html#cb17-5" tabindex="-1"></a></span>
+<span id="cb17-6"><a href="appendix-foundations-of-r.html#cb17-6" tabindex="-1"></a><span class="co"># Create a new variable with the sum score of variable1, variable2, and variable3</span></span>
+<span id="cb17-7"><a href="appendix-foundations-of-r.html#cb17-7" tabindex="-1"></a>data<span class="sc">$</span>sum_score <span class="ot">&lt;-</span> data <span class="sc">%&gt;%</span></span>
+<span id="cb17-8"><a href="appendix-foundations-of-r.html#cb17-8" tabindex="-1"></a>  <span class="fu">select</span>(variable1, variable2, variable3) <span class="sc">%&gt;%</span> </span>
+<span id="cb17-9"><a href="appendix-foundations-of-r.html#cb17-9" tabindex="-1"></a>  <span class="fu">rowSums</span>(<span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb17-10"><a href="appendix-foundations-of-r.html#cb17-10" tabindex="-1"></a></span>
+<span id="cb17-11"><a href="appendix-foundations-of-r.html#cb17-11" tabindex="-1"></a><span class="co"># Create a new variable with the average score of variable1, variable2, and variable3</span></span>
+<span id="cb17-12"><a href="appendix-foundations-of-r.html#cb17-12" tabindex="-1"></a>data<span class="sc">$</span>mean_score <span class="ot">&lt;-</span> data <span class="sc">%&gt;%</span> </span>
+<span id="cb17-13"><a href="appendix-foundations-of-r.html#cb17-13" tabindex="-1"></a>  <span class="fu">select</span>(variable1, variable2, variable3) <span class="sc">%&gt;%</span> </span>
+<span id="cb17-14"><a href="appendix-foundations-of-r.html#cb17-14" tabindex="-1"></a>  <span class="fu">rowMeans</span>(<span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+
+</div>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="week-13---fundamental-of-natural-language-processing.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/USERNAME/REPO/edit/BRANCH/02-r_help.Rmd",
+"text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["_main.pdf", "_main.epub"],
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+</body>
+
+</html>

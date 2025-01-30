@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 4 Task 1 - Familiarize yourself with important R commands | PSYC614: Text and Talk (Quantitative)</title>
+  <meta name="description" content="This is a bookdown created for the quantitative analysis portion of PSYC614 taught by Dr Stefan Leach at Lancaster University." />
+  <meta name="generator" content="bookdown 0.42 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 4 Task 1 - Familiarize yourself with important R commands | PSYC614: Text and Talk (Quantitative)" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:description" content="This is a bookdown created for the quantitative analysis portion of PSYC614 taught by Dr Stefan Leach at Lancaster University." />
+  <meta name="github-repo" content="rstudio/bookdown-demo" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 4 Task 1 - Familiarize yourself with important R commands | PSYC614: Text and Talk (Quantitative)" />
+  
+  <meta name="twitter:description" content="This is a bookdown created for the quantitative analysis portion of PSYC614 taught by Dr Stefan Leach at Lancaster University." />
+  
+
+<meta name="author" content="Stefan Leach" />
+
+
+<meta name="date" content="2025-01-30" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="homework---compiling-potential-sources.html"/>
+<link rel="next" href="extra-task-1---picking-your-data.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">R Workshop</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> About</a></li>
+<li class="chapter" data-level="2" data-path="week-13---fundamental-of-natural-language-processing.html"><a href="week-13---fundamental-of-natural-language-processing.html"><i class="fa fa-check"></i><b>2</b> Week 13 - Fundamental of Natural Language Processing</a></li>
+<li class="chapter" data-level="3" data-path="homework---compiling-potential-sources.html"><a href="homework---compiling-potential-sources.html"><i class="fa fa-check"></i><b>3</b> Homework - Compiling Potential Sources</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="homework---compiling-potential-sources.html"><a href="homework---compiling-potential-sources.html#collective-data-bank"><i class="fa fa-check"></i><b>3.1</b> Collective Data Bank</a></li>
+<li class="chapter" data-level="3.2" data-path="homework---compiling-potential-sources.html"><a href="homework---compiling-potential-sources.html#sources-of-data"><i class="fa fa-check"></i><b>3.2</b> Sources of Data</a></li>
+<li class="chapter" data-level="3.3" data-path="homework---compiling-potential-sources.html"><a href="homework---compiling-potential-sources.html#harvard-dataverse-repository"><i class="fa fa-check"></i><b>3.3</b> Harvard Dataverse Repository</a></li>
+<li class="chapter" data-level="3.4" data-path="homework---compiling-potential-sources.html"><a href="homework---compiling-potential-sources.html#papers-with-code"><i class="fa fa-check"></i><b>3.4</b> Papers with Code</a></li>
+<li class="chapter" data-level="3.5" data-path="homework---compiling-potential-sources.html"><a href="homework---compiling-potential-sources.html#kaggle"><i class="fa fa-check"></i><b>3.5</b> Kaggle</a></li>
+<li class="chapter" data-level="3.6" data-path="homework---compiling-potential-sources.html"><a href="homework---compiling-potential-sources.html#scientific-articles"><i class="fa fa-check"></i><b>3.6</b> Scientific articles</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="task-1---familiarize-yourself-with-important-r-commands.html"><a href="task-1---familiarize-yourself-with-important-r-commands.html"><i class="fa fa-check"></i><b>4</b> Task 1 - Familiarize yourself with important R commands</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="task-1---familiarize-yourself-with-important-r-commands.html"><a href="task-1---familiarize-yourself-with-important-r-commands.html#file-types"><i class="fa fa-check"></i><b>4.1</b> File Types</a>
+<ul>
+<li class="chapter" data-level="4.1.1" data-path="task-1---familiarize-yourself-with-important-r-commands.html"><a href="task-1---familiarize-yourself-with-important-r-commands.html#csv-comma-separated-values"><i class="fa fa-check"></i><b>4.1.1</b> .csv (Comma-Separated Values)</a></li>
+<li class="chapter" data-level="4.1.2" data-path="task-1---familiarize-yourself-with-important-r-commands.html"><a href="task-1---familiarize-yourself-with-important-r-commands.html#xlsx-excel-spreadsheet"><i class="fa fa-check"></i><b>4.1.2</b> .xlsx (Excel Spreadsheet)</a></li>
+<li class="chapter" data-level="4.1.3" data-path="task-1---familiarize-yourself-with-important-r-commands.html"><a href="task-1---familiarize-yourself-with-important-r-commands.html#rds-r-data-file"><i class="fa fa-check"></i><b>4.1.3</b> .rds (R Data File)</a></li>
+<li class="chapter" data-level="4.1.4" data-path="task-1---familiarize-yourself-with-important-r-commands.html"><a href="task-1---familiarize-yourself-with-important-r-commands.html#json-javascript-object-notation"><i class="fa fa-check"></i><b>4.1.4</b> .json (JavaScript Object Notation)</a></li>
+<li class="chapter" data-level="4.1.5" data-path="task-1---familiarize-yourself-with-important-r-commands.html"><a href="task-1---familiarize-yourself-with-important-r-commands.html#txt-plain-text-file"><i class="fa fa-check"></i><b>4.1.5</b> .txt (Plain Text File)</a></li>
+</ul></li>
+<li class="chapter" data-level="4.2" data-path="task-1---familiarize-yourself-with-important-r-commands.html"><a href="task-1---familiarize-yourself-with-important-r-commands.html#accessing-nested-data"><i class="fa fa-check"></i><b>4.2</b> Accessing nested data</a></li>
+<li class="chapter" data-level="4.3" data-path="task-1---familiarize-yourself-with-important-r-commands.html"><a href="task-1---familiarize-yourself-with-important-r-commands.html#cleaning-data"><i class="fa fa-check"></i><b>4.3</b> Cleaning data</a></li>
+<li class="chapter" data-level="4.4" data-path="task-1---familiarize-yourself-with-important-r-commands.html"><a href="task-1---familiarize-yourself-with-important-r-commands.html#identifying-relevant-cases"><i class="fa fa-check"></i><b>4.4</b> Identifying relevant cases</a></li>
+<li class="chapter" data-level="4.5" data-path="task-1---familiarize-yourself-with-important-r-commands.html"><a href="task-1---familiarize-yourself-with-important-r-commands.html#counting-words"><i class="fa fa-check"></i><b>4.5</b> Counting words</a></li>
+<li class="chapter" data-level="4.6" data-path="task-1---familiarize-yourself-with-important-r-commands.html"><a href="task-1---familiarize-yourself-with-important-r-commands.html#using-loops"><i class="fa fa-check"></i><b>4.6</b> Using loops</a></li>
+<li class="chapter" data-level="4.7" data-path="task-1---familiarize-yourself-with-important-r-commands.html"><a href="task-1---familiarize-yourself-with-important-r-commands.html#task-2---putting-your-knowledge-to-the-test"><i class="fa fa-check"></i><b>4.7</b> Task 2 - Putting your knowledge to the test</a></li>
+<li class="chapter" data-level="4.8" data-path="task-1---familiarize-yourself-with-important-r-commands.html"><a href="task-1---familiarize-yourself-with-important-r-commands.html#compile-a-single-dataframe"><i class="fa fa-check"></i><b>4.8</b> Compile a single dataframe</a></li>
+<li class="chapter" data-level="4.9" data-path="task-1---familiarize-yourself-with-important-r-commands.html"><a href="task-1---familiarize-yourself-with-important-r-commands.html#extract-nested-fields"><i class="fa fa-check"></i><b>4.9</b> Extract nested fields</a></li>
+<li class="chapter" data-level="4.10" data-path="task-1---familiarize-yourself-with-important-r-commands.html"><a href="task-1---familiarize-yourself-with-important-r-commands.html#clean"><i class="fa fa-check"></i><b>4.10</b> Clean</a></li>
+<li class="chapter" data-level="4.11" data-path="task-1---familiarize-yourself-with-important-r-commands.html"><a href="task-1---familiarize-yourself-with-important-r-commands.html#pick-out-relevant-cases"><i class="fa fa-check"></i><b>4.11</b> Pick out relevant cases</a></li>
+<li class="chapter" data-level="4.12" data-path="task-1---familiarize-yourself-with-important-r-commands.html"><a href="task-1---familiarize-yourself-with-important-r-commands.html#solutions"><i class="fa fa-check"></i><b>4.12</b> Solutions</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="extra-task-1---picking-your-data.html"><a href="extra-task-1---picking-your-data.html"><i class="fa fa-check"></i><b>5</b> Extra Task 1 - Picking Your Data</a></li>
+<li class="chapter" data-level="6" data-path="extra-task-2---considering-ethical-issues.html"><a href="extra-task-2---considering-ethical-issues.html"><i class="fa fa-check"></i><b>6</b> Extra Task 2 - Considering Ethical Issues</a></li>
+<li class="chapter" data-level="7" data-path="extra-task-3---wrangling-your-data.html"><a href="extra-task-3---wrangling-your-data.html"><i class="fa fa-check"></i><b>7</b> Extra Task 3 - Wrangling your data</a></li>
+<li class="chapter" data-level="8" data-path="appendix-foundations-of-r.html"><a href="appendix-foundations-of-r.html"><i class="fa fa-check"></i><b>8</b> Appendix: Foundations of R</a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="appendix-foundations-of-r.html"><a href="appendix-foundations-of-r.html#setting-up-your-environment"><i class="fa fa-check"></i><b>8.1</b> Setting up your environment</a>
+<ul>
+<li class="chapter" data-level="8.1.1" data-path="appendix-foundations-of-r.html"><a href="appendix-foundations-of-r.html#installing-r"><i class="fa fa-check"></i><b>8.1.1</b> Installing R</a></li>
+<li class="chapter" data-level="8.1.2" data-path="appendix-foundations-of-r.html"><a href="appendix-foundations-of-r.html#installing-rstudio"><i class="fa fa-check"></i><b>8.1.2</b> Installing RStudio</a></li>
+<li class="chapter" data-level="8.1.3" data-path="appendix-foundations-of-r.html"><a href="appendix-foundations-of-r.html#launching-rstudio-and-setting-up-a-project"><i class="fa fa-check"></i><b>8.1.3</b> Launching RStudio and setting up a project</a></li>
+<li class="chapter" data-level="8.1.4" data-path="appendix-foundations-of-r.html"><a href="appendix-foundations-of-r.html#installing-packages"><i class="fa fa-check"></i><b>8.1.4</b> Installing packages</a></li>
+<li class="chapter" data-level="8.1.5" data-path="appendix-foundations-of-r.html"><a href="appendix-foundations-of-r.html#loading-packages"><i class="fa fa-check"></i><b>8.1.5</b> Loading packages</a></li>
+</ul></li>
+<li class="chapter" data-level="8.2" data-path="appendix-foundations-of-r.html"><a href="appendix-foundations-of-r.html#vectors-factors-matrices-and-data-frames"><i class="fa fa-check"></i><b>8.2</b> Vectors, factors, matrices, and data frames</a>
+<ul>
+<li class="chapter" data-level="8.2.1" data-path="appendix-foundations-of-r.html"><a href="appendix-foundations-of-r.html#vectors"><i class="fa fa-check"></i><b>8.2.1</b> Vectors</a></li>
+<li class="chapter" data-level="8.2.2" data-path="appendix-foundations-of-r.html"><a href="appendix-foundations-of-r.html#factors"><i class="fa fa-check"></i><b>8.2.2</b> Factors</a></li>
+<li class="chapter" data-level="8.2.3" data-path="appendix-foundations-of-r.html"><a href="appendix-foundations-of-r.html#matrices"><i class="fa fa-check"></i><b>8.2.3</b> Matrices</a></li>
+<li class="chapter" data-level="8.2.4" data-path="appendix-foundations-of-r.html"><a href="appendix-foundations-of-r.html#data-frames"><i class="fa fa-check"></i><b>8.2.4</b> Data Frames</a></li>
+<li class="chapter" data-level="8.2.5" data-path="appendix-foundations-of-r.html"><a href="appendix-foundations-of-r.html#accessing-subsets-of-vectors-and-data-frames"><i class="fa fa-check"></i><b>8.2.5</b> Accessing subsets of vectors and data frames</a></li>
+</ul></li>
+<li class="chapter" data-level="8.3" data-path="appendix-foundations-of-r.html"><a href="appendix-foundations-of-r.html#data-manipulation-with-tidyverse"><i class="fa fa-check"></i><b>8.3</b> Data manipulation with tidyverse</a>
+<ul>
+<li class="chapter" data-level="8.3.1" data-path="appendix-foundations-of-r.html"><a href="appendix-foundations-of-r.html#install-and-load-the-tidyverse-package"><i class="fa fa-check"></i><b>8.3.1</b> Install and load the <code>tidyverse</code> package</a></li>
+<li class="chapter" data-level="8.3.2" data-path="appendix-foundations-of-r.html"><a href="appendix-foundations-of-r.html#the-pipe-operator"><i class="fa fa-check"></i><b>8.3.2</b> The pipe operator <code>%&gt;%</code></a></li>
+<li class="chapter" data-level="8.3.3" data-path="appendix-foundations-of-r.html"><a href="appendix-foundations-of-r.html#selecting-columns-with-select"><i class="fa fa-check"></i><b>8.3.3</b> Selecting columns with <code>select()</code></a></li>
+<li class="chapter" data-level="8.3.4" data-path="appendix-foundations-of-r.html"><a href="appendix-foundations-of-r.html#filtering-rows-with-filter"><i class="fa fa-check"></i><b>8.3.4</b> Filtering rows with <code>filter()</code></a></li>
+<li class="chapter" data-level="8.3.5" data-path="appendix-foundations-of-r.html"><a href="appendix-foundations-of-r.html#renaming-variables-with-rename"><i class="fa fa-check"></i><b>8.3.5</b> Renaming variables with <code>rename()</code></a></li>
+<li class="chapter" data-level="8.3.6" data-path="appendix-foundations-of-r.html"><a href="appendix-foundations-of-r.html#recoding-variables-with-recode-and-mutate"><i class="fa fa-check"></i><b>8.3.6</b> Recoding variables with <code>recode()</code> and <code>mutate()</code></a></li>
+<li class="chapter" data-level="8.3.7" data-path="appendix-foundations-of-r.html"><a href="appendix-foundations-of-r.html#creating-new-variables-by-combining-select-with-rowmeans-or-rowsums"><i class="fa fa-check"></i><b>8.3.7</b> Creating new variables by combining <code>select()</code> with <code>rowMeans()</code> or <code>rowSums()</code></a></li>
+</ul></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">PSYC614: Text and Talk (Quantitative)</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="task-1---familiarize-yourself-with-important-r-commands" class="section level1 hasAnchor" number="4">
+<h1><span class="header-section-number">Chapter 4</span> Task 1 - Familiarize yourself with important R commands<a href="task-1---familiarize-yourself-with-important-r-commands.html#task-1---familiarize-yourself-with-important-r-commands" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<p>Start to get familiar with your chosen dataset. Your research question may require a certain number of relevant cases or topics, how can you ensure they are present in the data?</p>
+<div id="file-types" class="section level2 hasAnchor" number="4.1">
+<h2><span class="header-section-number">4.1</span> File Types<a href="task-1---familiarize-yourself-with-important-r-commands.html#file-types" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>This section provides an overview of common file types (<code>.csv</code>, <code>.xlsx</code>, <code>.rds</code>, <code>.json</code>, <code>.txt</code>) and explains how to open them using conventional Windows programs and R.</p>
+<div id="csv-comma-separated-values" class="section level3 hasAnchor" number="4.1.1">
+<h3><span class="header-section-number">4.1.1</span> .csv (Comma-Separated Values)<a href="task-1---familiarize-yourself-with-important-r-commands.html#csv-comma-separated-values" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p><strong>Description</strong>
+A plain text file where data is stored in a tabular format, with each row on a new line and columns separated by commas.</p>
+<p><strong>How to Open in Windows</strong>
+- <strong>Microsoft Excel:</strong> Right-click the file → Open with Excel. Alternatively, open Excel and import the file through the “Data” tab.
+- <strong>Notepad/Notepad++:</strong> Right-click → Open with Notepad or another text editor.</p>
+<p><strong>How to Open in R</strong>
+Using the <code>readr</code> package:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="task-1---familiarize-yourself-with-important-r-commands.html#cb1-1" tabindex="-1"></a><span class="fu">library</span>(readr)</span>
+<span id="cb1-2"><a href="task-1---familiarize-yourself-with-important-r-commands.html#cb1-2" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">&quot;path/to/file.csv&quot;</span>)</span></code></pre></div>
+<p>Or using base R:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="task-1---familiarize-yourself-with-important-r-commands.html#cb2-1" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;path/to/file.csv&quot;</span>)</span></code></pre></div>
+<hr />
+</div>
+<div id="xlsx-excel-spreadsheet" class="section level3 hasAnchor" number="4.1.2">
+<h3><span class="header-section-number">4.1.2</span> .xlsx (Excel Spreadsheet)<a href="task-1---familiarize-yourself-with-important-r-commands.html#xlsx-excel-spreadsheet" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p><strong>Description</strong>
+A Microsoft Excel file format that stores data in worksheets with support for formatting, formulas, and multiple sheets.</p>
+<p><strong>How to Open in Windows</strong>
+- <strong>Microsoft Excel:</strong> Double-click the file to open in Excel.
+- <strong>Google Sheets:</strong> Upload the file to Google Drive and open it in Google Sheets (web-based).</p>
+<p><strong>How to Open in R</strong>
+Using the <code>readxl</code> package:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="task-1---familiarize-yourself-with-important-r-commands.html#cb3-1" tabindex="-1"></a><span class="fu">library</span>(readxl)</span>
+<span id="cb3-2"><a href="task-1---familiarize-yourself-with-important-r-commands.html#cb3-2" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(<span class="st">&quot;path/to/file.xlsx&quot;</span>, <span class="at">sheet =</span> <span class="dv">1</span>)  <span class="co"># Specify the sheet if needed</span></span></code></pre></div>
+<hr />
+</div>
+<div id="rds-r-data-file" class="section level3 hasAnchor" number="4.1.3">
+<h3><span class="header-section-number">4.1.3</span> .rds (R Data File)<a href="task-1---familiarize-yourself-with-important-r-commands.html#rds-r-data-file" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p><strong>Description</strong>
+A file format unique to R that stores R objects in a binary format for efficient storage and loading.</p>
+<p><strong>How to Open in Windows</strong>
+- <strong>Not Directly Openable:</strong> You cannot open <code>.rds</code> files in common Windows programs. They are intended for use within R.</p>
+<p><strong>How to Open in R</strong></p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="task-1---familiarize-yourself-with-important-r-commands.html#cb4-1" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(<span class="st">&quot;path/to/file.rds&quot;</span>)</span></code></pre></div>
+<hr />
+</div>
+<div id="json-javascript-object-notation" class="section level3 hasAnchor" number="4.1.4">
+<h3><span class="header-section-number">4.1.4</span> .json (JavaScript Object Notation)<a href="task-1---familiarize-yourself-with-important-r-commands.html#json-javascript-object-notation" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p><strong>Description</strong>
+A lightweight, human-readable format for structuring data, often used in web APIs and configuration files.</p>
+<p><strong>How to Open in Windows</strong>
+- <strong>Notepad/Notepad++:</strong> Right-click → Open with Notepad or another text editor.
+- <strong>Web Browser:</strong> Drag the file into a browser for a formatted view.</p>
+<p><strong>How to Open in R</strong>
+Using the <code>jsonlite</code> package:</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="task-1---familiarize-yourself-with-important-r-commands.html#cb5-1" tabindex="-1"></a><span class="fu">library</span>(jsonlite)</span>
+<span id="cb5-2"><a href="task-1---familiarize-yourself-with-important-r-commands.html#cb5-2" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">fromJSON</span>(<span class="st">&quot;path/to/file.json&quot;</span>)</span></code></pre></div>
+<hr />
+</div>
+<div id="txt-plain-text-file" class="section level3 hasAnchor" number="4.1.5">
+<h3><span class="header-section-number">4.1.5</span> .txt (Plain Text File)<a href="task-1---familiarize-yourself-with-important-r-commands.html#txt-plain-text-file" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p><strong>Description</strong>
+A basic text file containing unformatted text, often used for simple data storage or documentation.</p>
+<p><strong>How to Open in Windows</strong>
+- <strong>Notepad/Notepad++:</strong> Double-click to open in Notepad or another text editor.
+- <strong>Microsoft Word:</strong> Open in Word to add formatting or modify the content.</p>
+<p><strong>How to Open in R</strong>
+Using base R:</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="task-1---familiarize-yourself-with-important-r-commands.html#cb6-1" tabindex="-1"></a><span class="co"># For line-by-line reading</span></span>
+<span id="cb6-2"><a href="task-1---familiarize-yourself-with-important-r-commands.html#cb6-2" tabindex="-1"></a>lines <span class="ot">&lt;-</span> <span class="fu">readLines</span>(<span class="st">&quot;path/to/file.txt&quot;</span>)</span>
+<span id="cb6-3"><a href="task-1---familiarize-yourself-with-important-r-commands.html#cb6-3" tabindex="-1"></a></span>
+<span id="cb6-4"><a href="task-1---familiarize-yourself-with-important-r-commands.html#cb6-4" tabindex="-1"></a><span class="co"># For reading as a table</span></span>
+<span id="cb6-5"><a href="task-1---familiarize-yourself-with-important-r-commands.html#cb6-5" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">read.table</span>(<span class="st">&quot;path/to/file.txt&quot;</span>, <span class="at">header =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<hr />
+</div>
+</div>
+<div id="accessing-nested-data" class="section level2 hasAnchor" number="4.2">
+<h2><span class="header-section-number">4.2</span> Accessing nested data<a href="task-1---familiarize-yourself-with-important-r-commands.html#accessing-nested-data" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>You may find that many data formats you encounter will not seamlessly convert into the sorts of R objects you may want them to for further analyses. Often you will find that text data is read into nested lists or dictionaries which require further formatting. This is common for .json files.</p>
+<p>{ “name”: “John Doe”, “age”: 30, “address”: { “street”: “123 Main St”, “city”: “New York”, “state”: “NY” }, “contacts”: [ { “type”: “email”, “value”: “<a href="mailto:johndoe@example.com" class="email">johndoe@example.com</a>” }, { “type”: “phone”, “value”: “555-1234” } ], “blog”: { “url”: “<a href="https://johndoe.com" class="uri">https://johndoe.com</a>”, “description”: “John’s personal blog about tech and coding.” } }</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="task-1---familiarize-yourself-with-important-r-commands.html#cb7-1" tabindex="-1"></a><span class="co"># Install and load the &#39;jsonlite&#39; package (if you haven&#39;t already)</span></span>
+<span id="cb7-2"><a href="task-1---familiarize-yourself-with-important-r-commands.html#cb7-2" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;jsonlite&quot;</span>)</span>
+<span id="cb7-3"><a href="task-1---familiarize-yourself-with-important-r-commands.html#cb7-3" tabindex="-1"></a><span class="fu">library</span>(jsonlite)</span>
+<span id="cb7-4"><a href="task-1---familiarize-yourself-with-important-r-commands.html#cb7-4" tabindex="-1"></a></span>
+<span id="cb7-5"><a href="task-1---familiarize-yourself-with-important-r-commands.html#cb7-5" tabindex="-1"></a><span class="co"># Read in the JSON file</span></span>
+<span id="cb7-6"><a href="task-1---familiarize-yourself-with-important-r-commands.html#cb7-6" tabindex="-1"></a>json_data <span class="ot">&lt;-</span> <span class="fu">fromJSON</span>(<span class="st">&quot;data.json&quot;</span>)</span>
+<span id="cb7-7"><a href="task-1---familiarize-yourself-with-important-r-commands.html#cb7-7" tabindex="-1"></a></span>
+<span id="cb7-8"><a href="task-1---familiarize-yourself-with-important-r-commands.html#cb7-8" tabindex="-1"></a><span class="co"># Print the entire JSON structure</span></span>
+<span id="cb7-9"><a href="task-1---familiarize-yourself-with-important-r-commands.html#cb7-9" tabindex="-1"></a><span class="fu">print</span>(json_data)</span>
+<span id="cb7-10"><a href="task-1---familiarize-yourself-with-important-r-commands.html#cb7-10" tabindex="-1"></a></span>
+<span id="cb7-11"><a href="task-1---familiarize-yourself-with-important-r-commands.html#cb7-11" tabindex="-1"></a><span class="co"># Accessing top-level data (name, age)</span></span>
+<span id="cb7-12"><a href="task-1---familiarize-yourself-with-important-r-commands.html#cb7-12" tabindex="-1"></a>name <span class="ot">&lt;-</span> json_data<span class="sc">$</span>name</span>
+<span id="cb7-13"><a href="task-1---familiarize-yourself-with-important-r-commands.html#cb7-13" tabindex="-1"></a>age <span class="ot">&lt;-</span> json_data<span class="sc">$</span>age</span>
+<span id="cb7-14"><a href="task-1---familiarize-yourself-with-important-r-commands.html#cb7-14" tabindex="-1"></a><span class="fu">print</span>(name)  <span class="co"># Output: &quot;John Doe&quot;</span></span>
+<span id="cb7-15"><a href="task-1---familiarize-yourself-with-important-r-commands.html#cb7-15" tabindex="-1"></a><span class="fu">print</span>(age)   <span class="co"># Output: 30</span></span>
+<span id="cb7-16"><a href="task-1---familiarize-yourself-with-important-r-commands.html#cb7-16" tabindex="-1"></a></span>
+<span id="cb7-17"><a href="task-1---familiarize-yourself-with-important-r-commands.html#cb7-17" tabindex="-1"></a><span class="co"># Accessing nested data (address)</span></span>
+<span id="cb7-18"><a href="task-1---familiarize-yourself-with-important-r-commands.html#cb7-18" tabindex="-1"></a>street <span class="ot">&lt;-</span> json_data<span class="sc">$</span>address<span class="sc">$</span>street</span>
+<span id="cb7-19"><a href="task-1---familiarize-yourself-with-important-r-commands.html#cb7-19" tabindex="-1"></a>city <span class="ot">&lt;-</span> json_data<span class="sc">$</span>address<span class="sc">$</span>city</span>
+<span id="cb7-20"><a href="task-1---familiarize-yourself-with-important-r-commands.html#cb7-20" tabindex="-1"></a>state <span class="ot">&lt;-</span> json_data<span class="sc">$</span>address<span class="sc">$</span>state</span>
+<span id="cb7-21"><a href="task-1---familiarize-yourself-with-important-r-commands.html#cb7-21" tabindex="-1"></a><span class="fu">print</span>(street)  <span class="co"># Output: &quot;123 Main St&quot;</span></span>
+<span id="cb7-22"><a href="task-1---familiarize-yourself-with-important-r-commands.html#cb7-22" tabindex="-1"></a><span class="fu">print</span>(city)    <span class="co"># Output: &quot;New York&quot;</span></span>
+<span id="cb7-23"><a href="task-1---familiarize-yourself-with-important-r-commands.html#cb7-23" tabindex="-1"></a><span class="fu">print</span>(state)   <span class="co"># Output: &quot;NY&quot;</span></span>
+<span id="cb7-24"><a href="task-1---familiarize-yourself-with-important-r-commands.html#cb7-24" tabindex="-1"></a></span>
+<span id="cb7-25"><a href="task-1---familiarize-yourself-with-important-r-commands.html#cb7-25" tabindex="-1"></a><span class="co"># Accessing the contacts array (e.g., first contact)</span></span>
+<span id="cb7-26"><a href="task-1---familiarize-yourself-with-important-r-commands.html#cb7-26" tabindex="-1"></a>first_contact <span class="ot">&lt;-</span> json_data<span class="sc">$</span>contacts[[<span class="dv">1</span>]]</span>
+<span id="cb7-27"><a href="task-1---familiarize-yourself-with-important-r-commands.html#cb7-27" tabindex="-1"></a>contact_type <span class="ot">&lt;-</span> first_contact<span class="sc">$</span>type</span>
+<span id="cb7-28"><a href="task-1---familiarize-yourself-with-important-r-commands.html#cb7-28" tabindex="-1"></a>contact_value <span class="ot">&lt;-</span> first_contact<span class="sc">$</span>value</span>
+<span id="cb7-29"><a href="task-1---familiarize-yourself-with-important-r-commands.html#cb7-29" tabindex="-1"></a><span class="fu">print</span>(contact_type)  <span class="co"># Output: &quot;email&quot;</span></span>
+<span id="cb7-30"><a href="task-1---familiarize-yourself-with-important-r-commands.html#cb7-30" tabindex="-1"></a><span class="fu">print</span>(contact_value) <span class="co"># Output: &quot;johndoe@example.com&quot;</span></span>
+<span id="cb7-31"><a href="task-1---familiarize-yourself-with-important-r-commands.html#cb7-31" tabindex="-1"></a></span>
+<span id="cb7-32"><a href="task-1---familiarize-yourself-with-important-r-commands.html#cb7-32" tabindex="-1"></a><span class="co"># Accessing top-level data (blog)</span></span>
+<span id="cb7-33"><a href="task-1---familiarize-yourself-with-important-r-commands.html#cb7-33" tabindex="-1"></a>blog_url <span class="ot">&lt;-</span> json_data<span class="sc">$</span>blog<span class="sc">$</span>url</span>
+<span id="cb7-34"><a href="task-1---familiarize-yourself-with-important-r-commands.html#cb7-34" tabindex="-1"></a>blog_description <span class="ot">&lt;-</span> json_data<span class="sc">$</span>blog<span class="sc">$</span>description</span>
+<span id="cb7-35"><a href="task-1---familiarize-yourself-with-important-r-commands.html#cb7-35" tabindex="-1"></a><span class="fu">print</span>(blog_url)         <span class="co"># Output: &quot;https://johndoe.com&quot;</span></span>
+<span id="cb7-36"><a href="task-1---familiarize-yourself-with-important-r-commands.html#cb7-36" tabindex="-1"></a><span class="fu">print</span>(blog_description) <span class="co"># Output: &quot;John&#39;s personal blog about tech and coding.&quot;</span></span></code></pre></div>
+<p><strong>Explanation</strong>
+Reading JSON: The fromJSON() function from the jsonlite package is used to read a JSON file into an R object (in this case, json_data).</p>
+<p>Accessing Top-Level Data: You can access simple fields (like name and age) directly using the $ operator.</p>
+<p>Accessing Nested Data: For the nested address object, we access it like json_data<span class="math inline">\(address\)</span>street.</p>
+<p>For arrays (like contacts), we use [[ ]] indexing to access elements. For example, json_data$contacts[[1]] gives us the first contact, and we can then extract the type and value.</p>
+</div>
+<div id="cleaning-data" class="section level2 hasAnchor" number="4.3">
+<h2><span class="header-section-number">4.3</span> Cleaning data<a href="task-1---familiarize-yourself-with-important-r-commands.html#cleaning-data" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Many types of text data have characters or strings in them which may be irrelevant or undesirable to the quantitative researcher. Corpora can have metadata and tags in them which you may wish to remove prior to your analyses (e.g., “Start:” to indicate where a speech begins). Similarly, you may wish to remove certain information from social media texts prior to your analyses, like hashtags or URLs.</p>
+<p>Below are a number of common functions in R which can help you clean your data. Try running them to see how they work.</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="task-1---familiarize-yourself-with-important-r-commands.html#cb8-1" tabindex="-1"></a><span class="co"># Sample string</span></span>
+<span id="cb8-2"><a href="task-1---familiarize-yourself-with-important-r-commands.html#cb8-2" tabindex="-1"></a>text <span class="ot">&lt;-</span> <span class="st">&quot;Start: Hello #world! Check out this link: https://example.com&quot;</span></span>
+<span id="cb8-3"><a href="task-1---familiarize-yourself-with-important-r-commands.html#cb8-3" tabindex="-1"></a></span>
+<span id="cb8-4"><a href="task-1---familiarize-yourself-with-important-r-commands.html#cb8-4" tabindex="-1"></a><span class="co"># Remove the first 6 characters</span></span>
+<span id="cb8-5"><a href="task-1---familiarize-yourself-with-important-r-commands.html#cb8-5" tabindex="-1"></a>text_without_first_6 <span class="ot">&lt;-</span> <span class="fu">substr</span>(text, <span class="dv">7</span>, <span class="fu">nchar</span>(text))</span>
+<span id="cb8-6"><a href="task-1---familiarize-yourself-with-important-r-commands.html#cb8-6" tabindex="-1"></a><span class="fu">print</span>(text_without_first_6)  <span class="co"># Output: &quot;Hello world! Check out this link: https://example.com #excited&quot;</span></span>
+<span id="cb8-7"><a href="task-1---familiarize-yourself-with-important-r-commands.html#cb8-7" tabindex="-1"></a></span>
+<span id="cb8-8"><a href="task-1---familiarize-yourself-with-important-r-commands.html#cb8-8" tabindex="-1"></a><span class="co"># Remove hashtags</span></span>
+<span id="cb8-9"><a href="task-1---familiarize-yourself-with-important-r-commands.html#cb8-9" tabindex="-1"></a>text_no_hashtags <span class="ot">&lt;-</span> <span class="fu">gsub</span>(<span class="st">&quot;#</span><span class="sc">\\</span><span class="st">w+&quot;</span>, <span class="st">&quot;&quot;</span>, text_without_first_6)</span>
+<span id="cb8-10"><a href="task-1---familiarize-yourself-with-important-r-commands.html#cb8-10" tabindex="-1"></a><span class="fu">print</span>(text_no_hashtags)  <span class="co"># Output: &quot;Hello world! Check out this link: https://example.com&quot;</span></span>
+<span id="cb8-11"><a href="task-1---familiarize-yourself-with-important-r-commands.html#cb8-11" tabindex="-1"></a></span>
+<span id="cb8-12"><a href="task-1---familiarize-yourself-with-important-r-commands.html#cb8-12" tabindex="-1"></a><span class="co"># Remove URLs</span></span>
+<span id="cb8-13"><a href="task-1---familiarize-yourself-with-important-r-commands.html#cb8-13" tabindex="-1"></a>text_cleaned <span class="ot">&lt;-</span> <span class="fu">gsub</span>(<span class="st">&quot;https?://</span><span class="sc">\\</span><span class="st">S+&quot;</span>, <span class="st">&quot;&quot;</span>, text_no_hashtags)</span>
+<span id="cb8-14"><a href="task-1---familiarize-yourself-with-important-r-commands.html#cb8-14" tabindex="-1"></a><span class="fu">print</span>(text_cleaned)  <span class="co"># Output: &quot;Hello world! Check out this link:&quot;</span></span></code></pre></div>
+<p><strong>Explanation:</strong>
+Removing the first 6 characters:
+The <code>substr()</code> function removes letters in the string. We pass it the ‘text’ object to tell it which string to operate on, <code>6</code> to tell it the position to start deleting from, and <code>nchar(text)</code> to tell it to delete all the way to the last position of the text–which is equal to the total number of characters in the string, given by <code>nchar(text)</code>.</p>
+<p>Removing hashtags:
+The <code>gsub()</code> function matches and replaces strings. We pass the regular expression #\w+ to match any word following a # symbol and “” to replace it with nothing (effectively deleting it). Finally, we pass the ‘text_without_first_6’ object to tell it which string to operate on.</p>
+<p>Removing URLs:
+We use the <code>gsub()</code> function again but this time with the regular expression https?://\S+ to match URLs that start with <a href="http://" class="uri">http://</a> or <a href="https://" class="uri">https://</a>. We replace these with nothing “” and the ‘text_without_first_6’ object.</p>
+</div>
+<div id="identifying-relevant-cases" class="section level2 hasAnchor" number="4.4">
+<h2><span class="header-section-number">4.4</span> Identifying relevant cases<a href="task-1---familiarize-yourself-with-important-r-commands.html#identifying-relevant-cases" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Many types of text data have , either because they are entirely irrelevant to your analyses or</p>
+<p>The <code>grepl</code> operator can also be combined with the</p>
+</div>
+<div id="counting-words" class="section level2 hasAnchor" number="4.5">
+<h2><span class="header-section-number">4.5</span> Counting words<a href="task-1---familiarize-yourself-with-important-r-commands.html#counting-words" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+</div>
+<div id="using-loops" class="section level2 hasAnchor" number="4.6">
+<h2><span class="header-section-number">4.6</span> Using loops<a href="task-1---familiarize-yourself-with-important-r-commands.html#using-loops" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Loops are indispensable</p>
+<p>Oftentimes text data will be made available in a way that is not conducive to psychological analyses. Typically, we want our data to be in tabular format saved as vectors in R data frames. Let’s have a go at converting.</p>
+</div>
+<div id="task-2---putting-your-knowledge-to-the-test" class="section level2 hasAnchor" number="4.7">
+<h2><span class="header-section-number">4.7</span> Task 2 - Putting your knowledge to the test<a href="task-1---familiarize-yourself-with-important-r-commands.html#task-2---putting-your-knowledge-to-the-test" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+</div>
+<div id="compile-a-single-dataframe" class="section level2 hasAnchor" number="4.8">
+<h2><span class="header-section-number">4.8</span> Compile a single dataframe<a href="task-1---familiarize-yourself-with-important-r-commands.html#compile-a-single-dataframe" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p><strong>Challenge 1</strong>
+Adapt your understanding of the Create a loop which reads a .txt file and appends it to to a dataframe.</p>
+<p>Tip: It is often infeasible to manually define all of the files you wish to iterate over, as you may have many thousands of them. A solution to this can be found in the X command, which will define a new vector with all file names in your currently-active folder of a certain sort.</p>
+</div>
+<div id="extract-nested-fields" class="section level2 hasAnchor" number="4.9">
+<h2><span class="header-section-number">4.9</span> Extract nested fields<a href="task-1---familiarize-yourself-with-important-r-commands.html#extract-nested-fields" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+</div>
+<div id="clean" class="section level2 hasAnchor" number="4.10">
+<h2><span class="header-section-number">4.10</span> Clean<a href="task-1---familiarize-yourself-with-important-r-commands.html#clean" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>This section provides an overview of common file types (<code>.csv</code>, <code>.xlsx</code>, <code>.rds</code>, <code>.json</code>, <code>.txt</code>) and explains how to open them using conventional Windows programs and R.</p>
+</div>
+<div id="pick-out-relevant-cases" class="section level2 hasAnchor" number="4.11">
+<h2><span class="header-section-number">4.11</span> Pick out relevant cases<a href="task-1---familiarize-yourself-with-important-r-commands.html#pick-out-relevant-cases" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+</div>
+<div id="solutions" class="section level2 hasAnchor" number="4.12">
+<h2><span class="header-section-number">4.12</span> Solutions<a href="task-1---familiarize-yourself-with-important-r-commands.html#solutions" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p><strong>Solution 1</strong>
+Adapt your understanding of the Create a loop which reads a .txt file and appends it to to a dataframe.</p>
+<p><strong>Solution 2</strong>
+Adapt your understanding of the Create a loop which reads a .txt file and appends it to to a dataframe.</p>
+<p><strong>Solution3</strong>
+Adapt your understanding of the Create a loop which reads a .txt file and appends it to to a dataframe.</p>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="homework---compiling-potential-sources.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="extra-task-1---picking-your-data.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/USERNAME/REPO/edit/BRANCH/01-week1.Rmd",
+"text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["_main.pdf", "_main.epub"],
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

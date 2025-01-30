@@ -1,0 +1,734 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 2 Week 13 - Fundamentals of Natural Language Processing | PSYC614: Text and Talk (Quantitative)</title>
+  <meta name="description" content="This is a bookdown created for the quantitative analysis portion of PSYC614 taught by Dr Stefan Leach at Lancaster University." />
+  <meta name="generator" content="bookdown 0.42 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 2 Week 13 - Fundamentals of Natural Language Processing | PSYC614: Text and Talk (Quantitative)" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:description" content="This is a bookdown created for the quantitative analysis portion of PSYC614 taught by Dr Stefan Leach at Lancaster University." />
+  <meta name="github-repo" content="rstudio/bookdown-demo" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 2 Week 13 - Fundamentals of Natural Language Processing | PSYC614: Text and Talk (Quantitative)" />
+  
+  <meta name="twitter:description" content="This is a bookdown created for the quantitative analysis portion of PSYC614 taught by Dr Stefan Leach at Lancaster University." />
+  
+
+<meta name="author" content="Stefan Leach" />
+
+
+<meta name="date" content="2025-01-30" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="index.html"/>
+<link rel="next" href="appendix-foundations-of-r.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">R Workshop</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> url: your book url like https://bookdown.org/yihui/bookdown</a></li>
+<li class="chapter" data-level="2" data-path="week-13---fundamentals-of-natural-language-processing.html"><a href="week-13---fundamentals-of-natural-language-processing.html"><i class="fa fa-check"></i><b>2</b> Week 13 - Fundamentals of Natural Language Processing</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="week-13---fundamentals-of-natural-language-processing.html"><a href="week-13---fundamentals-of-natural-language-processing.html#homework---compiling-potential-sources-of-data"><i class="fa fa-check"></i><b>2.1</b> Homework - Compiling Potential Sources of Data</a>
+<ul>
+<li class="chapter" data-level="2.1.1" data-path="week-13---fundamentals-of-natural-language-processing.html"><a href="week-13---fundamentals-of-natural-language-processing.html#collective-data-bank"><i class="fa fa-check"></i><b>2.1.1</b> Collective Data Bank</a></li>
+<li class="chapter" data-level="2.1.2" data-path="week-13---fundamentals-of-natural-language-processing.html"><a href="week-13---fundamentals-of-natural-language-processing.html#sources-of-data"><i class="fa fa-check"></i><b>2.1.2</b> Sources of Data</a></li>
+</ul></li>
+<li class="chapter" data-level="2.2" data-path="week-13---fundamentals-of-natural-language-processing.html"><a href="week-13---fundamentals-of-natural-language-processing.html#task-1---familiarize-yourself-with-important-r-commands"><i class="fa fa-check"></i><b>2.2</b> Task 1 - Familiarize yourself with important R commands</a>
+<ul>
+<li class="chapter" data-level="2.2.1" data-path="week-13---fundamentals-of-natural-language-processing.html"><a href="week-13---fundamentals-of-natural-language-processing.html#file-types"><i class="fa fa-check"></i><b>2.2.1</b> File Types</a></li>
+<li class="chapter" data-level="2.2.2" data-path="week-13---fundamentals-of-natural-language-processing.html"><a href="week-13---fundamentals-of-natural-language-processing.html#accessing-nested-data"><i class="fa fa-check"></i><b>2.2.2</b> Accessing nested data</a></li>
+<li class="chapter" data-level="2.2.3" data-path="week-13---fundamentals-of-natural-language-processing.html"><a href="week-13---fundamentals-of-natural-language-processing.html#cleaning-data"><i class="fa fa-check"></i><b>2.2.3</b> Cleaning data</a></li>
+<li class="chapter" data-level="2.2.4" data-path="week-13---fundamentals-of-natural-language-processing.html"><a href="week-13---fundamentals-of-natural-language-processing.html#concatenating-strings"><i class="fa fa-check"></i><b>2.2.4</b> Concatenating strings</a></li>
+<li class="chapter" data-level="2.2.5" data-path="week-13---fundamentals-of-natural-language-processing.html"><a href="week-13---fundamentals-of-natural-language-processing.html#counting-words"><i class="fa fa-check"></i><b>2.2.5</b> Counting words</a></li>
+<li class="chapter" data-level="2.2.6" data-path="week-13---fundamentals-of-natural-language-processing.html"><a href="week-13---fundamentals-of-natural-language-processing.html#identifying-specific-instances"><i class="fa fa-check"></i><b>2.2.6</b> Identifying specific instances</a></li>
+<li class="chapter" data-level="2.2.7" data-path="week-13---fundamentals-of-natural-language-processing.html"><a href="week-13---fundamentals-of-natural-language-processing.html#using-loops"><i class="fa fa-check"></i><b>2.2.7</b> Using loops</a></li>
+</ul></li>
+<li class="chapter" data-level="2.3" data-path="week-13---fundamentals-of-natural-language-processing.html"><a href="week-13---fundamentals-of-natural-language-processing.html#task-2---putting-your-knowledge-to-the-test"><i class="fa fa-check"></i><b>2.3</b> Task 2 - Putting your knowledge to the test</a>
+<ul>
+<li class="chapter" data-level="2.3.1" data-path="week-13---fundamentals-of-natural-language-processing.html"><a href="week-13---fundamentals-of-natural-language-processing.html#pick-out-relevant-cases-from-a-.csv-file"><i class="fa fa-check"></i><b>2.3.1</b> Pick out relevant cases from a .csv file</a></li>
+<li class="chapter" data-level="2.3.2" data-path="week-13---fundamentals-of-natural-language-processing.html"><a href="week-13---fundamentals-of-natural-language-processing.html#build-a-dataframe-from-multiple-.txt-files"><i class="fa fa-check"></i><b>2.3.2</b> Build a dataframe from multiple .txt files</a></li>
+<li class="chapter" data-level="2.3.3" data-path="week-13---fundamentals-of-natural-language-processing.html"><a href="week-13---fundamentals-of-natural-language-processing.html#extract-nested-fields-from-a-.json-file"><i class="fa fa-check"></i><b>2.3.3</b> Extract nested fields from a .json file</a></li>
+<li class="chapter" data-level="2.3.4" data-path="week-13---fundamentals-of-natural-language-processing.html"><a href="week-13---fundamentals-of-natural-language-processing.html#solutions"><i class="fa fa-check"></i><b>2.3.4</b> Solutions</a></li>
+</ul></li>
+<li class="chapter" data-level="2.4" data-path="week-13---fundamentals-of-natural-language-processing.html"><a href="week-13---fundamentals-of-natural-language-processing.html#bonus-task-1---pick-your-data"><i class="fa fa-check"></i><b>2.4</b> Bonus Task 1 - Pick Your Data</a></li>
+<li class="chapter" data-level="2.5" data-path="week-13---fundamentals-of-natural-language-processing.html"><a href="week-13---fundamentals-of-natural-language-processing.html#bonus-task-2---considering-ethical-issues"><i class="fa fa-check"></i><b>2.5</b> Bonus Task 2 - Considering Ethical Issues</a></li>
+<li class="chapter" data-level="2.6" data-path="week-13---fundamentals-of-natural-language-processing.html"><a href="week-13---fundamentals-of-natural-language-processing.html#bonus-task-3---wrangling-your-data"><i class="fa fa-check"></i><b>2.6</b> Bonus Task 3 - Wrangling your data</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="appendix-foundations-of-r.html"><a href="appendix-foundations-of-r.html"><i class="fa fa-check"></i><b>3</b> Appendix: Foundations of R</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="appendix-foundations-of-r.html"><a href="appendix-foundations-of-r.html#setting-up-your-environment"><i class="fa fa-check"></i><b>3.1</b> Setting up your environment</a>
+<ul>
+<li class="chapter" data-level="3.1.1" data-path="appendix-foundations-of-r.html"><a href="appendix-foundations-of-r.html#installing-r"><i class="fa fa-check"></i><b>3.1.1</b> Installing R</a></li>
+<li class="chapter" data-level="3.1.2" data-path="appendix-foundations-of-r.html"><a href="appendix-foundations-of-r.html#installing-rstudio"><i class="fa fa-check"></i><b>3.1.2</b> Installing RStudio</a></li>
+<li class="chapter" data-level="3.1.3" data-path="appendix-foundations-of-r.html"><a href="appendix-foundations-of-r.html#launching-rstudio-and-setting-up-a-project"><i class="fa fa-check"></i><b>3.1.3</b> Launching RStudio and setting up a project</a></li>
+<li class="chapter" data-level="3.1.4" data-path="appendix-foundations-of-r.html"><a href="appendix-foundations-of-r.html#installing-packages"><i class="fa fa-check"></i><b>3.1.4</b> Installing packages</a></li>
+<li class="chapter" data-level="3.1.5" data-path="appendix-foundations-of-r.html"><a href="appendix-foundations-of-r.html#loading-packages"><i class="fa fa-check"></i><b>3.1.5</b> Loading packages</a></li>
+</ul></li>
+<li class="chapter" data-level="3.2" data-path="appendix-foundations-of-r.html"><a href="appendix-foundations-of-r.html#vectors-factors-matrices-and-data-frames"><i class="fa fa-check"></i><b>3.2</b> Vectors, factors, matrices, and data frames</a>
+<ul>
+<li class="chapter" data-level="3.2.1" data-path="appendix-foundations-of-r.html"><a href="appendix-foundations-of-r.html#vectors"><i class="fa fa-check"></i><b>3.2.1</b> Vectors</a></li>
+<li class="chapter" data-level="3.2.2" data-path="appendix-foundations-of-r.html"><a href="appendix-foundations-of-r.html#factors"><i class="fa fa-check"></i><b>3.2.2</b> Factors</a></li>
+<li class="chapter" data-level="3.2.3" data-path="appendix-foundations-of-r.html"><a href="appendix-foundations-of-r.html#matrices"><i class="fa fa-check"></i><b>3.2.3</b> Matrices</a></li>
+<li class="chapter" data-level="3.2.4" data-path="appendix-foundations-of-r.html"><a href="appendix-foundations-of-r.html#data-frames"><i class="fa fa-check"></i><b>3.2.4</b> Data Frames</a></li>
+<li class="chapter" data-level="3.2.5" data-path="appendix-foundations-of-r.html"><a href="appendix-foundations-of-r.html#accessing-subsets-of-vectors-and-data-frames"><i class="fa fa-check"></i><b>3.2.5</b> Accessing subsets of vectors and data frames</a></li>
+</ul></li>
+<li class="chapter" data-level="3.3" data-path="appendix-foundations-of-r.html"><a href="appendix-foundations-of-r.html#data-manipulation-with-tidyverse"><i class="fa fa-check"></i><b>3.3</b> Data manipulation with tidyverse</a>
+<ul>
+<li class="chapter" data-level="3.3.1" data-path="appendix-foundations-of-r.html"><a href="appendix-foundations-of-r.html#install-and-load-the-tidyverse-package"><i class="fa fa-check"></i><b>3.3.1</b> Install and load the <code>tidyverse</code> package</a></li>
+<li class="chapter" data-level="3.3.2" data-path="appendix-foundations-of-r.html"><a href="appendix-foundations-of-r.html#the-pipe-operator"><i class="fa fa-check"></i><b>3.3.2</b> The pipe operator <code>%&gt;%</code></a></li>
+<li class="chapter" data-level="3.3.3" data-path="appendix-foundations-of-r.html"><a href="appendix-foundations-of-r.html#selecting-columns-with-select"><i class="fa fa-check"></i><b>3.3.3</b> Selecting columns with <code>select()</code></a></li>
+<li class="chapter" data-level="3.3.4" data-path="appendix-foundations-of-r.html"><a href="appendix-foundations-of-r.html#filtering-rows-with-filter"><i class="fa fa-check"></i><b>3.3.4</b> Filtering rows with <code>filter()</code></a></li>
+<li class="chapter" data-level="3.3.5" data-path="appendix-foundations-of-r.html"><a href="appendix-foundations-of-r.html#renaming-variables-with-rename"><i class="fa fa-check"></i><b>3.3.5</b> Renaming variables with <code>rename()</code></a></li>
+<li class="chapter" data-level="3.3.6" data-path="appendix-foundations-of-r.html"><a href="appendix-foundations-of-r.html#recoding-variables-with-recode-and-mutate"><i class="fa fa-check"></i><b>3.3.6</b> Recoding variables with <code>recode()</code> and <code>mutate()</code></a></li>
+<li class="chapter" data-level="3.3.7" data-path="appendix-foundations-of-r.html"><a href="appendix-foundations-of-r.html#creating-new-variables-by-combining-select-with-rowmeans-or-rowsums"><i class="fa fa-check"></i><b>3.3.7</b> Creating new variables by combining <code>select()</code> with <code>rowMeans()</code> or <code>rowSums()</code></a></li>
+</ul></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">PSYC614: Text and Talk (Quantitative)</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="week-13---fundamentals-of-natural-language-processing" class="section level1 hasAnchor" number="2">
+<h1><span class="header-section-number">Chapter 2</span> Week 13 - Fundamentals of Natural Language Processing<a href="week-13---fundamentals-of-natural-language-processing.html#week-13---fundamentals-of-natural-language-processing" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<p>The purpose of this workshop is to tackle some basic problems of how to read and manage text data; and, if you have time, start to identify an appropriate dataset to support your research project.</p>
+<div id="homework---compiling-potential-sources-of-data" class="section level2 hasAnchor" number="2.1">
+<h2><span class="header-section-number">2.1</span> Homework - Compiling Potential Sources of Data<a href="week-13---fundamentals-of-natural-language-processing.html#homework---compiling-potential-sources-of-data" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>To remind you, prior to this workshop session you were tasked with searching for potential sources and contributing them to a collective data bank.</p>
+<p>You are expected to <strong>contribute at least three sources of data</strong>.</p>
+<div id="collective-data-bank" class="section level3 hasAnchor" number="2.1.1">
+<h3><span class="header-section-number">2.1.1</span> Collective Data Bank<a href="week-13---fundamentals-of-natural-language-processing.html#collective-data-bank" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>The collective data bank can be accessed here: <a href="https://docs.google.com/spreadsheets/d/19_Tvwe-eWtIVInTZFouKvYNkt0aq-gcpMaBTyNfCCLk/edit?gid=0#gid=0" class="uri">https://docs.google.com/spreadsheets/d/19_Tvwe-eWtIVInTZFouKvYNkt0aq-gcpMaBTyNfCCLk/edit?gid=0#gid=0</a></p>
+<p>Please fill in each cell for your contributions. Note, you must confirm that the raw text is available for each of your contributions. You will often find that sources unfortunately do not share the raw texts, often due to ethical considerations. Your contributions <strong>must</strong> contain text data.</p>
+<p>When adding your contributions, please also take a look at those which already exist in the document and only add your contribution if it does not replicate one which is already present.</p>
+</div>
+<div id="sources-of-data" class="section level3 hasAnchor" number="2.1.2">
+<h3><span class="header-section-number">2.1.2</span> Sources of Data<a href="week-13---fundamentals-of-natural-language-processing.html#sources-of-data" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>You are expected to conduct an independent search via Google and also to look for relevant scholarly articles which may share their data via public repositories. Below are some initial resources. Please note that these are only meant to be starting-points.</p>
+<p><strong>Harvard Dataverse Repository</strong></p>
+<p>The Harvard Dataverse Repository is a free resource open to all researchers from any discipline, both inside and outside of the Harvard community, where you can share, archive, cite, access, and explore research data.</p>
+<p>The Harvard Dataverse Repository can be accessed here: <a href="https://dataverse.harvard.edu/" class="uri">https://dataverse.harvard.edu/</a></p>
+<p><strong>Papers with Code</strong></p>
+<p>The mission of Papers with Code is to create a free and open resource with Machine Learning papers, code, datasets, methods and evaluation tables.</p>
+<p>The website can be accessed here: <a href="https://paperswithcode.com/" class="uri">https://paperswithcode.com/</a></p>
+<p><strong>Kaggle</strong></p>
+<p>Kaggle is a data science competition platform and online community for data scientists and machine learning practitioners under Google LLC. Has a huge repository of community-published data.</p>
+<p>The website can be accessed here: <a href="https://www.kaggle.com/" class="uri">https://www.kaggle.com/</a></p>
+<p><strong>Scientific articles</strong></p>
+<p>It is becoming increasingly common for scientific articles to share their data via public repositories (e.g., osf.io). You may be able to find interesting and relevant datasets by searching Google Scholar for articles on topics of interest which share their data.</p>
+</div>
+</div>
+<div id="task-1---familiarize-yourself-with-important-r-commands" class="section level2 hasAnchor" number="2.2">
+<h2><span class="header-section-number">2.2</span> Task 1 - Familiarize yourself with important R commands<a href="week-13---fundamentals-of-natural-language-processing.html#task-1---familiarize-yourself-with-important-r-commands" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Below are a number of important R libraries, commands, and functions which you need to be familiar with to effectively process text data. Your first task is to familiarize yourself with these. You are encouraged to copy over the code and run them on your own machines.</p>
+<div id="file-types" class="section level3 hasAnchor" number="2.2.1">
+<h3><span class="header-section-number">2.2.1</span> File Types<a href="week-13---fundamentals-of-natural-language-processing.html#file-types" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>This section provides an overview of common file types (<code>.csv</code>, <code>.xlsx</code>, <code>.rds</code>, <code>.json</code>, <code>.txt</code>) and explains how to open them using conventional Windows programs and R.</p>
+<p><strong>.csv (Comma-Separated Values)</strong></p>
+<p>Description: A plain text file where data is stored in a tabular format, with each row on a new line and columns separated by commas.</p>
+<p>How to open in Windows:</p>
+<ul>
+<li><strong>Microsoft Excel:</strong> Right-click the file → Open with Excel. Alternatively, open Excel and import the file through the “Data” tab.</li>
+<li><strong>Notepad/Notepad++:</strong> Right-click → Open with Notepad or another text editor.</li>
+</ul>
+<p>How to open in R:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="week-13---fundamentals-of-natural-language-processing.html#cb1-1" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;path/to/file.csv&quot;</span>)</span></code></pre></div>
+<p><strong>.xlsx (Excel Spreadsheet)</strong></p>
+<p>Description: A Microsoft Excel file format that stores data in worksheets with support for formatting, formulas, and multiple sheets.</p>
+<p>How to open in Windows:</p>
+<ul>
+<li><strong>Microsoft Excel:</strong> Double-click the file to open in Excel.</li>
+<li><strong>Google Sheets:</strong> Upload the file to Google Drive and open it in Google Sheets (web-based).</li>
+</ul>
+<p>How to open in R:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="week-13---fundamentals-of-natural-language-processing.html#cb2-1" tabindex="-1"></a><span class="fu">library</span>(openxlsx)</span>
+<span id="cb2-2"><a href="week-13---fundamentals-of-natural-language-processing.html#cb2-2" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">read.xlsx</span>(<span class="st">&quot;path/to/file.xlsx&quot;</span>, <span class="at">sheet =</span> <span class="dv">1</span>)  <span class="co"># Specify the sheet if needed</span></span></code></pre></div>
+<p><strong>.rds (R Data File)</strong></p>
+<p>Description: A file format unique to R that stores R objects in a binary format for efficient storage and loading.</p>
+<p>How to open in Windows:</p>
+<ul>
+<li><strong>Not Directly Openable:</strong> You cannot open <code>.rds</code> files in common Windows programs. They are intended for use within R.</li>
+</ul>
+<p>How to open in R:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="week-13---fundamentals-of-natural-language-processing.html#cb3-1" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(<span class="st">&quot;path/to/file.rds&quot;</span>)</span></code></pre></div>
+<p><strong>.json (JavaScript Object Notation)</strong></p>
+<p>Description: A lightweight, human-readable format for structuring data, often used in web APIs and configuration files.</p>
+<p>How to open in Windows:</p>
+<ul>
+<li><strong>Notepad/Notepad++:</strong> Right-click → Open with Notepad or another text editor.</li>
+<li><strong>Web Browser:</strong> Drag the file into a browser for a formatted view.</li>
+</ul>
+<p>How to open in R:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="week-13---fundamentals-of-natural-language-processing.html#cb4-1" tabindex="-1"></a><span class="fu">library</span>(jsonlite)</span>
+<span id="cb4-2"><a href="week-13---fundamentals-of-natural-language-processing.html#cb4-2" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">fromJSON</span>(<span class="st">&quot;path/to/file.json&quot;</span>)</span></code></pre></div>
+<p><strong>.txt (Plain Text File)</strong></p>
+<p>Description: A basic text file containing unformatted text, often used for simple data storage or documentation.</p>
+<p>How to open in Windows:</p>
+<ul>
+<li><strong>Notepad/Notepad++:</strong> Double-click to open in Notepad or another text editor.</li>
+<li><strong>Microsoft Word:</strong> Open in Word to add formatting or modify the content.</li>
+</ul>
+<p>How to open in R:</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="week-13---fundamentals-of-natural-language-processing.html#cb5-1" tabindex="-1"></a><span class="co"># For reading as a table</span></span>
+<span id="cb5-2"><a href="week-13---fundamentals-of-natural-language-processing.html#cb5-2" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">read.table</span>(<span class="st">&quot;path/to/file.txt&quot;</span>, <span class="at">header =</span> <span class="cn">FALSE</span>, <span class="at">sep =</span> <span class="st">&quot;</span><span class="sc">\\</span><span class="st">&quot;</span>, <span class="at">comment.char =</span> <span class="st">&quot;&quot;</span>)</span></code></pre></div>
+</div>
+<div id="accessing-nested-data" class="section level3 hasAnchor" number="2.2.2">
+<h3><span class="header-section-number">2.2.2</span> Accessing nested data<a href="week-13---fundamentals-of-natural-language-processing.html#accessing-nested-data" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>You may find that many data formats you encounter will not seamlessly convert into the sorts of R objects you need for further analyses. Often you will find that text data is read into nested lists which require further formatting. This is common for .json files.</p>
+<p>Before running the code below, you will need to download this file: <a href="https://drive.google.com/file/d/1GWjl1zW7Uw8B_OoSu7FUXFjxh5Wsor2Z/view?usp=sharing" class="uri">https://drive.google.com/file/d/1GWjl1zW7Uw8B_OoSu7FUXFjxh5Wsor2Z/view?usp=sharing</a></p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="week-13---fundamentals-of-natural-language-processing.html#cb6-1" tabindex="-1"></a><span class="co">#load package to read json files</span></span>
+<span id="cb6-2"><a href="week-13---fundamentals-of-natural-language-processing.html#cb6-2" tabindex="-1"></a><span class="fu">library</span>(jsonlite)</span>
+<span id="cb6-3"><a href="week-13---fundamentals-of-natural-language-processing.html#cb6-3" tabindex="-1"></a></span>
+<span id="cb6-4"><a href="week-13---fundamentals-of-natural-language-processing.html#cb6-4" tabindex="-1"></a><span class="co"># Read test json data</span></span>
+<span id="cb6-5"><a href="week-13---fundamentals-of-natural-language-processing.html#cb6-5" tabindex="-1"></a>json_data <span class="ot">&lt;-</span> <span class="fu">fromJSON</span>(<span class="st">&quot;mock_data.json&quot;</span>)</span>
+<span id="cb6-6"><a href="week-13---fundamentals-of-natural-language-processing.html#cb6-6" tabindex="-1"></a></span>
+<span id="cb6-7"><a href="week-13---fundamentals-of-natural-language-processing.html#cb6-7" tabindex="-1"></a><span class="co"># The structure of the .json file is as follows</span></span>
+<span id="cb6-8"><a href="week-13---fundamentals-of-natural-language-processing.html#cb6-8" tabindex="-1"></a>{</span>
+<span id="cb6-9"><a href="week-13---fundamentals-of-natural-language-processing.html#cb6-9" tabindex="-1"></a>  <span class="st">&quot;name&quot;</span><span class="sc">:</span><span class="st">&quot;John Doe&quot;</span>, </span>
+<span id="cb6-10"><a href="week-13---fundamentals-of-natural-language-processing.html#cb6-10" tabindex="-1"></a>  <span class="st">&quot;age&quot;</span><span class="sc">:</span><span class="dv">30</span>, </span>
+<span id="cb6-11"><a href="week-13---fundamentals-of-natural-language-processing.html#cb6-11" tabindex="-1"></a>  <span class="st">&quot;address&quot;</span><span class="sc">:</span>{</span>
+<span id="cb6-12"><a href="week-13---fundamentals-of-natural-language-processing.html#cb6-12" tabindex="-1"></a>    <span class="st">&quot;street&quot;</span><span class="sc">:</span><span class="st">&quot;123 Main St&quot;</span>, </span>
+<span id="cb6-13"><a href="week-13---fundamentals-of-natural-language-processing.html#cb6-13" tabindex="-1"></a>    <span class="st">&quot;city&quot;</span><span class="sc">:</span><span class="st">&quot;New York&quot;</span>, </span>
+<span id="cb6-14"><a href="week-13---fundamentals-of-natural-language-processing.html#cb6-14" tabindex="-1"></a>    <span class="st">&quot;state&quot;</span><span class="sc">:</span><span class="st">&quot;NY&quot;</span></span>
+<span id="cb6-15"><a href="week-13---fundamentals-of-natural-language-processing.html#cb6-15" tabindex="-1"></a>  }, </span>
+<span id="cb6-16"><a href="week-13---fundamentals-of-natural-language-processing.html#cb6-16" tabindex="-1"></a>  <span class="st">&quot;blog&quot;</span><span class="sc">:</span>{</span>
+<span id="cb6-17"><a href="week-13---fundamentals-of-natural-language-processing.html#cb6-17" tabindex="-1"></a>    <span class="st">&quot;url&quot;</span><span class="sc">:</span><span class="st">&quot;https://johndoe.com&quot;</span>, </span>
+<span id="cb6-18"><a href="week-13---fundamentals-of-natural-language-processing.html#cb6-18" tabindex="-1"></a>    <span class="st">&quot;description&quot;</span><span class="sc">:</span><span class="st">&quot;John&#39;s personal blog about tech and coding.&quot;</span></span>
+<span id="cb6-19"><a href="week-13---fundamentals-of-natural-language-processing.html#cb6-19" tabindex="-1"></a>  }</span>
+<span id="cb6-20"><a href="week-13---fundamentals-of-natural-language-processing.html#cb6-20" tabindex="-1"></a>  <span class="st">&quot;contacts&quot;</span><span class="sc">:</span>[{</span>
+<span id="cb6-21"><a href="week-13---fundamentals-of-natural-language-processing.html#cb6-21" tabindex="-1"></a>    <span class="st">&quot;type&quot;</span><span class="sc">:</span><span class="st">&quot;email&quot;</span>, </span>
+<span id="cb6-22"><a href="week-13---fundamentals-of-natural-language-processing.html#cb6-22" tabindex="-1"></a>    <span class="st">&quot;value&quot;</span><span class="sc">:</span><span class="st">&quot;johndoe@example.com&quot;</span></span>
+<span id="cb6-23"><a href="week-13---fundamentals-of-natural-language-processing.html#cb6-23" tabindex="-1"></a>  }, {</span>
+<span id="cb6-24"><a href="week-13---fundamentals-of-natural-language-processing.html#cb6-24" tabindex="-1"></a>    <span class="st">&quot;type&quot;</span><span class="sc">:</span><span class="st">&quot;phone&quot;</span>, </span>
+<span id="cb6-25"><a href="week-13---fundamentals-of-natural-language-processing.html#cb6-25" tabindex="-1"></a>    <span class="st">&quot;value&quot;</span><span class="sc">:</span><span class="st">&quot;555-1234&quot;</span></span>
+<span id="cb6-26"><a href="week-13---fundamentals-of-natural-language-processing.html#cb6-26" tabindex="-1"></a>  }],</span>
+<span id="cb6-27"><a href="week-13---fundamentals-of-natural-language-processing.html#cb6-27" tabindex="-1"></a>}</span>
+<span id="cb6-28"><a href="week-13---fundamentals-of-natural-language-processing.html#cb6-28" tabindex="-1"></a></span>
+<span id="cb6-29"><a href="week-13---fundamentals-of-natural-language-processing.html#cb6-29" tabindex="-1"></a><span class="co"># You will notice, however, that this stucture not fully visable when accessed as a dataframe</span></span>
+<span id="cb6-30"><a href="week-13---fundamentals-of-natural-language-processing.html#cb6-30" tabindex="-1"></a><span class="fu">View</span>(json_data)</span>
+<span id="cb6-31"><a href="week-13---fundamentals-of-natural-language-processing.html#cb6-31" tabindex="-1"></a></span>
+<span id="cb6-32"><a href="week-13---fundamentals-of-natural-language-processing.html#cb6-32" tabindex="-1"></a><span class="co"># Accessing top-level data (name, age)</span></span>
+<span id="cb6-33"><a href="week-13---fundamentals-of-natural-language-processing.html#cb6-33" tabindex="-1"></a>json_data<span class="sc">$</span>name  <span class="co"># Output: &quot;John Doe&quot;</span></span>
+<span id="cb6-34"><a href="week-13---fundamentals-of-natural-language-processing.html#cb6-34" tabindex="-1"></a>json_data<span class="sc">$</span>age   <span class="co"># Output: 30</span></span>
+<span id="cb6-35"><a href="week-13---fundamentals-of-natural-language-processing.html#cb6-35" tabindex="-1"></a></span>
+<span id="cb6-36"><a href="week-13---fundamentals-of-natural-language-processing.html#cb6-36" tabindex="-1"></a><span class="co"># Accessing nested data (address, blog)</span></span>
+<span id="cb6-37"><a href="week-13---fundamentals-of-natural-language-processing.html#cb6-37" tabindex="-1"></a>json_data<span class="sc">$</span>address<span class="sc">$</span>street  <span class="co"># Output: &quot;123 Main St&quot;</span></span>
+<span id="cb6-38"><a href="week-13---fundamentals-of-natural-language-processing.html#cb6-38" tabindex="-1"></a>json_data<span class="sc">$</span>address<span class="sc">$</span>city    <span class="co"># Output: &quot;New York&quot;</span></span>
+<span id="cb6-39"><a href="week-13---fundamentals-of-natural-language-processing.html#cb6-39" tabindex="-1"></a>json_data<span class="sc">$</span>address<span class="sc">$</span>state   <span class="co"># Output: &quot;NY&quot;</span></span>
+<span id="cb6-40"><a href="week-13---fundamentals-of-natural-language-processing.html#cb6-40" tabindex="-1"></a>json_data<span class="sc">$</span>blog<span class="sc">$</span>url         <span class="co"># Output: &quot;https://johndoe.com&quot;</span></span>
+<span id="cb6-41"><a href="week-13---fundamentals-of-natural-language-processing.html#cb6-41" tabindex="-1"></a>json_data<span class="sc">$</span>blog<span class="sc">$</span>description <span class="co"># Output: &quot;John&#39;s personal blog about tech and coding.&quot;</span></span>
+<span id="cb6-42"><a href="week-13---fundamentals-of-natural-language-processing.html#cb6-42" tabindex="-1"></a></span>
+<span id="cb6-43"><a href="week-13---fundamentals-of-natural-language-processing.html#cb6-43" tabindex="-1"></a><span class="co"># Accessing further nested arrays (e.g., first contact email)</span></span>
+<span id="cb6-44"><a href="week-13---fundamentals-of-natural-language-processing.html#cb6-44" tabindex="-1"></a>json_data<span class="sc">$</span>contacts[[<span class="dv">1</span>]]<span class="sc">$</span>value[<span class="dv">1</span>] <span class="co"># Output: &quot;johndoe@example.com&quot;</span></span>
+<span id="cb6-45"><a href="week-13---fundamentals-of-natural-language-processing.html#cb6-45" tabindex="-1"></a>json_data<span class="sc">$</span>contacts[[<span class="dv">1</span>]]<span class="sc">$</span>value[<span class="dv">2</span>] <span class="co"># Output: &quot;555-1234&quot;</span></span>
+<span id="cb6-46"><a href="week-13---fundamentals-of-natural-language-processing.html#cb6-46" tabindex="-1"></a></span>
+<span id="cb6-47"><a href="week-13---fundamentals-of-natural-language-processing.html#cb6-47" tabindex="-1"></a><span class="co"># Pulling out all relevant details and saving them in a new dataframe</span></span>
+<span id="cb6-48"><a href="week-13---fundamentals-of-natural-language-processing.html#cb6-48" tabindex="-1"></a>dataframe <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">name =</span> json_data<span class="sc">$</span>name,</span>
+<span id="cb6-49"><a href="week-13---fundamentals-of-natural-language-processing.html#cb6-49" tabindex="-1"></a>                        <span class="at">age =</span> json_data<span class="sc">$</span>age,</span>
+<span id="cb6-50"><a href="week-13---fundamentals-of-natural-language-processing.html#cb6-50" tabindex="-1"></a>                        <span class="at">street_address =</span> json_data<span class="sc">$</span>address<span class="sc">$</span>street,</span>
+<span id="cb6-51"><a href="week-13---fundamentals-of-natural-language-processing.html#cb6-51" tabindex="-1"></a>                        <span class="at">city_address =</span> json_data<span class="sc">$</span>address<span class="sc">$</span>city,</span>
+<span id="cb6-52"><a href="week-13---fundamentals-of-natural-language-processing.html#cb6-52" tabindex="-1"></a>                        <span class="at">state_address =</span> json_data<span class="sc">$</span>address<span class="sc">$</span>state,</span>
+<span id="cb6-53"><a href="week-13---fundamentals-of-natural-language-processing.html#cb6-53" tabindex="-1"></a>                        <span class="at">blog_url =</span> json_data<span class="sc">$</span>blog<span class="sc">$</span>url ,</span>
+<span id="cb6-54"><a href="week-13---fundamentals-of-natural-language-processing.html#cb6-54" tabindex="-1"></a>                        <span class="at">blog_description =</span> json_data<span class="sc">$</span>blog<span class="sc">$</span>description,</span>
+<span id="cb6-55"><a href="week-13---fundamentals-of-natural-language-processing.html#cb6-55" tabindex="-1"></a>                        <span class="at">email =</span> json_data<span class="sc">$</span>contacts[[<span class="dv">1</span>]]<span class="sc">$</span>value[<span class="dv">1</span>],</span>
+<span id="cb6-56"><a href="week-13---fundamentals-of-natural-language-processing.html#cb6-56" tabindex="-1"></a>                        <span class="at">phone =</span> json_data<span class="sc">$</span>contacts[[<span class="dv">1</span>]]<span class="sc">$</span>value[<span class="dv">2</span>])</span></code></pre></div>
+<p><strong>Explanation</strong></p>
+<p>Reading JSON: The <code>fromJSON()</code> function from the <code>jsonlite</code> package is used to read a JSON file into an R object (in this case, json_data).</p>
+<ul>
+<li>Accessing Top-Level Data: You can access simple fields (like name and age) directly using the <code>$</code> operator.</li>
+<li>Accessing Nested Data: For the nested address object, we access it like <code>json_data$address$street</code>.</li>
+<li>For arrays (like contacts), we use <code>[[ ]]</code> indexing to access elements. For example, <code>json_data$contacts[[1]]</code> gives us the first contact, and we can then extract the type and value, as well as focus in on the first or second elements by using <code>[ ]</code></li>
+</ul>
+</div>
+<div id="cleaning-data" class="section level3 hasAnchor" number="2.2.3">
+<h3><span class="header-section-number">2.2.3</span> Cleaning data<a href="week-13---fundamentals-of-natural-language-processing.html#cleaning-data" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Many types of text data have characters or strings in them which may be irrelevant or undesirable to the quantitative researcher. Corpora can have metadata and tags which you may wish to remove prior to your analyses (e.g., “Start:” to indicate where a speech begins). Similarly, you may wish to remove certain information from social media texts prior to your analyses, like hashtags or URLs. Many of these operations rely on regular expressions–a formal language for specifying text strings. If you are curious, here is a short video: <a href="https://www.youtube.com/watch?v=UbIQxT3bApU" class="uri">https://www.youtube.com/watch?v=UbIQxT3bApU</a></p>
+<p>Below are a number of common functions in R which can help you clean your data. Try running them to see how they work.</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="week-13---fundamentals-of-natural-language-processing.html#cb7-1" tabindex="-1"></a><span class="co"># Sample string</span></span>
+<span id="cb7-2"><a href="week-13---fundamentals-of-natural-language-processing.html#cb7-2" tabindex="-1"></a>text <span class="ot">&lt;-</span> <span class="st">&quot;Start: Hello world! Check out this link: https://example.com #excited&quot;</span></span>
+<span id="cb7-3"><a href="week-13---fundamentals-of-natural-language-processing.html#cb7-3" tabindex="-1"></a></span>
+<span id="cb7-4"><a href="week-13---fundamentals-of-natural-language-processing.html#cb7-4" tabindex="-1"></a><span class="co"># Remove the first 6 characters</span></span>
+<span id="cb7-5"><a href="week-13---fundamentals-of-natural-language-processing.html#cb7-5" tabindex="-1"></a>text_without_first_6 <span class="ot">&lt;-</span> <span class="fu">substr</span>(text, <span class="dv">7</span>, <span class="fu">nchar</span>(text))</span>
+<span id="cb7-6"><a href="week-13---fundamentals-of-natural-language-processing.html#cb7-6" tabindex="-1"></a><span class="fu">print</span>(text_without_first_6)  <span class="co"># Output: &quot; Hello world! Check out this link: https://example.com #excited&quot;</span></span>
+<span id="cb7-7"><a href="week-13---fundamentals-of-natural-language-processing.html#cb7-7" tabindex="-1"></a></span>
+<span id="cb7-8"><a href="week-13---fundamentals-of-natural-language-processing.html#cb7-8" tabindex="-1"></a><span class="co"># Remove hashtags</span></span>
+<span id="cb7-9"><a href="week-13---fundamentals-of-natural-language-processing.html#cb7-9" tabindex="-1"></a>text_no_hashtags <span class="ot">&lt;-</span> <span class="fu">gsub</span>(<span class="st">&quot;#</span><span class="sc">\\</span><span class="st">w+&quot;</span>, <span class="st">&quot;&quot;</span>, text_without_first_6)</span>
+<span id="cb7-10"><a href="week-13---fundamentals-of-natural-language-processing.html#cb7-10" tabindex="-1"></a><span class="fu">print</span>(text_no_hashtags)  <span class="co"># Output: &quot; Hello world! Check out this link: https://example.com &quot;</span></span>
+<span id="cb7-11"><a href="week-13---fundamentals-of-natural-language-processing.html#cb7-11" tabindex="-1"></a></span>
+<span id="cb7-12"><a href="week-13---fundamentals-of-natural-language-processing.html#cb7-12" tabindex="-1"></a><span class="co"># Remove URLs</span></span>
+<span id="cb7-13"><a href="week-13---fundamentals-of-natural-language-processing.html#cb7-13" tabindex="-1"></a>text_no_hashtags_urls <span class="ot">&lt;-</span> <span class="fu">gsub</span>(<span class="st">&quot;https?://</span><span class="sc">\\</span><span class="st">S+&quot;</span>, <span class="st">&quot;&quot;</span>, text_no_hashtags)</span>
+<span id="cb7-14"><a href="week-13---fundamentals-of-natural-language-processing.html#cb7-14" tabindex="-1"></a><span class="fu">print</span>(text_no_hashtags_urls)  <span class="co"># Output: &quot; Hello world! Check out this link:  &quot;</span></span>
+<span id="cb7-15"><a href="week-13---fundamentals-of-natural-language-processing.html#cb7-15" tabindex="-1"></a></span>
+<span id="cb7-16"><a href="week-13---fundamentals-of-natural-language-processing.html#cb7-16" tabindex="-1"></a><span class="co"># Remove leading and trailing spaces</span></span>
+<span id="cb7-17"><a href="week-13---fundamentals-of-natural-language-processing.html#cb7-17" tabindex="-1"></a>text_cleaned <span class="ot">&lt;-</span> <span class="fu">trimws</span>(text_no_hashtags_urls)</span>
+<span id="cb7-18"><a href="week-13---fundamentals-of-natural-language-processing.html#cb7-18" tabindex="-1"></a><span class="fu">print</span>(text_cleaned)  <span class="co"># Output: &quot;Hello world! Check out this link:&quot;</span></span></code></pre></div>
+<p><strong>Explanation</strong></p>
+<ul>
+<li>Removing the first 6 characters: The <code>substr()</code> function removes letters in the string. We pass it the ‘text’ object to tell it which string to operate on, <em>6</em> to tell it the position to start deleting from, and <code>nchar(text)</code> to tell it to delete all the way to the last position of the text–which is equal to the total number of characters in the string, given by <code>nchar(text)</code>.</li>
+<li>Removing hashtags: The <code>gsub()</code> function matches and replaces strings. We pass the regular expression <em>#\w+</em> to match any word following a <em>#</em> symbol and “” to replace it with nothing (effectively deleting it). Finally, we pass the <code>text_without_first_6</code> object to tell it which string to operate on.</li>
+<li>Removing URLs: We use the <code>gsub()</code> function again but this time with the regular expression <em>https?://\S+</em> to match URLs that start with <em><a href="http://" class="uri">http://</a></em> or <em><a href="https://" class="uri">https://</a></em>. We replace these with nothing “” and the <code>text_without_first_6</code> object.</li>
+<li>Removing leading and trailing spaces: We use the <code>trimws()</code> to remove leading and trailing spaces.</li>
+</ul>
+</div>
+<div id="concatenating-strings" class="section level3 hasAnchor" number="2.2.4">
+<h3><span class="header-section-number">2.2.4</span> Concatenating strings<a href="week-13---fundamentals-of-natural-language-processing.html#concatenating-strings" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>An additional step you may have to take in some cases is to concatenate strings of text into larger units. For example, sometimes texts will be by-word, but you may wish to analyze them as full sentences of texts.</p>
+<p>Below are two examples using the <code>paste()</code> function to concatenate words.</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="week-13---fundamentals-of-natural-language-processing.html#cb8-1" tabindex="-1"></a><span class="co"># Individual words</span></span>
+<span id="cb8-2"><a href="week-13---fundamentals-of-natural-language-processing.html#cb8-2" tabindex="-1"></a>word1 <span class="ot">&lt;-</span> <span class="st">&quot;Data&quot;</span></span>
+<span id="cb8-3"><a href="week-13---fundamentals-of-natural-language-processing.html#cb8-3" tabindex="-1"></a>word2 <span class="ot">&lt;-</span> <span class="st">&quot;Science&quot;</span></span>
+<span id="cb8-4"><a href="week-13---fundamentals-of-natural-language-processing.html#cb8-4" tabindex="-1"></a>word3 <span class="ot">&lt;-</span> <span class="st">&quot;is&quot;</span></span>
+<span id="cb8-5"><a href="week-13---fundamentals-of-natural-language-processing.html#cb8-5" tabindex="-1"></a>word4 <span class="ot">&lt;-</span> <span class="st">&quot;fun!&quot;</span></span>
+<span id="cb8-6"><a href="week-13---fundamentals-of-natural-language-processing.html#cb8-6" tabindex="-1"></a></span>
+<span id="cb8-7"><a href="week-13---fundamentals-of-natural-language-processing.html#cb8-7" tabindex="-1"></a><span class="co"># Concatenate words using paste() with a space separator</span></span>
+<span id="cb8-8"><a href="week-13---fundamentals-of-natural-language-processing.html#cb8-8" tabindex="-1"></a>sentence <span class="ot">&lt;-</span> <span class="fu">paste</span>(word1, word2, word3, word4)</span>
+<span id="cb8-9"><a href="week-13---fundamentals-of-natural-language-processing.html#cb8-9" tabindex="-1"></a></span>
+<span id="cb8-10"><a href="week-13---fundamentals-of-natural-language-processing.html#cb8-10" tabindex="-1"></a><span class="co"># Print the sentence</span></span>
+<span id="cb8-11"><a href="week-13---fundamentals-of-natural-language-processing.html#cb8-11" tabindex="-1"></a><span class="fu">print</span>(sentence)</span>
+<span id="cb8-12"><a href="week-13---fundamentals-of-natural-language-processing.html#cb8-12" tabindex="-1"></a></span>
+<span id="cb8-13"><a href="week-13---fundamentals-of-natural-language-processing.html#cb8-13" tabindex="-1"></a><span class="co"># Vector of words</span></span>
+<span id="cb8-14"><a href="week-13---fundamentals-of-natural-language-processing.html#cb8-14" tabindex="-1"></a>words_vector <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;Data&quot;</span>, <span class="st">&quot;Science&quot;</span>, <span class="st">&quot;is&quot;</span>, <span class="st">&quot;amazing!&quot;</span>)</span>
+<span id="cb8-15"><a href="week-13---fundamentals-of-natural-language-processing.html#cb8-15" tabindex="-1"></a></span>
+<span id="cb8-16"><a href="week-13---fundamentals-of-natural-language-processing.html#cb8-16" tabindex="-1"></a><span class="co"># Concatenate words with spaces using collapse</span></span>
+<span id="cb8-17"><a href="week-13---fundamentals-of-natural-language-processing.html#cb8-17" tabindex="-1"></a>sentence <span class="ot">&lt;-</span> <span class="fu">paste</span>(words_vector, <span class="at">collapse =</span> <span class="st">&quot; &quot;</span>)</span>
+<span id="cb8-18"><a href="week-13---fundamentals-of-natural-language-processing.html#cb8-18" tabindex="-1"></a></span>
+<span id="cb8-19"><a href="week-13---fundamentals-of-natural-language-processing.html#cb8-19" tabindex="-1"></a><span class="co"># Print the sentence</span></span>
+<span id="cb8-20"><a href="week-13---fundamentals-of-natural-language-processing.html#cb8-20" tabindex="-1"></a><span class="fu">print</span>(sentence)</span></code></pre></div>
+</div>
+<div id="counting-words" class="section level3 hasAnchor" number="2.2.5">
+<h3><span class="header-section-number">2.2.5</span> Counting words<a href="week-13---fundamentals-of-natural-language-processing.html#counting-words" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>In many cases it will be important for you to know how many words each of your texts contains. As it turns out, it is quite difficult to define exactly what constitutes a word. For example, is <em>?</em> a word? Is <em>never-ending</em> one or two words? If you are curious to know more, this short video may be illuminating: <a href="https://www.youtube.com/watch?v=em0ePorcp48" class="uri">https://www.youtube.com/watch?v=em0ePorcp48</a></p>
+<p>For the purposes of this workshop though, let’s stick to addressing the practical problem of computing an estimate of how many words a text contains.</p>
+<p>Knowing how many words each string contains has many practical benefits, the most obvious is to filter out data which contains little or no content of interest. For example, it is often reasonably to filter out strings which have no words in them.</p>
+<p>Here is an example which uses a simple function to count the number of words in a string, relying on the <code>str_count()</code> function from the <code>tidyverse</code> library.</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="week-13---fundamentals-of-natural-language-processing.html#cb9-1" tabindex="-1"></a><span class="co"># Load required package</span></span>
+<span id="cb9-2"><a href="week-13---fundamentals-of-natural-language-processing.html#cb9-2" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb9-3"><a href="week-13---fundamentals-of-natural-language-processing.html#cb9-3" tabindex="-1"></a></span>
+<span id="cb9-4"><a href="week-13---fundamentals-of-natural-language-processing.html#cb9-4" tabindex="-1"></a><span class="co"># Define a new function to count words in a string</span></span>
+<span id="cb9-5"><a href="week-13---fundamentals-of-natural-language-processing.html#cb9-5" tabindex="-1"></a>nwords <span class="ot">&lt;-</span> </span>
+<span id="cb9-6"><a href="week-13---fundamentals-of-natural-language-processing.html#cb9-6" tabindex="-1"></a>  <span class="cf">function</span>(string, <span class="at">pseudo=</span>F){</span>
+<span id="cb9-7"><a href="week-13---fundamentals-of-natural-language-processing.html#cb9-7" tabindex="-1"></a>    <span class="fu">ifelse</span>(pseudo, </span>
+<span id="cb9-8"><a href="week-13---fundamentals-of-natural-language-processing.html#cb9-8" tabindex="-1"></a>           pattern <span class="ot">&lt;-</span> <span class="st">&quot;</span><span class="sc">\\</span><span class="st">S+&quot;</span>, </span>
+<span id="cb9-9"><a href="week-13---fundamentals-of-natural-language-processing.html#cb9-9" tabindex="-1"></a>           pattern <span class="ot">&lt;-</span> <span class="st">&quot;[[:alpha:]]+&quot;</span> </span>
+<span id="cb9-10"><a href="week-13---fundamentals-of-natural-language-processing.html#cb9-10" tabindex="-1"></a>    )</span>
+<span id="cb9-11"><a href="week-13---fundamentals-of-natural-language-processing.html#cb9-11" tabindex="-1"></a>    <span class="fu">str_count</span>(string, pattern)</span>
+<span id="cb9-12"><a href="week-13---fundamentals-of-natural-language-processing.html#cb9-12" tabindex="-1"></a>  }</span>
+<span id="cb9-13"><a href="week-13---fundamentals-of-natural-language-processing.html#cb9-13" tabindex="-1"></a></span>
+<span id="cb9-14"><a href="week-13---fundamentals-of-natural-language-processing.html#cb9-14" tabindex="-1"></a><span class="co"># Define a vector with four text strings</span></span>
+<span id="cb9-15"><a href="week-13---fundamentals-of-natural-language-processing.html#cb9-15" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">texts =</span> <span class="fu">c</span>(<span class="st">&quot;Data Science is fun!&quot;</span>, <span class="st">&quot;Learn R Programming.&quot;</span>, <span class="st">&quot;:)!&quot;</span>, <span class="st">&quot;Analysis with R&quot;</span>),</span>
+<span id="cb9-16"><a href="week-13---fundamentals-of-natural-language-processing.html#cb9-16" tabindex="-1"></a>                   <span class="at">nwords =</span> <span class="cn">NA</span>)</span>
+<span id="cb9-17"><a href="week-13---fundamentals-of-natural-language-processing.html#cb9-17" tabindex="-1"></a></span>
+<span id="cb9-18"><a href="week-13---fundamentals-of-natural-language-processing.html#cb9-18" tabindex="-1"></a><span class="co"># Print the data</span></span>
+<span id="cb9-19"><a href="week-13---fundamentals-of-natural-language-processing.html#cb9-19" tabindex="-1"></a><span class="fu">print</span>(data)</span>
+<span id="cb9-20"><a href="week-13---fundamentals-of-natural-language-processing.html#cb9-20" tabindex="-1"></a></span>
+<span id="cb9-21"><a href="week-13---fundamentals-of-natural-language-processing.html#cb9-21" tabindex="-1"></a><span class="co"># Apply the nwords function to the vector</span></span>
+<span id="cb9-22"><a href="week-13---fundamentals-of-natural-language-processing.html#cb9-22" tabindex="-1"></a><span class="fu">nwords</span>(data<span class="sc">$</span>texts)</span>
+<span id="cb9-23"><a href="week-13---fundamentals-of-natural-language-processing.html#cb9-23" tabindex="-1"></a></span>
+<span id="cb9-24"><a href="week-13---fundamentals-of-natural-language-processing.html#cb9-24" tabindex="-1"></a><span class="co"># Append the nwords to the text_data frame</span></span>
+<span id="cb9-25"><a href="week-13---fundamentals-of-natural-language-processing.html#cb9-25" tabindex="-1"></a>data<span class="sc">$</span>nwords <span class="ot">&lt;-</span> <span class="fu">nwords</span>(data<span class="sc">$</span>texts)</span>
+<span id="cb9-26"><a href="week-13---fundamentals-of-natural-language-processing.html#cb9-26" tabindex="-1"></a></span>
+<span id="cb9-27"><a href="week-13---fundamentals-of-natural-language-processing.html#cb9-27" tabindex="-1"></a><span class="co"># Filter out strings which have zero words</span></span>
+<span id="cb9-28"><a href="week-13---fundamentals-of-natural-language-processing.html#cb9-28" tabindex="-1"></a>data_filtered <span class="ot">&lt;-</span> data <span class="sc">%&gt;%</span></span>
+<span id="cb9-29"><a href="week-13---fundamentals-of-natural-language-processing.html#cb9-29" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span>nwords<span class="sc">==</span><span class="dv">0</span>)</span>
+<span id="cb9-30"><a href="week-13---fundamentals-of-natural-language-processing.html#cb9-30" tabindex="-1"></a>  </span>
+<span id="cb9-31"><a href="week-13---fundamentals-of-natural-language-processing.html#cb9-31" tabindex="-1"></a><span class="co"># Print the filtered data</span></span>
+<span id="cb9-32"><a href="week-13---fundamentals-of-natural-language-processing.html#cb9-32" tabindex="-1"></a><span class="fu">print</span>(data_filtered)</span></code></pre></div>
+<p><strong>Explanation</strong></p>
+<ul>
+<li>After loading the required packages and defining the function to count the number of words in a vector of strings, we define a dataframe with four texts and an empty vector to hold their word-counts</li>
+<li>We apply the <code>nwords()</code> function to the texts in <code>data$texts</code> to attain the word counts, and assign them to the empty vector <code>data$nwords</code></li>
+<li>We use the the pipe operator <code>%&gt;%</code> and <code>filter()</code> function to retain only cases where nwords does not equal 0 <code>filter(!nwords==0)</code> which in this case, removes the row no words <em>:)!</em></li>
+</ul>
+</div>
+<div id="identifying-specific-instances" class="section level3 hasAnchor" number="2.2.6">
+<h3><span class="header-section-number">2.2.6</span> Identifying specific instances<a href="week-13---fundamentals-of-natural-language-processing.html#identifying-specific-instances" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>For many types of analyses you will want to identify specific types of text data either because they are relevant or irrelevant to your analyses. The most basic way of doing this is via key-word searches.</p>
+<p>The <code>grepl()</code> function is used to search for patterns or keywords within a string and returns <code>TRUE</code> or <code>FALSE</code> depending on whether the pattern is found.</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="week-13---fundamentals-of-natural-language-processing.html#cb10-1" tabindex="-1"></a><span class="co"># Example text data</span></span>
+<span id="cb10-2"><a href="week-13---fundamentals-of-natural-language-processing.html#cb10-2" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">texts =</span> <span class="fu">c</span>(<span class="st">&quot;Data Science is fun!&quot;</span>, <span class="st">&quot;Learn R Programming.&quot;</span>, <span class="st">&quot;Python is great.&quot;</span>, <span class="st">&quot;R is powerful.&quot;</span>))</span>
+<span id="cb10-3"><a href="week-13---fundamentals-of-natural-language-processing.html#cb10-3" tabindex="-1"></a></span>
+<span id="cb10-4"><a href="week-13---fundamentals-of-natural-language-processing.html#cb10-4" tabindex="-1"></a><span class="co"># Print the data</span></span>
+<span id="cb10-5"><a href="week-13---fundamentals-of-natural-language-processing.html#cb10-5" tabindex="-1"></a><span class="fu">print</span>(data)</span>
+<span id="cb10-6"><a href="week-13---fundamentals-of-natural-language-processing.html#cb10-6" tabindex="-1"></a></span>
+<span id="cb10-7"><a href="week-13---fundamentals-of-natural-language-processing.html#cb10-7" tabindex="-1"></a><span class="co"># Search for the word &quot;python&quot;</span></span>
+<span id="cb10-8"><a href="week-13---fundamentals-of-natural-language-processing.html#cb10-8" tabindex="-1"></a>result <span class="ot">&lt;-</span> <span class="fu">grepl</span>(<span class="st">&quot;python&quot;</span>, data<span class="sc">$</span>texts, <span class="at">ignore.case =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb10-9"><a href="week-13---fundamentals-of-natural-language-processing.html#cb10-9" tabindex="-1"></a></span>
+<span id="cb10-10"><a href="week-13---fundamentals-of-natural-language-processing.html#cb10-10" tabindex="-1"></a><span class="co"># Print the result</span></span>
+<span id="cb10-11"><a href="week-13---fundamentals-of-natural-language-processing.html#cb10-11" tabindex="-1"></a><span class="fu">print</span>(result)</span>
+<span id="cb10-12"><a href="week-13---fundamentals-of-natural-language-processing.html#cb10-12" tabindex="-1"></a></span>
+<span id="cb10-13"><a href="week-13---fundamentals-of-natural-language-processing.html#cb10-13" tabindex="-1"></a><span class="co"># Select only cases with the word &quot;python&quot;</span></span>
+<span id="cb10-14"><a href="week-13---fundamentals-of-natural-language-processing.html#cb10-14" tabindex="-1"></a>data_python <span class="ot">&lt;-</span> data <span class="sc">%&gt;%</span></span>
+<span id="cb10-15"><a href="week-13---fundamentals-of-natural-language-processing.html#cb10-15" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">grepl</span>(<span class="st">&quot;python&quot;</span>, texts, <span class="at">ignore.case =</span> <span class="cn">TRUE</span>))</span>
+<span id="cb10-16"><a href="week-13---fundamentals-of-natural-language-processing.html#cb10-16" tabindex="-1"></a>  </span>
+<span id="cb10-17"><a href="week-13---fundamentals-of-natural-language-processing.html#cb10-17" tabindex="-1"></a><span class="co"># Print the data only with cases with the word &quot;python&quot; </span></span>
+<span id="cb10-18"><a href="week-13---fundamentals-of-natural-language-processing.html#cb10-18" tabindex="-1"></a><span class="fu">print</span>(data_python)</span></code></pre></div>
+<p><strong>Explanation</strong></p>
+<ul>
+<li>The <code>grepl("Programming", data$texts, ignore.case = TRUE)</code> function checks each string in the <code>data$texts</code> to see if it contains the string <em>python</em>.</li>
+<li>Note that we defined <code>ignore.case = TRUE</code> in the <code>grepl()</code> function to allow <em>python</em> to match to <em>Python</em>. Try setting <code>ignore.case = FALSE</code> and see how this changes the output.</li>
+<li>We can combine <code>grepl()</code> with <code>filter()</code> to remove rows which do now contain <em>python</em> in <code>data$texts</code>.</li>
+</ul>
+</div>
+<div id="using-loops" class="section level3 hasAnchor" number="2.2.7">
+<h3><span class="header-section-number">2.2.7</span> Using loops<a href="week-13---fundamentals-of-natural-language-processing.html#using-loops" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Now that you have learnt how to read and process individual files and examples, its time to learn how to automate this process for large amounts of data. Loops are indispensable for this. They are used to repeat a block of code multiple times. This is helpful when you need to perform repetitive tasks, like iterating over many data files or instances of text. The most common type of loop in R is the <code>for</code> loop which iterates through a sequence of specified values.</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="week-13---fundamentals-of-natural-language-processing.html#cb11-1" tabindex="-1"></a><span class="co"># Example of a &#39;for&#39; loop in R</span></span>
+<span id="cb11-2"><a href="week-13---fundamentals-of-natural-language-processing.html#cb11-2" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>) {</span>
+<span id="cb11-3"><a href="week-13---fundamentals-of-natural-language-processing.html#cb11-3" tabindex="-1"></a>  <span class="fu">print</span>(<span class="fu">paste</span>(<span class="st">&quot;Iteration number:&quot;</span>, i))</span>
+<span id="cb11-4"><a href="week-13---fundamentals-of-natural-language-processing.html#cb11-4" tabindex="-1"></a>}</span></code></pre></div>
+<p><strong>Explanation</strong></p>
+<ul>
+<li>The for loop will iterate over the sequence 1:5 (numbers 1 through 5).</li>
+<li>For each iteration, it will print “Iteration number:” followed by the current value of i.</li>
+</ul>
+<p>Let’s see the value of looping over numerous texts to quickly clean and save them.</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="week-13---fundamentals-of-natural-language-processing.html#cb12-1" tabindex="-1"></a><span class="co"># Sample text data with 3 values</span></span>
+<span id="cb12-2"><a href="week-13---fundamentals-of-natural-language-processing.html#cb12-2" tabindex="-1"></a>text_data <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;  Hello World!  &quot;</span>, <span class="st">&quot;  R is great! &quot;</span>, <span class="st">&quot;  CLEANING text DATA.  &quot;</span>)</span>
+<span id="cb12-3"><a href="week-13---fundamentals-of-natural-language-processing.html#cb12-3" tabindex="-1"></a></span>
+<span id="cb12-4"><a href="week-13---fundamentals-of-natural-language-processing.html#cb12-4" tabindex="-1"></a><span class="co"># Initialize an empty dataframe with 3 rows to store the cleaned text</span></span>
+<span id="cb12-5"><a href="week-13---fundamentals-of-natural-language-processing.html#cb12-5" tabindex="-1"></a>cleaned_data <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">id =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>,</span>
+<span id="cb12-6"><a href="week-13---fundamentals-of-natural-language-processing.html#cb12-6" tabindex="-1"></a>                           <span class="at">cleaned_text =</span> <span class="cn">NA</span>)</span>
+<span id="cb12-7"><a href="week-13---fundamentals-of-natural-language-processing.html#cb12-7" tabindex="-1"></a></span>
+<span id="cb12-8"><a href="week-13---fundamentals-of-natural-language-processing.html#cb12-8" tabindex="-1"></a><span class="co"># For loop from 1:3 to clean the text</span></span>
+<span id="cb12-9"><a href="week-13---fundamentals-of-natural-language-processing.html#cb12-9" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>) {</span>
+<span id="cb12-10"><a href="week-13---fundamentals-of-natural-language-processing.html#cb12-10" tabindex="-1"></a>  cleaned_data<span class="sc">$</span>cleaned_text[i] <span class="ot">&lt;-</span> <span class="fu">trimws</span>(text_data[i])  <span class="co"># Remove extra spaces</span></span>
+<span id="cb12-11"><a href="week-13---fundamentals-of-natural-language-processing.html#cb12-11" tabindex="-1"></a>}</span>
+<span id="cb12-12"><a href="week-13---fundamentals-of-natural-language-processing.html#cb12-12" tabindex="-1"></a></span>
+<span id="cb12-13"><a href="week-13---fundamentals-of-natural-language-processing.html#cb12-13" tabindex="-1"></a><span class="co"># Print cleaned data</span></span>
+<span id="cb12-14"><a href="week-13---fundamentals-of-natural-language-processing.html#cb12-14" tabindex="-1"></a><span class="fu">print</span>(cleaned_data)</span></code></pre></div>
+<p><strong>Explanation</strong></p>
+<ul>
+<li>The for loop will iterate over each text in <code>text_data</code> in the sequence 1:3 by replacing the value i in <code>text_data[i]</code> (e.g., the first iteration pulls <code>"  Hello World!  "</code> by calling <code>text_data[1]</code>)</li>
+<li>For each iteration, it uses <code>trimws()</code> to remove leading and trailing spaces.</li>
+<li>Each cleaned text is saved in the initialized dataframe <code>cleaned_data</code> by placing it in the <code>$cleaned_text</code> vector in the cell defined by <code>[i]</code> (e.g., the third iteration assigns the cleaned text <code>"CLEANING text DATA."</code> to the third row of via <code>cleaned_data$cleaned_text[3]</code>)</li>
+</ul>
+</div>
+</div>
+<div id="task-2---putting-your-knowledge-to-the-test" class="section level2 hasAnchor" number="2.3">
+<h2><span class="header-section-number">2.3</span> Task 2 - Putting your knowledge to the test<a href="week-13---fundamentals-of-natural-language-processing.html#task-2---putting-your-knowledge-to-the-test" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Oftentimes text data will be made available in a way that is not conducive to psychological analyses. Typically, we want our data to be in tabular format saved as vectors in R data frames, where each chunk of text we plan to analyze is saved in a single cell. Here are some challenges to test your ability to wrangle text data into this format.</p>
+<div id="pick-out-relevant-cases-from-a-.csv-file" class="section level3 hasAnchor" number="2.3.1">
+<h3><span class="header-section-number">2.3.1</span> Pick out relevant cases from a .csv file<a href="week-13---fundamentals-of-natural-language-processing.html#pick-out-relevant-cases-from-a-.csv-file" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Download this file: <a href="https://drive.google.com/drive/folders/1M8caZ3axqEloZDMPc_U2E3mIwx7hLYnq?usp=sharing" class="uri">https://drive.google.com/drive/folders/1M8caZ3axqEloZDMPc_U2E3mIwx7hLYnq?usp=sharing</a></p>
+<p>It contains Reddit post titles from r/politics. Pick out all the titles which have any of the following key words regardless of case (“MAGA”, “Trump”, “Republican”) and which are 5 words or longer.</p>
+</div>
+<div id="build-a-dataframe-from-multiple-.txt-files" class="section level3 hasAnchor" number="2.3.2">
+<h3><span class="header-section-number">2.3.2</span> Build a dataframe from multiple .txt files<a href="week-13---fundamentals-of-natural-language-processing.html#build-a-dataframe-from-multiple-.txt-files" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Download these files: <a href="https://drive.google.com/drive/folders/1J11aj_iz60zvNd2kAcp8cbAl9NUNniVu?usp=sharing" class="uri">https://drive.google.com/drive/folders/1J11aj_iz60zvNd2kAcp8cbAl9NUNniVu?usp=sharing</a></p>
+<p>They contain descriptions of petitions to <a href="https://www.change.org/" class="uri">https://www.change.org/</a>. Your task is to extract the text data in them and save them to a new dataframe. Your new dataframe should have the following variables.</p>
+<ul>
+<li><strong>id</strong>: a basic indicator ranging from 1-6</li>
+<li><strong>text_file</strong>: the name of the text file</li>
+<li><strong>text</strong>: the full text of the file</li>
+</ul>
+</div>
+<div id="extract-nested-fields-from-a-.json-file" class="section level3 hasAnchor" number="2.3.3">
+<h3><span class="header-section-number">2.3.3</span> Extract nested fields from a .json file<a href="week-13---fundamentals-of-natural-language-processing.html#extract-nested-fields-from-a-.json-file" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Download this file: <a href="https://drive.google.com/drive/folders/1JIb35rVG2p_-NEHgeJN21EgDpZtzvmEO?usp=sharing" class="uri">https://drive.google.com/drive/folders/1JIb35rVG2p_-NEHgeJN21EgDpZtzvmEO?usp=sharing</a></p>
+<p>It contains Twitter posts from a politician. It has multiple nested variables. Your task is to extract them and save them to a new dataframe. Your new dataframe should have the following variables, populated with the relevant scores from the .json file.</p>
+<ul>
+<li><strong>id</strong>: a basic indicator ranging from 1-12</li>
+<li><strong>text</strong>: Tweet text</li>
+<li><strong>referenced_tweets</strong>: id of the referenced Tweets</li>
+<li><strong>likes</strong>: count of how many times the Tweet was liked</li>
+<li><strong>retweets</strong>: count of how many times the Tweet was shared</li>
+</ul>
+<p><strong>Tip</strong>: you will need to loop through each row in data to do this.</p>
+</div>
+<div id="solutions" class="section level3 hasAnchor" number="2.3.4">
+<h3><span class="header-section-number">2.3.4</span> Solutions<a href="week-13---fundamentals-of-natural-language-processing.html#solutions" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p><strong>Pick out relevant cases from a .csv file</strong></p>
+<p>Here is a solution for extracting the relevant cases.</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="week-13---fundamentals-of-natural-language-processing.html#cb13-1" tabindex="-1"></a>nwords <span class="ot">&lt;-</span> </span>
+<span id="cb13-2"><a href="week-13---fundamentals-of-natural-language-processing.html#cb13-2" tabindex="-1"></a>  <span class="cf">function</span>(string, <span class="at">pseudo=</span>F){</span>
+<span id="cb13-3"><a href="week-13---fundamentals-of-natural-language-processing.html#cb13-3" tabindex="-1"></a>    <span class="fu">ifelse</span>(pseudo, </span>
+<span id="cb13-4"><a href="week-13---fundamentals-of-natural-language-processing.html#cb13-4" tabindex="-1"></a>           pattern <span class="ot">&lt;-</span> <span class="st">&quot;</span><span class="sc">\\</span><span class="st">S+&quot;</span>, </span>
+<span id="cb13-5"><a href="week-13---fundamentals-of-natural-language-processing.html#cb13-5" tabindex="-1"></a>           pattern <span class="ot">&lt;-</span> <span class="st">&quot;[[:alpha:]]+&quot;</span> </span>
+<span id="cb13-6"><a href="week-13---fundamentals-of-natural-language-processing.html#cb13-6" tabindex="-1"></a>    )</span>
+<span id="cb13-7"><a href="week-13---fundamentals-of-natural-language-processing.html#cb13-7" tabindex="-1"></a>    <span class="fu">str_count</span>(string, pattern)</span>
+<span id="cb13-8"><a href="week-13---fundamentals-of-natural-language-processing.html#cb13-8" tabindex="-1"></a>  }</span>
+<span id="cb13-9"><a href="week-13---fundamentals-of-natural-language-processing.html#cb13-9" tabindex="-1"></a></span>
+<span id="cb13-10"><a href="week-13---fundamentals-of-natural-language-processing.html#cb13-10" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;reddit.csv&quot;</span>)</span>
+<span id="cb13-11"><a href="week-13---fundamentals-of-natural-language-processing.html#cb13-11" tabindex="-1"></a></span>
+<span id="cb13-12"><a href="week-13---fundamentals-of-natural-language-processing.html#cb13-12" tabindex="-1"></a>data<span class="sc">$</span>title_nwords <span class="ot">&lt;-</span> <span class="fu">nwords</span>(data<span class="sc">$</span>title)</span>
+<span id="cb13-13"><a href="week-13---fundamentals-of-natural-language-processing.html#cb13-13" tabindex="-1"></a></span>
+<span id="cb13-14"><a href="week-13---fundamentals-of-natural-language-processing.html#cb13-14" tabindex="-1"></a>data_maga <span class="ot">&lt;-</span> data <span class="sc">%&gt;%</span></span>
+<span id="cb13-15"><a href="week-13---fundamentals-of-natural-language-processing.html#cb13-15" tabindex="-1"></a>  <span class="fu">filter</span>(title_nwords <span class="sc">&gt;</span> <span class="dv">4</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb13-16"><a href="week-13---fundamentals-of-natural-language-processing.html#cb13-16" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">grepl</span>(<span class="st">&quot;Maga&quot;</span>, title, <span class="at">ignore.case =</span> <span class="cn">TRUE</span>))</span>
+<span id="cb13-17"><a href="week-13---fundamentals-of-natural-language-processing.html#cb13-17" tabindex="-1"></a></span>
+<span id="cb13-18"><a href="week-13---fundamentals-of-natural-language-processing.html#cb13-18" tabindex="-1"></a>data_trump <span class="ot">&lt;-</span> data <span class="sc">%&gt;%</span></span>
+<span id="cb13-19"><a href="week-13---fundamentals-of-natural-language-processing.html#cb13-19" tabindex="-1"></a>  <span class="fu">filter</span>(title_nwords <span class="sc">&gt;</span> <span class="dv">4</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb13-20"><a href="week-13---fundamentals-of-natural-language-processing.html#cb13-20" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">grepl</span>(<span class="st">&quot;Trump&quot;</span>, title, <span class="at">ignore.case =</span> <span class="cn">TRUE</span>))</span>
+<span id="cb13-21"><a href="week-13---fundamentals-of-natural-language-processing.html#cb13-21" tabindex="-1"></a></span>
+<span id="cb13-22"><a href="week-13---fundamentals-of-natural-language-processing.html#cb13-22" tabindex="-1"></a>data_republican <span class="ot">&lt;-</span> data <span class="sc">%&gt;%</span></span>
+<span id="cb13-23"><a href="week-13---fundamentals-of-natural-language-processing.html#cb13-23" tabindex="-1"></a>  <span class="fu">filter</span>(title_nwords <span class="sc">&gt;</span> <span class="dv">4</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb13-24"><a href="week-13---fundamentals-of-natural-language-processing.html#cb13-24" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">grepl</span>(<span class="st">&quot;Republican&quot;</span>, title, <span class="at">ignore.case =</span> <span class="cn">TRUE</span>))</span>
+<span id="cb13-25"><a href="week-13---fundamentals-of-natural-language-processing.html#cb13-25" tabindex="-1"></a></span>
+<span id="cb13-26"><a href="week-13---fundamentals-of-natural-language-processing.html#cb13-26" tabindex="-1"></a>data_filtered <span class="ot">&lt;-</span> </span>
+<span id="cb13-27"><a href="week-13---fundamentals-of-natural-language-processing.html#cb13-27" tabindex="-1"></a>  data_maga <span class="sc">%&gt;%</span></span>
+<span id="cb13-28"><a href="week-13---fundamentals-of-natural-language-processing.html#cb13-28" tabindex="-1"></a>  <span class="fu">rbind</span>(data_trump) <span class="sc">%&gt;%</span></span>
+<span id="cb13-29"><a href="week-13---fundamentals-of-natural-language-processing.html#cb13-29" tabindex="-1"></a>  <span class="fu">rbind</span>(data_republican)</span></code></pre></div>
+<p><strong>Build a dataframe from multiple .txt files</strong></p>
+<p>Here is a solution for compiling a datafrom from the .txt files.</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="week-13---fundamentals-of-natural-language-processing.html#cb14-1" tabindex="-1"></a>files <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;NICKI MINAJ DESERVES A STAR.txt&quot;</span>,</span>
+<span id="cb14-2"><a href="week-13---fundamentals-of-natural-language-processing.html#cb14-2" tabindex="-1"></a>           <span class="st">&quot;AMANDAS LAW Oklahoma needs a law for prison and county jail officers to wear body cams!.txt&quot;</span>,</span>
+<span id="cb14-3"><a href="week-13---fundamentals-of-natural-language-processing.html#cb14-3" tabindex="-1"></a>           <span class="st">&quot;Save Alberta Parks from Shutting-down and Privatization.txt&quot;</span>,</span>
+<span id="cb14-4"><a href="week-13---fundamentals-of-natural-language-processing.html#cb14-4" tabindex="-1"></a>           <span class="st">&quot;Serve The Served Fox Hole Community, will Provide a Community for Homeless Veterans.txt&quot;</span>,</span>
+<span id="cb14-5"><a href="week-13---fundamentals-of-natural-language-processing.html#cb14-5" tabindex="-1"></a>           <span class="st">&quot;Stop Sadiq Khan expanding the ULEZ to all the London borough 2023.txt&quot;</span>)</span>
+<span id="cb14-6"><a href="week-13---fundamentals-of-natural-language-processing.html#cb14-6" tabindex="-1"></a></span>
+<span id="cb14-7"><a href="week-13---fundamentals-of-natural-language-processing.html#cb14-7" tabindex="-1"></a>data_cleaned <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">id =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>,</span>
+<span id="cb14-8"><a href="week-13---fundamentals-of-natural-language-processing.html#cb14-8" tabindex="-1"></a>                           <span class="at">text_file =</span> <span class="cn">NA</span>,</span>
+<span id="cb14-9"><a href="week-13---fundamentals-of-natural-language-processing.html#cb14-9" tabindex="-1"></a>                           <span class="at">text =</span> <span class="cn">NA</span>)</span>
+<span id="cb14-10"><a href="week-13---fundamentals-of-natural-language-processing.html#cb14-10" tabindex="-1"></a></span>
+<span id="cb14-11"><a href="week-13---fundamentals-of-natural-language-processing.html#cb14-11" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>) {</span>
+<span id="cb14-12"><a href="week-13---fundamentals-of-natural-language-processing.html#cb14-12" tabindex="-1"></a>  file_name <span class="ot">&lt;-</span> files[i]</span>
+<span id="cb14-13"><a href="week-13---fundamentals-of-natural-language-processing.html#cb14-13" tabindex="-1"></a>  data_cleaned<span class="sc">$</span>text_file[i] <span class="ot">&lt;-</span> file_name</span>
+<span id="cb14-14"><a href="week-13---fundamentals-of-natural-language-processing.html#cb14-14" tabindex="-1"></a>  text_data <span class="ot">&lt;-</span> <span class="fu">read.table</span>(file_name, <span class="at">header =</span> <span class="cn">FALSE</span>, <span class="at">sep =</span> <span class="st">&quot;</span><span class="sc">\\</span><span class="st">&quot;</span>, <span class="at">comment.char =</span> <span class="st">&quot;&quot;</span>)</span>
+<span id="cb14-15"><a href="week-13---fundamentals-of-natural-language-processing.html#cb14-15" tabindex="-1"></a>  data_cleaned<span class="sc">$</span>text[i] <span class="ot">&lt;-</span> text_data<span class="sc">$</span>V1</span>
+<span id="cb14-16"><a href="week-13---fundamentals-of-natural-language-processing.html#cb14-16" tabindex="-1"></a>}</span></code></pre></div>
+<p><strong>Tip:</strong> It is often unfeasible to manually define all of the files you wish to iterate over, as you may have many thousands of them. A solution to this can be found in the <code>Sys.glob()</code> command, which will define a new vector with all file names in your currently-active folder of a certain sort. For example, to define a vector with all <code>.txt</code> files in your working folder you can specify: <code>files &lt;- (Sys.glob("*.txt"))</code></p>
+<p><strong>Extract nested fields from a .json file</strong></p>
+<p>Here is a solution for extracting the required fields from the json file.</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="week-13---fundamentals-of-natural-language-processing.html#cb15-1" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">fromJSON</span>(<span class="st">&quot;RepRandal.json&quot;</span>)</span>
+<span id="cb15-2"><a href="week-13---fundamentals-of-natural-language-processing.html#cb15-2" tabindex="-1"></a></span>
+<span id="cb15-3"><a href="week-13---fundamentals-of-natural-language-processing.html#cb15-3" tabindex="-1"></a>data_cleaned <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">id =</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">nrow</span>(data),</span>
+<span id="cb15-4"><a href="week-13---fundamentals-of-natural-language-processing.html#cb15-4" tabindex="-1"></a>                           <span class="at">text =</span> <span class="cn">NA</span>,</span>
+<span id="cb15-5"><a href="week-13---fundamentals-of-natural-language-processing.html#cb15-5" tabindex="-1"></a>                           <span class="at">referenced_tweets =</span> <span class="cn">NA</span>,</span>
+<span id="cb15-6"><a href="week-13---fundamentals-of-natural-language-processing.html#cb15-6" tabindex="-1"></a>                           <span class="at">likes =</span> <span class="cn">NA</span>,</span>
+<span id="cb15-7"><a href="week-13---fundamentals-of-natural-language-processing.html#cb15-7" tabindex="-1"></a>                           <span class="at">reposts =</span> <span class="cn">NA</span>)</span>
+<span id="cb15-8"><a href="week-13---fundamentals-of-natural-language-processing.html#cb15-8" tabindex="-1"></a></span>
+<span id="cb15-9"><a href="week-13---fundamentals-of-natural-language-processing.html#cb15-9" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">nrow</span>(data)) {</span>
+<span id="cb15-10"><a href="week-13---fundamentals-of-natural-language-processing.html#cb15-10" tabindex="-1"></a>  data_cleaned<span class="sc">$</span>text[i] <span class="ot">&lt;-</span> data<span class="sc">$</span>text[i]</span>
+<span id="cb15-11"><a href="week-13---fundamentals-of-natural-language-processing.html#cb15-11" tabindex="-1"></a>  data_cleaned<span class="sc">$</span>referenced_tweets[i] <span class="ot">&lt;-</span> data<span class="sc">$</span>referenced_tweets[[i]]<span class="sc">$</span>id</span>
+<span id="cb15-12"><a href="week-13---fundamentals-of-natural-language-processing.html#cb15-12" tabindex="-1"></a>  data_cleaned<span class="sc">$</span>likes[i] <span class="ot">&lt;-</span> data<span class="sc">$</span>public_metrics<span class="sc">$</span>like_count[i]</span>
+<span id="cb15-13"><a href="week-13---fundamentals-of-natural-language-processing.html#cb15-13" tabindex="-1"></a>  data_cleaned<span class="sc">$</span>retweets[i] <span class="ot">&lt;-</span> data<span class="sc">$</span>public_metrics<span class="sc">$</span>retweet_count[i]</span>
+<span id="cb15-14"><a href="week-13---fundamentals-of-natural-language-processing.html#cb15-14" tabindex="-1"></a>}</span></code></pre></div>
+<p><strong>Tip:</strong> When looping through dataframes you may hit upon cells which your code cannot deal with (e.g., those which are <code>NA</code>). This will typically cause your code to stop looping and fail to complete the task. One solution to this is to place operations within the <code>try()</code> instruction. This specifies that R should attempt to conduct the operation on the specified data for the given iteration and, if it fails, to continue to the next iteration.</p>
+</div>
+</div>
+<div id="bonus-task-1---pick-your-data" class="section level2 hasAnchor" number="2.4">
+<h2><span class="header-section-number">2.4</span> Bonus Task 1 - Pick Your Data<a href="week-13---fundamentals-of-natural-language-processing.html#bonus-task-1---pick-your-data" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Now that you have the knowledge and tools to deal with different sorts of text data, you should identify a dataset which lends itself to your research question.</p>
+<p>Ask yourself:</p>
+<ul>
+<li>Is the sample from an appropriate source?</li>
+<li>Are the authors of the text relevant to your investigation?</li>
+<li>If the texts are about a specific topic, can your interest be investigated within that topic?</li>
+<li>Are there any additional variables in the dataset which can inform your interests?</li>
+</ul>
+<p>The answer may very well be <em>no</em> to all of these; don’t force it.</p>
+<p>Please note, you are not required to use a resource from the Collective Data Bank. If none of them spark your interest or afford the sorts of analyses you wish to do, you are free to continue looking for datasets in your free time.</p>
+</div>
+<div id="bonus-task-2---considering-ethical-issues" class="section level2 hasAnchor" number="2.5">
+<h2><span class="header-section-number">2.5</span> Bonus Task 2 - Considering Ethical Issues<a href="week-13---fundamentals-of-natural-language-processing.html#bonus-task-2---considering-ethical-issues" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>The lectures in week 11 intended to convey the importance of considering the potential risks arising from analyzing pre-existing text data. Before moving forward with your research, you must consider the following questions in relation to your dataset of choice:</p>
+<ul>
+<li>Are there potential impacts on well-being, social or legal standing?</li>
+<li>Are you analyzing potentially sensitive or stigmatizing topics?</li>
+<li>Are there risks related to consent?</li>
+<li>Is the data in the public domain?</li>
+<li>Are there risks to privacy?</li>
+<li>Are there any personal (e.g., names, user profiles, ip, addresses) data?</li>
+<li>Is there any way that someone could trace anyone’s identity from your analyses?</li>
+<li>Do you foresee any other risks?</li>
+<li>What steps can you take to address the potential risks you have identified?</li>
+</ul>
+</div>
+<div id="bonus-task-3---wrangling-your-data" class="section level2 hasAnchor" number="2.6">
+<h2><span class="header-section-number">2.6</span> Bonus Task 3 - Wrangling your data<a href="week-13---fundamentals-of-natural-language-processing.html#bonus-task-3---wrangling-your-data" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Apply what you have learned to download and read your data into R. Examine if you need to process it in any way to arrive at a single dataframe with all relevant indicies.</p>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="index.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="appendix-foundations-of-r.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/USERNAME/REPO/edit/BRANCH/01-week1.Rmd",
+"text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["_main.pdf", "_main.epub"],
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+</body>
+
+</html>

@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 4 For loop from 1:3 to clean the text | PSYC614: Text and Talk (Quantitative)</title>
+  <meta name="description" content="This is a bookdown created for the quantitative analysis portion of PSYC614 taught by Dr Stefan Leach at Lancaster University." />
+  <meta name="generator" content="bookdown 0.42 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 4 For loop from 1:3 to clean the text | PSYC614: Text and Talk (Quantitative)" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:description" content="This is a bookdown created for the quantitative analysis portion of PSYC614 taught by Dr Stefan Leach at Lancaster University." />
+  <meta name="github-repo" content="rstudio/bookdown-demo" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 4 For loop from 1:3 to clean the text | PSYC614: Text and Talk (Quantitative)" />
+  
+  <meta name="twitter:description" content="This is a bookdown created for the quantitative analysis portion of PSYC614 taught by Dr Stefan Leach at Lancaster University." />
+  
+
+<meta name="author" content="Stefan Leach" />
+
+
+<meta name="date" content="2025-01-30" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="initialize-an-empty-dataframe-with-3-rows-to-store-the-cleaned-text.html"/>
+<link rel="next" href="print-cleaned-data.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">R Workshop</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> url: your book url like https://bookdown.org/yihui/bookdown</a></li>
+<li class="chapter" data-level="2" data-path="week-13---fundamental-of-natural-language-processing.html"><a href="week-13---fundamental-of-natural-language-processing.html"><i class="fa fa-check"></i><b>2</b> Week 13 - Fundamental of Natural Language Processing</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="week-13---fundamental-of-natural-language-processing.html"><a href="week-13---fundamental-of-natural-language-processing.html#homework---compiling-potential-sources-of-data"><i class="fa fa-check"></i><b>2.1</b> Homework - Compiling Potential Sources of Data</a>
+<ul>
+<li class="chapter" data-level="2.1.1" data-path="week-13---fundamental-of-natural-language-processing.html"><a href="week-13---fundamental-of-natural-language-processing.html#collective-data-bank"><i class="fa fa-check"></i><b>2.1.1</b> Collective Data Bank</a></li>
+<li class="chapter" data-level="2.1.2" data-path="week-13---fundamental-of-natural-language-processing.html"><a href="week-13---fundamental-of-natural-language-processing.html#sources-of-data"><i class="fa fa-check"></i><b>2.1.2</b> Sources of Data</a></li>
+</ul></li>
+<li class="chapter" data-level="2.2" data-path="week-13---fundamental-of-natural-language-processing.html"><a href="week-13---fundamental-of-natural-language-processing.html#task-1---familiarize-yourself-with-important-r-commands"><i class="fa fa-check"></i><b>2.2</b> Task 1 - Familiarize yourself with important R commands</a>
+<ul>
+<li class="chapter" data-level="2.2.1" data-path="week-13---fundamental-of-natural-language-processing.html"><a href="week-13---fundamental-of-natural-language-processing.html#file-types"><i class="fa fa-check"></i><b>2.2.1</b> File Types</a></li>
+<li class="chapter" data-level="2.2.2" data-path="week-13---fundamental-of-natural-language-processing.html"><a href="week-13---fundamental-of-natural-language-processing.html#accessing-nested-data"><i class="fa fa-check"></i><b>2.2.2</b> Accessing nested data</a></li>
+<li class="chapter" data-level="2.2.3" data-path="week-13---fundamental-of-natural-language-processing.html"><a href="week-13---fundamental-of-natural-language-processing.html#cleaning-data"><i class="fa fa-check"></i><b>2.2.3</b> Cleaning data</a></li>
+<li class="chapter" data-level="2.2.4" data-path="week-13---fundamental-of-natural-language-processing.html"><a href="week-13---fundamental-of-natural-language-processing.html#identifying-relevant-cases"><i class="fa fa-check"></i><b>2.2.4</b> Identifying relevant cases</a></li>
+<li class="chapter" data-level="2.2.5" data-path="week-13---fundamental-of-natural-language-processing.html"><a href="week-13---fundamental-of-natural-language-processing.html#counting-words"><i class="fa fa-check"></i><b>2.2.5</b> Counting words</a></li>
+<li class="chapter" data-level="2.2.6" data-path="week-13---fundamental-of-natural-language-processing.html"><a href="week-13---fundamental-of-natural-language-processing.html#using-loops"><i class="fa fa-check"></i><b>2.2.6</b> Using loops</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="initialize-an-empty-dataframe-with-3-rows-to-store-the-cleaned-text.html"><a href="initialize-an-empty-dataframe-with-3-rows-to-store-the-cleaned-text.html"><i class="fa fa-check"></i><b>3</b> Initialize an empty dataframe with 3 rows to store the cleaned text</a></li>
+<li class="chapter" data-level="4" data-path="for-loop-from-13-to-clean-the-text.html"><a href="for-loop-from-13-to-clean-the-text.html"><i class="fa fa-check"></i><b>4</b> For loop from 1:3 to clean the text</a></li>
+<li class="chapter" data-level="5" data-path="print-cleaned-data.html"><a href="print-cleaned-data.html"><i class="fa fa-check"></i><b>5</b> Print cleaned data</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="print-cleaned-data.html"><a href="print-cleaned-data.html#task-2---putting-your-knowledge-to-the-test"><i class="fa fa-check"></i><b>5.1</b> Task 2 - Putting your knowledge to the test</a>
+<ul>
+<li class="chapter" data-level="5.1.1" data-path="print-cleaned-data.html"><a href="print-cleaned-data.html#compile-a-single-dataframe"><i class="fa fa-check"></i><b>5.1.1</b> Compile a single dataframe</a></li>
+<li class="chapter" data-level="5.1.2" data-path="print-cleaned-data.html"><a href="print-cleaned-data.html#extract-nested-fields"><i class="fa fa-check"></i><b>5.1.2</b> Extract nested fields</a></li>
+<li class="chapter" data-level="5.1.3" data-path="print-cleaned-data.html"><a href="print-cleaned-data.html#clean"><i class="fa fa-check"></i><b>5.1.3</b> Clean</a></li>
+<li class="chapter" data-level="5.1.4" data-path="print-cleaned-data.html"><a href="print-cleaned-data.html#pick-out-relevant-cases"><i class="fa fa-check"></i><b>5.1.4</b> Pick out relevant cases</a></li>
+<li class="chapter" data-level="5.1.5" data-path="print-cleaned-data.html"><a href="print-cleaned-data.html#solutions"><i class="fa fa-check"></i><b>5.1.5</b> Solutions</a></li>
+</ul></li>
+<li class="chapter" data-level="5.2" data-path="print-cleaned-data.html"><a href="print-cleaned-data.html#bonus-task-1---picking-your-data"><i class="fa fa-check"></i><b>5.2</b> Bonus Task 1 - Picking Your Data</a></li>
+<li class="chapter" data-level="5.3" data-path="print-cleaned-data.html"><a href="print-cleaned-data.html#bonus-task-2---considering-ethical-issues"><i class="fa fa-check"></i><b>5.3</b> Bonus Task 2 - Considering Ethical Issues</a></li>
+<li class="chapter" data-level="5.4" data-path="print-cleaned-data.html"><a href="print-cleaned-data.html#bonus-task-3---wrangling-your-data"><i class="fa fa-check"></i><b>5.4</b> Bonus Task 3 - Wrangling your data</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="appendix-foundations-of-r.html"><a href="appendix-foundations-of-r.html"><i class="fa fa-check"></i><b>6</b> Appendix: Foundations of R</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="appendix-foundations-of-r.html"><a href="appendix-foundations-of-r.html#setting-up-your-environment"><i class="fa fa-check"></i><b>6.1</b> Setting up your environment</a>
+<ul>
+<li class="chapter" data-level="6.1.1" data-path="appendix-foundations-of-r.html"><a href="appendix-foundations-of-r.html#installing-r"><i class="fa fa-check"></i><b>6.1.1</b> Installing R</a></li>
+<li class="chapter" data-level="6.1.2" data-path="appendix-foundations-of-r.html"><a href="appendix-foundations-of-r.html#installing-rstudio"><i class="fa fa-check"></i><b>6.1.2</b> Installing RStudio</a></li>
+<li class="chapter" data-level="6.1.3" data-path="appendix-foundations-of-r.html"><a href="appendix-foundations-of-r.html#launching-rstudio-and-setting-up-a-project"><i class="fa fa-check"></i><b>6.1.3</b> Launching RStudio and setting up a project</a></li>
+<li class="chapter" data-level="6.1.4" data-path="appendix-foundations-of-r.html"><a href="appendix-foundations-of-r.html#installing-packages"><i class="fa fa-check"></i><b>6.1.4</b> Installing packages</a></li>
+<li class="chapter" data-level="6.1.5" data-path="appendix-foundations-of-r.html"><a href="appendix-foundations-of-r.html#loading-packages"><i class="fa fa-check"></i><b>6.1.5</b> Loading packages</a></li>
+</ul></li>
+<li class="chapter" data-level="6.2" data-path="appendix-foundations-of-r.html"><a href="appendix-foundations-of-r.html#vectors-factors-matrices-and-data-frames"><i class="fa fa-check"></i><b>6.2</b> Vectors, factors, matrices, and data frames</a>
+<ul>
+<li class="chapter" data-level="6.2.1" data-path="appendix-foundations-of-r.html"><a href="appendix-foundations-of-r.html#vectors"><i class="fa fa-check"></i><b>6.2.1</b> Vectors</a></li>
+<li class="chapter" data-level="6.2.2" data-path="appendix-foundations-of-r.html"><a href="appendix-foundations-of-r.html#factors"><i class="fa fa-check"></i><b>6.2.2</b> Factors</a></li>
+<li class="chapter" data-level="6.2.3" data-path="appendix-foundations-of-r.html"><a href="appendix-foundations-of-r.html#matrices"><i class="fa fa-check"></i><b>6.2.3</b> Matrices</a></li>
+<li class="chapter" data-level="6.2.4" data-path="appendix-foundations-of-r.html"><a href="appendix-foundations-of-r.html#data-frames"><i class="fa fa-check"></i><b>6.2.4</b> Data Frames</a></li>
+<li class="chapter" data-level="6.2.5" data-path="appendix-foundations-of-r.html"><a href="appendix-foundations-of-r.html#accessing-subsets-of-vectors-and-data-frames"><i class="fa fa-check"></i><b>6.2.5</b> Accessing subsets of vectors and data frames</a></li>
+</ul></li>
+<li class="chapter" data-level="6.3" data-path="appendix-foundations-of-r.html"><a href="appendix-foundations-of-r.html#data-manipulation-with-tidyverse"><i class="fa fa-check"></i><b>6.3</b> Data manipulation with tidyverse</a>
+<ul>
+<li class="chapter" data-level="6.3.1" data-path="appendix-foundations-of-r.html"><a href="appendix-foundations-of-r.html#install-and-load-the-tidyverse-package"><i class="fa fa-check"></i><b>6.3.1</b> Install and load the <code>tidyverse</code> package</a></li>
+<li class="chapter" data-level="6.3.2" data-path="appendix-foundations-of-r.html"><a href="appendix-foundations-of-r.html#the-pipe-operator"><i class="fa fa-check"></i><b>6.3.2</b> The pipe operator <code>%&gt;%</code></a></li>
+<li class="chapter" data-level="6.3.3" data-path="appendix-foundations-of-r.html"><a href="appendix-foundations-of-r.html#selecting-columns-with-select"><i class="fa fa-check"></i><b>6.3.3</b> Selecting columns with <code>select()</code></a></li>
+<li class="chapter" data-level="6.3.4" data-path="appendix-foundations-of-r.html"><a href="appendix-foundations-of-r.html#filtering-rows-with-filter"><i class="fa fa-check"></i><b>6.3.4</b> Filtering rows with <code>filter()</code></a></li>
+<li class="chapter" data-level="6.3.5" data-path="appendix-foundations-of-r.html"><a href="appendix-foundations-of-r.html#renaming-variables-with-rename"><i class="fa fa-check"></i><b>6.3.5</b> Renaming variables with <code>rename()</code></a></li>
+<li class="chapter" data-level="6.3.6" data-path="appendix-foundations-of-r.html"><a href="appendix-foundations-of-r.html#recoding-variables-with-recode-and-mutate"><i class="fa fa-check"></i><b>6.3.6</b> Recoding variables with <code>recode()</code> and <code>mutate()</code></a></li>
+<li class="chapter" data-level="6.3.7" data-path="appendix-foundations-of-r.html"><a href="appendix-foundations-of-r.html#creating-new-variables-by-combining-select-with-rowmeans-or-rowsums"><i class="fa fa-check"></i><b>6.3.7</b> Creating new variables by combining <code>select()</code> with <code>rowMeans()</code> or <code>rowSums()</code></a></li>
+</ul></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">PSYC614: Text and Talk (Quantitative)</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="for-loop-from-13-to-clean-the-text" class="section level1 hasAnchor" number="4">
+<h1><span class="header-section-number">Chapter 4</span> For loop from 1:3 to clean the text<a href="for-loop-from-13-to-clean-the-text.html#for-loop-from-13-to-clean-the-text" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<p>for (i in 1:3) {
+cleaned_data$cleaned_text[i] &lt;- trimws(text_data[i]) # Remove extra spaces
+}</p>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="initialize-an-empty-dataframe-with-3-rows-to-store-the-cleaned-text.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="print-cleaned-data.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/USERNAME/REPO/edit/BRANCH/01-week1.Rmd",
+"text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["_main.pdf", "_main.epub"],
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>
