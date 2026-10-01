@@ -1,0 +1,803 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="A guide by Dr Stefan Leach to help students and collaborators navigate statistical analyses in R.">
+<title>Data Analysis in R</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Source+Sans+3:wght@400;500;600;700&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&display=swap">
+<style>
+/* Layout: bookdown-style reader. Chapter sidebar on the left (sections of the open chapter nested), one chapter per view, prev/next at the foot. */
+:root {
+  --bg: #fafbfc; --panel: #eff3f5; --fg: #1b2a33; --muted: #56666f; --rule: #d6e0e5;
+  --on-accent: #ffffff;
+  --code-bg: #f1f4f6;
+  --hl-comment: #5f6e77; --hl-string: #2e7a4d; --hl-number: #a8540a; --hl-keyword: #7a3e9c;
+  --hl-literal: #b0353a; --hl-fn: #005c84; --hl-param: #3d6a7a; --hl-op: #56666f;
+  --font-body: "Source Serif 4", Georgia, "Times New Roman", serif;
+  --font-ui: "Source Sans 3", "Segoe UI", system-ui, -apple-system, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, Menlo, Consolas, monospace;
+  --accent: #1d6b57; --accent-soft: #e1f0eb;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0f1519; --panel: #151e23; --fg: #e2e9ed; --muted: #9aabb4; --rule: #27343c;
+    --on-accent: #0f1519;
+    --code-bg: #141c21;
+    --hl-comment: #8a9ba5; --hl-string: #8fd3a8; --hl-number: #f0a04b; --hl-keyword: #d0a6ec;
+    --hl-literal: #f28b8b; --hl-fn: #6cc3e8; --hl-param: #9fc9d6; --hl-op: #9aabb4;
+    color-scheme: dark;
+    --accent: #6fd1b5; --accent-soft: #15302a;
+  }
+}
+:root[data-theme="dark"] {
+    --bg: #0f1519; --panel: #151e23; --fg: #e2e9ed; --muted: #9aabb4; --rule: #27343c;
+    --on-accent: #0f1519;
+    --code-bg: #141c21;
+    --hl-comment: #8a9ba5; --hl-string: #8fd3a8; --hl-number: #f0a04b; --hl-keyword: #d0a6ec;
+    --hl-literal: #f28b8b; --hl-fn: #6cc3e8; --hl-param: #9fc9d6; --hl-op: #9aabb4;
+    color-scheme: dark;
+    --accent: #6fd1b5; --accent-soft: #15302a;
+}
+
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+:root { padding-top: env(safe-area-inset-top, 0px); padding-bottom: env(safe-area-inset-bottom, 0px); }
+body { margin: 0; background: var(--bg); color: var(--fg); font-family: var(--font-body); font-size: 17px; line-height: 1.65; }
+[hidden] { display: none !important; }
+img { max-width: 100%; }
+a { color: var(--accent); text-underline-offset: 2px; }
+a:focus-visible, button:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+code { font-family: var(--font-mono); font-size: 0.86em; background: var(--accent-soft); padding: 0.05em 0.35em; border-radius: 4px; }
+
+.topbar { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 30; display: flex; align-items: center; gap: 12px;
+  padding: 10px 16px; background: var(--bg); border-bottom: 1px solid var(--rule); font-family: var(--font-ui); }
+.menu-btn { display: inline-flex; align-items: center; justify-content: center; width: 36px; height: 36px; border: 1px solid var(--rule);
+  border-radius: 8px; background: var(--panel); color: var(--fg); cursor: pointer; flex: none; }
+.menu-btn svg { width: 18px; height: 18px; }
+.book { font-weight: 700; font-size: 15px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; min-width: 0; }
+.book span { color: var(--muted); font-weight: 500; }
+.home-link { margin-left: auto; font-size: 14px; font-weight: 600; text-decoration: none; white-space: nowrap; }
+.home-link:hover { text-decoration: underline; }
+
+.layout { display: grid; grid-template-columns: 300px minmax(0, 1fr); }
+.sidebar { position: sticky; top: calc(env(safe-area-inset-top, 0px) + 57px); height: calc(100vh - 57px - env(safe-area-inset-top, 0px));
+  overflow-y: auto; background: var(--panel); border-right: 1px solid var(--rule); font-family: var(--font-ui); font-size: 15px;
+  line-height: 1.35; padding-block: 16px 32px; }
+.layout.collapsed { grid-template-columns: 0 minmax(0, 1fr); }
+.layout.collapsed .sidebar { visibility: hidden; }
+.toc a { display: grid; grid-template-columns: 2rem minmax(0, 1fr); gap: 4px; align-items: baseline; padding: 7px 16px 7px 20px;
+  color: var(--fg); text-decoration: none; }
+.toc a:hover { background: var(--accent-soft); }
+.toc a.ch[aria-current="page"] { background: var(--accent-soft); color: var(--accent); font-weight: 600; }
+.toc .n { color: var(--muted); font-variant-numeric: tabular-nums; font-size: 13px; }
+.toc a[aria-current] .n { color: var(--accent); }
+.toc .secs { padding-block: 2px 8px; }
+.toc .secs a { grid-template-columns: 2.4rem minmax(0, 1fr); padding: 5px 16px 5px 40px; font-size: 14px; color: var(--muted); }
+.toc .secs a:hover { color: var(--fg); }
+.toc .secs a[aria-current="true"] { color: var(--accent); font-weight: 600; }
+.toc code { font-size: 0.85em; }
+
+main { min-width: 0; padding-block: 40px 64px; padding-inline: clamp(16px, 5vw, 64px); }
+.page { max-width: 46rem; margin-inline: auto; }
+.page > * + * { margin-top: 1rem; }
+.eyebrow { font-family: var(--font-ui); font-size: 13px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent); margin: 0; }
+h1, h2, h3 { font-family: var(--font-ui); text-wrap: balance; line-height: 1.25; }
+h1 { font-size: clamp(1.9rem, 1.4rem + 1.8vw, 2.5rem); font-weight: 700; margin: 0; letter-spacing: -0.01em; }
+.page > .eyebrow + h1 { margin-top: 0.25rem; }
+h2 { font-size: 1.4rem; font-weight: 700; padding-bottom: 0.3rem; border-bottom: 1px solid var(--rule); scroll-margin-top: 76px; }
+.page > h2 { margin-top: 2.6rem; }
+h2 .num { color: var(--accent); margin-right: 0.35em; font-variant-numeric: tabular-nums; }
+h3 { font-size: 1.1rem; font-weight: 700; }
+.page > h3 { margin-top: 1.8rem; }
+p { margin: 0; }
+ul, ol { padding-left: 1.3rem; margin: 0; }
+li + li { margin-top: 0.35rem; }
+li > ul { margin-top: 0.35rem; }
+.lead p { font-size: 1.1rem; }
+.lead p + p { margin-top: 0.8rem; }
+
+.code { position: relative; }
+pre { margin: 0; background: var(--code-bg); border: 1px solid var(--rule); border-radius: 10px; padding: 14px 16px; overflow-x: auto;
+  font-family: var(--font-mono); font-size: 14px; line-height: 1.55; tab-size: 2; }
+pre code { background: none; padding: 0; font-size: inherit; border-radius: 0; color: var(--fg); }
+.copy-btn { position: absolute; top: 8px; right: 8px; font-family: var(--font-ui); font-size: 12.5px; font-weight: 600; color: var(--muted);
+  background: var(--bg); border: 1px solid var(--rule); border-radius: 6px; padding: 3px 9px; cursor: pointer; }
+.copy-btn:hover { color: var(--accent); border-color: var(--accent); }
+.tk-c { color: var(--hl-comment); font-style: italic; }
+.tk-s { color: var(--hl-string); }
+.tk-n { color: var(--hl-number); }
+.tk-k { color: var(--hl-keyword); font-weight: 500; }
+.tk-l { color: var(--hl-literal); }
+.tk-f { color: var(--hl-fn); }
+.tk-p { color: var(--hl-param); }
+.tk-o { color: var(--hl-op); font-weight: 500; }
+
+.outline { list-style: none; padding: 0; display: grid; gap: 12px; }
+.outline > li { margin: 0; border: 1px solid var(--rule); border-radius: 10px; padding: 14px 18px; }
+.outline-title { display: flex; gap: 10px; align-items: baseline; font-family: var(--font-ui); font-weight: 700; font-size: 1.08rem; text-decoration: none; }
+.outline-title:hover { text-decoration: underline; }
+.outline-title .n { color: var(--muted); font-variant-numeric: tabular-nums; }
+.outline ul { margin-top: 6px; color: var(--muted); font-size: 0.97rem; }
+.callout { background: var(--accent-soft); border-radius: 10px; padding: 14px 18px; }
+.callout .label { display: block; font-family: var(--font-ui); font-size: 12.5px; font-weight: 700; letter-spacing: 0.07em; text-transform: uppercase; color: var(--accent); margin-bottom: 4px; }
+
+.pager { max-width: 46rem; margin: 3.5rem auto 0; display: grid; grid-template-columns: 1fr 1fr; gap: 12px; font-family: var(--font-ui); }
+.pager a { display: block; border: 1px solid var(--rule); border-radius: 10px; padding: 12px 16px; text-decoration: none; color: var(--fg); min-width: 0; }
+.pager a:hover { border-color: var(--accent); }
+.pager small { display: block; font-size: 12.5px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.06em; font-weight: 600; }
+.pager .next { text-align: right; grid-column: 2; }
+.pager span { font-weight: 600; color: var(--accent); }
+.foot { max-width: 46rem; margin: 2.5rem auto 0; font-family: var(--font-ui); font-size: 13px; color: var(--muted); }
+
+.scrim { display: none; }
+@media (max-width: 900px) {
+  .layout, .layout.collapsed { grid-template-columns: minmax(0, 1fr); }
+  .sidebar { position: fixed; top: 0; left: 0; bottom: 0; z-index: 50; width: min(86vw, 320px); height: auto;
+    padding-top: calc(env(safe-area-inset-top, 0px) + 16px); transform: translateX(-100%); transition: transform 0.2s ease; visibility: hidden; }
+  .layout.open .sidebar { transform: none; visibility: visible; }
+  .layout.open .scrim { display: block; position: fixed; inset: 0; z-index: 40; background: rgba(0,0,0,0.35); }
+  .book span { display: none; }
+  body { font-size: 16.5px; }
+  pre { font-size: 13px; }
+}
+@media (prefers-reduced-motion: reduce) { .sidebar { transition: none; } }
+</style>
+</head>
+<body>
+<header class="topbar">
+  <button class="menu-btn" id="menu-btn" type="button" aria-label="Show or hide chapters" aria-controls="toc" aria-expanded="true"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M3 5h14M3 10h14M3 15h14"/></svg></button>
+  <div class="book">Data Analysis in R <span>· Dr Stefan Leach</span></div>
+  <a class="home-link" href="../index.html">All resources</a>
+</header>
+<div class="layout" id="layout">
+  <nav class="sidebar" id="toc" aria-label="Chapters"></nav>
+  <div class="scrim" id="scrim"></div>
+  <main id="main">
+<section class="page" id="p-about" data-n="1" data-title="About" hidden>
+<p class="eyebrow">Chapter 1</p>
+<h1>About</h1>
+<div class="lead"><p>Welcome to <strong>Data Analysis in R</strong>, a guide designed to help you develop your knowledge of how to conduct statistical analysis, create figures, and troubleshoot in R. The guide is broken into four chapters:</p>
+</div>
+<ol class="outline"><li><a class="outline-title" href="#about"><span class="n">1</span>About</a><ul><li>A brief introduction to the resource.</li></ul></li><li><a class="outline-title" href="#foundations"><span class="n">2</span>Foundations of Data Analysis with R</a><ul><li>Setting up your environment</li><li>Vectors, factors, matrices, and data frames</li><li>Data manipulation with tidyverse</li></ul></li><li><a class="outline-title" href="#importing"><span class="n">3</span>Importing, saving, and exploring data</a><ul><li>Importing: Getting your data into R</li><li>Note on data from Qualtrics</li><li>Good practices: Making sure your data is correct</li><li>Distributions and summary statistics: Understanding basic properties of data</li></ul></li><li><a class="outline-title" href="#inferential"><span class="n">4</span>Inferential statistics</a><ul><li>Pearson correlation: Assessing relationships between variables</li><li>Linear regression: Predicting outcomes based on a single predictor</li><li>T-test: Comparing means between two groups</li><li>ANOVA: Analyzing variance between multiple groups</li></ul></li></ol>
+<div class="callout"><span class="label">Using the code</span>Every code block has a Copy button. Paste the code into an R script in RStudio and run it line by line to see what each step does.</div>
+</section>
+<section class="page" id="p-foundations" data-n="2" data-title="Foundations of Data Analysis with R" hidden>
+<p class="eyebrow">Chapter 2</p>
+<h1>Foundations of Data Analysis with R</h1>
+<h2 id="s-foundations-1" data-k="1"><span class="num">2.1</span> <span class="t">Setting up your environment</span></h2>
+<p>Setting up your R environment for data analysis involves a series of steps to install R, RStudio, and essential packages. Here is a step-by-step guide to help you get started:</p>
+<h3>Installing R</h3>
+<ol>
+<li>Visit the R Project website (https://www.r-project.org/).</li>
+<li>Click on the &quot;CRAN&quot; link under &quot;Download and Install R.&quot;</li>
+<li>Choose a CRAN mirror near you.</li>
+<li>Download and install the appropriate version of R for your operating system (Windows, macOS, or Linux).</li>
+<li>Follow the installation instructions for your chosen operating system.</li>
+</ol>
+<h3>Installing RStudio</h3>
+<ol>
+<li>Go to the RStudio website (https://www.rstudio.com/).</li>
+<li>Click on the &quot;Products&quot; tab and select &quot;RStudio Desktop.&quot;</li>
+<li>Choose the appropriate version for your operating system (Windows, macOS, or Linux).</li>
+<li>Download and install RStudio by following the installation instructions.</li>
+</ol>
+<h3>Launching RStudio and setting up a project</h3>
+<ol>
+<li>Open RStudio after installation.</li>
+<li>Click on &quot;File&quot; in the top menu, then select &quot;New Project.&quot;</li>
+<li>Choose the project type. For data analysis, select &quot;New Directory&quot; and then &quot;New Project.&quot;</li>
+<li>Specify the project name and location. You can create a new directory or use an existing one.</li>
+<li>Choose an optional version control system (e.g., Git) if you plan to use one.</li>
+<li>Click &quot;Create Project.&quot; This will create a new RStudio project with its own working directory.</li>
+</ol>
+<h3>Installing packages</h3>
+<p>You can install packages by using the <code>install.packages()</code> function, replacing &quot;package_name&quot; with the name of the package you want to install.</p>
+<pre><code class="language-r">install.packages(&quot;package_name&quot;)
+</code></pre>
+<p>For data analysis, some essential packages include:</p>
+<ul>
+<li><em>tidyverse</em> for data manipulation.</li>
+<li><em>ggplot2</em> for data visualization.</li>
+<li><em>psych</em> for statistical analyses.</li>
+</ul>
+<p>Install these packages using the above method.</p>
+<h3>Loading packages</h3>
+<p>You can load packages using the <code>library()</code> function.</p>
+<pre><code class="language-r"># Load the packages tidyverse, ggplot2, and psych
+library(tidyverse)
+library(ggplot2)
+library(psych)
+</code></pre>
+<h2 id="s-foundations-2" data-k="2"><span class="num">2.2</span> <span class="t">Vectors, factors, matrices, and data frames</span></h2>
+<p>A solid understanding of data structures is essential as they form the foundation for storing and manipulating data. R provides various data structures that cater to different types of data and analysis needs. In this section, we'll explore four key data structures: vectors, matrices, data frames, and factors.</p>
+<h3>Vectors</h3>
+<p>A vector is the simplest and most fundamental data structure in R. It is a one-dimensional array that can hold homogeneous elements of the same data type, such as numbers or characters. Vectors are created using the <code>c()</code> function. Here's an example.</p>
+<pre><code class="language-r"># Creating a numeric vector
+numeric_vector &lt;- c(1, 2, 3, 4, 5)
+
+# Creating a character vector
+character_vector &lt;- c(&quot;apple&quot;, &quot;banana&quot;, &quot;orange&quot;)
+</code></pre>
+<h3>Factors</h3>
+<p>Factors are used to represent categorical data and are particularly useful for data that have discrete levels or categories. They are an essential data structure for performing statistical analyses and plotting categorical data. Factors are created using the <code>factor()</code> function.</p>
+<pre><code class="language-r"># Creating a factor
+gender &lt;- factor(c(&quot;male&quot;, &quot;female&quot;, &quot;male&quot;, &quot;female&quot;))
+</code></pre>
+<h3>Matrices</h3>
+<p>A matrix is a two-dimensional data structure composed of rows and columns. All elements in a matrix must be of the same data type. Matrices are useful for storing data in a tabular format, such as datasets with equal-length variables. You can create a matrix using the <code>matrix()</code> function.</p>
+<pre><code class="language-r"># Creating a matrix
+matrix_data &lt;- matrix(1:12, nrow = 3, ncol = 4)
+</code></pre>
+<h3>Data Frames</h3>
+<p>Data frames are perhaps the most commonly used data structure for data analysis. They are similar to matrices but can store columns of different data types, making them versatile for handling real-world datasets. Data frames maintain the tabular structure and are often used to represent datasets with variables and observations. You can create a data frame using the <code>data.frame()</code> function.</p>
+<pre><code class="language-r"># Creating a data frame
+data_frame &lt;- data.frame(
+  name = c(&quot;Alice&quot;, &quot;Bob&quot;, &quot;Charlie&quot;),
+  age = c(25, 30, 22),
+  score = c(95, 85, 78)
+)
+</code></pre>
+<h3>Accessing subsets of vectors and data frames</h3>
+<p>Values can be accessed in a number of ways. To access a specific value in a vector, you can use square brackets <code>[]</code> with the integer index.</p>
+<pre><code class="language-r"># Create a vector
+vector &lt;- c(2, 6, 22, 12, 8)
+
+# Using square brackets and integer index to access the value in the forth position (12)
+vector[4]
+</code></pre>
+<p>To access a specific column in a data frame, you can use the <code>$</code> operator or square brackets <code>[]</code> with either the column name or integer index.</p>
+<pre><code class="language-r"># Create a data set
+data &lt;- data.frame(variable1 = c(2, 6, 22, 12, 8),
+                   variable2 = c(4, 8, 4, 10, 3),
+                   variable3 = c(9, 15, 9, 11, 4))
+
+# Using the $ operator
+data$variable1
+
+# Using square brackets and variable name
+data[&quot;variable1&quot;]
+
+# Using square brackets and integer index to access the first column (variable)
+data[ , 1]
+</code></pre>
+<p>To access specific rows in a data frame, you can use integer indexing with square brackets <code>[]</code>.</p>
+<pre><code class="language-r"># Create a data set
+data &lt;- data.frame(variable1 = c(2, 6, 22, 12, 8),
+                   variable2 = c(4, 8, 4, 10, 3),
+                   variable3 = c(9, 15, 9, 11, 4))
+
+# Using square brackets and integer index to access the forth row
+data[4, ]
+</code></pre>
+<p>To access a specific value at the intersection of a row and a column, you can use both row and column indexing with square brackets <code>[]</code>.</p>
+<pre><code class="language-r"># Create a data set
+data &lt;- data.frame(variable1 = c(2, 6, 22, 12, 8),
+                   variable2 = c(4, 8, 4, 10, 3),
+                   variable3 = c(9, 15, 9, 11, 4))
+
+# Using square brackets and integer index to access the value in the second row of the first column
+data[2, 1]
+</code></pre>
+<p>Understanding these data structures and how to manipulate them is crucial for effective data analysis in R. They enable you to store, organize, and manipulate data in various formats, facilitating a wide range of data manipulation, transformation, and visualization tasks. As you progress in your data analysis journey, you'll often find yourself working extensively with these fundamental data structures to extract insights from your data.</p>
+<h2 id="s-foundations-3" data-k="3"><span class="num">2.3</span> <span class="t">Data manipulation with tidyverse</span></h2>
+<p>The <code>tidyverse</code> package provides a set of functions that streamline and simplify data manipulation tasks. It follows a consistent grammar that makes it easy to express complex data transformations using a small set of intuitive verbs. Here's a step-by-step guide to manipulating data using <code>tidyverse</code>.</p>
+<h3>Install and load the <code>tidyverse</code> package</h3>
+<p>If you haven't already installed and loaded the <code>tidyverse</code> package, do so using these commands.</p>
+<pre><code class="language-r">install.packages(&quot;tidyverse&quot;)
+library(tidyverse)
+</code></pre>
+<h3>The pipe operator <code>%&gt;%</code></h3>
+<p>The <code>%&gt;%</code> symbol, known as the pipe operator, is a fundamental feature of the <code>tidyverse</code> ecosystem, which includes packages like dplyr, ggplot2, and more. The pipe operator simplifies and enhances the process of chaining multiple operations together, making your code more readable and efficient.</p>
+<p>The pipe operator is used to take the output of one function and feed it as the input to the next function. Its basic syntax is.</p>
+<pre><code class="language-r">output &lt;- input %&gt;%
+  function1() %&gt;%
+  function2() %&gt;%
+  function3()
+</code></pre>
+<h3>Selecting columns with <code>select()</code></h3>
+<p>Use <code>select()</code> to choose specific columns from your data frame.</p>
+<pre><code class="language-r"># Create a data set
+data &lt;- data.frame(variable1 = c(2, 6, 22, 12, 8),
+                   variable2 = c(4, 8, 4, 10, 3),
+                   variable3 = c(9, 15, 9, 11, 4))
+
+# Select variable1 and variable2
+data %&gt;%
+  select(variable1, variable2)
+
+# Select all variables apart from variable1
+data %&gt;%
+  select(!variable1)
+</code></pre>
+<h3>Filtering rows with <code>filter()</code></h3>
+<p>Use <code>filter()</code> to select rows from a data frame based on specific conditions.</p>
+<pre><code class="language-r"># Create a data set
+data &lt;- data.frame(variable1 = c(2, 6, 22, 12, 8),
+                   variable2 = c(&quot;apples&quot;, &quot;oranges&quot;, &quot;apples&quot;, &quot;cars&quot;, &quot;oranges&quot;),
+                   variable3 = c(9, 15, 9, 11, 4))
+
+# Get rows where values in variable1 are greater than 10
+data %&gt;%
+  filter(variable1 &gt; 10)
+
+# Get rows where values in variable2 are &quot;apples&quot;
+data %&gt;%
+  filter(variable2 == &quot;apples&quot;)
+
+# Get rows where values in variable2 are not &quot;cars&quot;
+data %&gt;%
+  filter(!variable2 == &quot;cars&quot;)
+
+# Get rows where values in variable1 are less than 10 and values in variable2 are &quot;oranges&quot;
+data %&gt;%
+  filter(variable1 &lt; 10) %&gt;%
+  filter(variable2 == &quot;oranges&quot;)
+</code></pre>
+<h3>Renaming variables with <code>rename()</code></h3>
+<p>Use <code>rename()</code> to change the name of columns in a data frame.</p>
+<pre><code class="language-r"># Create a data set
+data &lt;- data.frame(variable1 = c(2, 6, 22, 12, 8),
+                   variable2 = c(4, 8, 4, 10, 3),
+                   variable3 = c(9, 15, 9, 11, 4))
+
+# Rename variable1 to Variable_1
+data %&gt;%
+  rename(Variable_1 = variable1)
+
+</code></pre>
+<h3>Recoding variables with <code>recode()</code> and <code>mutate()</code></h3>
+<p>Use <code>recode()</code> together with <code>mutate()</code> to change the values of a variable in a data frame.</p>
+<pre><code class="language-r"># Create a data set
+data &lt;- data.frame(variable1 = c(&quot;apple&quot;, &quot;banana&quot;, &quot;orange&quot;),
+                   variable2 = c(1, 0, 1),
+                   variable3 = c(2, 5, 7))
+
+# Create a recoded character variable
+data$variable1_r &lt;- data %&gt;%
+  mutate(variable1_r = recode(variable1,
+                              &quot;apple&quot; = &quot;red&quot;,
+                              &quot;banana&quot; = &quot;yellow&quot;,
+                              &quot;orange&quot; = &quot;orange&quot;)) %&gt;%
+  pull(variable1_r)
+
+# Create a recoded binary variable
+data$variable2_r &lt;- data %&gt;%
+  mutate(variable2_r = recode(variable2,
+                              `0` = 1,
+                              `1` = 0)) %&gt;%
+  pull(variable2_r)
+
+# Create a reverse scored continuous variable (assuming the original variable ranges from 1-7)
+data$variable3_r &lt;- 8 - data$variable3
+</code></pre>
+<h3>Creating new variables by combining <code>select()</code> with <code>rowMeans()</code> or <code>rowSums()</code></h3>
+<p>Use <code>select()</code> to pull out relevant variables and then <code>rowMeans()</code> to compute a mean score across them or <code>rowSums()</code> to compute a sum score.</p>
+<pre><code class="language-r"># Create a data set
+data &lt;- data.frame(variable1 = c(2, 6, 22, 12, 8),
+                   variable2 = c(4, 8, 4, 10, 3),
+                   variable3 = c(9, 15, 9, 11, 4))
+
+# Create a new variable with the sum score of variable1, variable2, and variable3
+data$sum_score &lt;- data %&gt;%
+  select(variable1, variable2, variable3) %&gt;% 
+  rowSums(na.rm = TRUE)
+
+# Create a new variable with the average score of variable1, variable2, and variable3
+data$mean_score &lt;- data %&gt;% 
+  select(variable1, variable2, variable3) %&gt;% 
+  rowMeans(na.rm = TRUE)
+
+</code></pre>
+</section>
+<section class="page" id="p-importing" data-n="3" data-title="Importing, saving, and exploring data" hidden>
+<p class="eyebrow">Chapter 3</p>
+<h1>Importing, saving, and exploring data</h1>
+<p>Now that you have a solid understanding of how to install packages and work with vectors and dataframes, we are ready to start working with real psychological data. This section will explain how to read in your data and explore it descriptively.</p>
+<h2 id="s-importing-1" data-k="1"><span class="num">3.1</span> <span class="t">Importing: Getting your data into R</span></h2>
+<p>R provides various functions and packages to import data from different file formats. Here are some common methods to read data into R.</p>
+<p><strong>CSV files</strong></p>
+<pre><code class="language-r"># Read CSV file
+data &lt;- read.csv(&quot;data.csv&quot;)
+</code></pre>
+<p><strong>Excel files</strong></p>
+<pre><code class="language-r"># Install and load the openxlsx package
+install.packages(&quot;openxlsx&quot;)
+library(openxlsx)
+
+# Read Excel file
+data &lt;- read.xlsx(&quot;data.xlsx&quot;, sheet = 1)
+</code></pre>
+<p><strong>SPSS files</strong></p>
+<pre><code class="language-r"># Install and load the haven package
+install.packages(&quot;haven&quot;)
+library(haven)
+
+# Read SPSS file
+data &lt;- read_sav(&quot;data.sav&quot;)
+</code></pre>
+<p><strong>R data files</strong></p>
+<pre><code class="language-r"># Read RDS file
+data &lt;- readRDS(&quot;data.rds&quot;)
+</code></pre>
+<h3>Save and organize your work</h3>
+<p>Save your R script, RMarkdown document, or project by clicking on &quot;File&quot; and selecting &quot;Save&quot; or &quot;Save As.&quot;</p>
+<p>Use RStudio's project structure to organize your files, code, data, and outputs. This helps maintain a clear and structured workflow.</p>
+<p>Objects in R, such as data frames, can be saved in a number of formats. Here are some common methods to save data from R.</p>
+<p><strong>CSV files</strong></p>
+<pre><code class="language-r"># Save data as CSV file
+write.csv(data,
+         &quot;data.csv&quot;)
+</code></pre>
+<p><strong>Excel files</strong></p>
+<pre><code class="language-r"># Install and load the openxlsx package
+install.packages(&quot;openxlsx&quot;)
+library(openxlsx)
+
+# Save data as Excel file
+write.xlsx(data,
+          &quot;data.xlsx&quot;, sheet = 1)
+</code></pre>
+<p><strong>SPSS files</strong></p>
+<pre><code class="language-r"># Install and load the haven package
+install.packages(&quot;haven&quot;)
+library(haven)
+
+# Save data as SPSS file
+write_sav(data,
+          &quot;data.sav&quot;)
+</code></pre>
+<p><strong>R data files</strong></p>
+<pre><code class="language-r"># Save data as RDS file
+saveRDS(data,
+        &quot;data.rds&quot;)
+</code></pre>
+<p>By following these steps, you'll set up an optimal R environment for data analysis. As you progress, you can explore more advanced techniques, packages, and tools to enhance your skills and gain deeper insights from your data.</p>
+<h2 id="s-importing-2" data-k="2"><span class="num">3.2</span> <span class="t">A note on data from Qualtrics</span></h2>
+<p>It is recommended that you download Qualtrics data in <code>.csv</code> format and select the <code>Export Values</code> option (found under <code>Data and Analysis</code> -&gt; <code>Export &amp; Import</code> -&gt; <code>Export...</code>). If you have exported your Qualtrics data in <code>.csv</code> format, you will find that first three rows all contain headers. Reading such a file directly into <code>R</code> will result in gobbledygook. Here is a bit of code to read it in, remove the redundant headers and save a trimmed file for further analyses.</p>
+<pre><code class="language-r"># Read data set
+data &lt;- read.csv(&quot;qualtrics_data.csv&quot;)
+
+# Remove redundant headers
+data_trimmed &lt;- data[c(3:nrow(data)), ]
+
+# Save trimmed data set
+data_trimmed %&gt;%
+  write.csv(&quot;data.csv&quot;)
+</code></pre>
+<p>You should orient yourself and ensure you have a good understanding of the variables in the dataset and how they link back to your survey. This will often require you to go back to the Qualtrics platform and navigate to your survey and note down the indicator of each question (found in the top left hand corner of each question). It is worth keeping that these can be edited in Qualtrics to make them more interpretable. If left, they will be assigned uninterpretable names (e.g., Q424).</p>
+<p>You may need to re-code variables in your dataset to more interpretable values (e.g., 1 -&gt; male). Which numeric values Qualtrics has assigned to each response option can be found by selecting the relevant question in the main survey view on the Qualtrics Platform and selecting <code>Recode values</code> at the bottom of the left information pane. How to do re-code values in <code>R</code> is explained in Chapter 2.</p>
+<p>Qualtrics provides a number of variables by default which you should know how to interpret, including:</p>
+<ul>
+<li><code>Finished</code> is whether participants completed the entire survey (1) or stopped short of completion (0)</li>
+<li><code>Duration (in seconds)</code> is how long it took participants to complete the survey in seconds</li>
+<li><code>DistributionChannel</code> is whether the data were generated by previewing the survey or via a distribution link</li>
+</ul>
+<h2 id="s-importing-3" data-k="3"><span class="num">3.3</span> <span class="t">Good practices: Making sure your data is correct</span></h2>
+<p>It is recommended that you conduct basic checks to ensure the validity of your data, including computing <code>summary()</code> of all relevant variables to confirm the expected values (e.g., a scale from 1-7 should not have scores of 9), and also examining their distributions via <code>hist()</code>. Details on these functions are provided below.</p>
+<h2 id="s-importing-4" data-k="4"><span class="num">3.4</span> <span class="t">Distributions and summary statistics: Understanding basic properties of data</span></h2>
+<p>Exploratory Data Analysis is a crucial initial step in the data analysis process. It involves understanding the structure, patterns, and characteristics of your data before diving into more complex analyses. In this section, we will explore how to explore data distributions and calculate summary statistics in R.</p>
+<h3>Distributions</h3>
+<p>Data distribution refers to how the data values are spread across different ranges. Visualizing data distributions helps identify patterns, outliers, and central tendencies within the data.</p>
+<p>A histogram is a graphical representation of the frequency distribution of a set of values. It divides the data into intervals (bins) and displays the count of data points falling into each bin.</p>
+<p>To create a histogram in R, you can use the <code>hist()</code> function:</p>
+<pre><code class="language-r"># Create a data set
+data &lt;- data.frame(variable1 = rnorm(1000, mean = 0, sd = 1))
+
+# Create a histogram
+hist(data$variable1, 
+     breaks = 20, 
+     col = &quot;skyblue&quot;, 
+     main = &quot;Histogram of Data Distribution&quot;)
+</code></pre>
+<h3>Summary statistics</h3>
+<p>Summary statistics provide a concise summary of the main characteristics of a data set. They include measures of central tendency, dispersion, and shape.</p>
+<p>The <code>summary()</code> function provides a quick overview of essential statistics for each variable in the dataset. It includes the minimum, 1st quartile, median, mean, 3rd quartile, and maximum.</p>
+<pre><code class="language-r"># Create a data set
+data &lt;- data.frame(participant_id = c(1, 2, 3, 4, 5, 6, 7, 8),
+                   age = c(18, 19, 18, 22, 18, 19, 19, 18),
+                   gender = c(&quot;male&quot;, &quot;female&quot;, &quot;male&quot;, &quot;female&quot;, &quot;female&quot;, &quot;female&quot;, &quot;male&quot;, &quot;male&quot;),
+                   condition = c(&quot;high&quot;, &quot;high&quot;, &quot;low&quot;, &quot;high&quot;, &quot;low&quot;, &quot;low&quot;, &quot;low&quot;, &quot;high&quot;),
+                   variable1 = c(9, 15, 9, 11, 4, 6, 4, 12))
+
+# Calculate summary statistics for a data set
+summary(data)
+
+# Calculate summary statistics for a variable
+summary(data$variable1)
+</code></pre>
+<p>The <code>tidyverse</code> package provides additional functionality for easy calculation of frequency counts, means, standard deviations by group with the <code>summarize()</code> and <code>group_by()</code> functions.</p>
+<pre><code class="language-r"># Load packages
+library(tidyverse)
+
+# Create a data set
+data &lt;- data.frame(participant_id = c(1, 2, 3, 4, 5, 6, 7, 8),
+                   age = c(18, 19, 18, 22, 18, 19, 19, 18),
+                   gender = c(&quot;male&quot;, &quot;female&quot;, &quot;male&quot;, &quot;female&quot;, &quot;female&quot;, &quot;female&quot;, &quot;male&quot;, &quot;male&quot;),
+                   condition = c(&quot;high&quot;, &quot;high&quot;, &quot;low&quot;, &quot;high&quot;, &quot;low&quot;, &quot;low&quot;, &quot;low&quot;, &quot;high&quot;),
+                   variable1 = c(9, 15, 9, 11, 4, 6, 4, 12))
+
+# Summary ns and age
+data %&gt;%
+  summarize(n = n(),
+            age_mean = mean(age, na.rm = TRUE),
+            age_sd = sd(age, na.rm = TRUE))
+
+# Summary ns by gender
+data %&gt;%
+  group_by(gender) %&gt;%
+  summarize(n = n())
+
+# Summary of variable1 by condition
+data %&gt;%
+  group_by(condition) %&gt;%
+  summarize(n = n(),
+            variable1_mean = mean(variable1, na.rm = TRUE),
+            variable1_sd = sd(variable1, na.rm = TRUE))
+</code></pre>
+</section>
+<section class="page" id="p-inferential" data-n="4" data-title="Inferential statistics" hidden>
+<p class="eyebrow">Chapter 4</p>
+<h1>Inferential statistics</h1>
+<p>Inferential Statistics is an essential step in drawing conclusions from your data and making predictions about a larger population. It involves using sample data to infer the properties of an entire population, typically through hypothesis testing, confidence intervals, and regression analysis. In this section, we will explore how to conduct inferential statistical analyses and interpret the results using R.</p>
+<h2 id="s-inferential-1" data-k="1"><span class="num">4.1</span> <span class="t">Pearson Correlation: Assessing Relationships Between Variables</span></h2>
+<p>One of the fundamental aspects of data analysis is understanding the relationships between different variables in your data set. Pearson correlation is a statistical method used to quantify the strength and direction of a linear relationship between two continuous variables. It is often denoted as &quot;r&quot; and ranges from -1 to 1. A positive value indicates a positive linear relationship (as one variable increases, the other tends to increase), a negative value indicates a negative linear relationship (as one variable increases, the other tends to decrease), and a value close to 0 suggests little to no linear relationship.</p>
+<p>You can calculate the Pearson correlation coefficient using the <code>cor.test()</code> function.</p>
+<pre><code class="language-r"># Create a data set
+data &lt;- data.frame(variable1 = c(9, 15, 9, 11, 4, 6, 4, 12, 2, 5, 3, 11, 9, 10),
+                   variable2 = c(4, 8, 4, 10, 3, 5, 11, 4, 12, 3, 4, 8, 3, 8))
+
+# Calculate Pearson correlation
+cor.test(data$variable1, 
+         data$variable2,
+         alternative = &quot;two.sided&quot;, # can be edited to one-tailed with either &quot;less&quot; or &quot;greater&quot;
+         method = &quot;pearson&quot;,        # can be edited to &quot;kendall&quot; or &quot;spearman&quot;
+         conf.level = 0.95)         # can be edited to change confidence level
+</code></pre>
+<h2 id="s-inferential-2" data-k="2"><span class="num">4.2</span> <span class="t">Linear regression: Predicting outcomes based on a single predictor</span></h2>
+<p>Linear regression is a statistical technique used to model the relationship between a dependent variable and one or more independent variables. This section will guide you through the process of conducting linear regression in R to predict outcomes based on one or more independent variables.</p>
+<p>You can perform a linear regression using the <code>lm()</code> function.</p>
+<pre><code class="language-r"># Load packages
+library(tidyverse)
+
+# Create a data set
+data &lt;- data.frame(variable1 = c(9, 15, 9, 11, 4, 6, 4, 12, 2, 5, 3, 11, 9, 10),
+                   variable2 = c(4, 8, 4, 10, 3, 5, 11, 4, 12, 3, 4, 8, 3, 8),
+                   variable3 = c(1, 8, 6, 7, 11, 4, 12, 3, 4, 7, 3, 8, 9, 11))
+
+# Conduct a linear regression predicting variable1 from variable2
+lm(variable1 ~ variable2, 
+   data) %&gt;% # we pipe the regression model to the summary() function to attain inferential statistics
+  summary()
+
+# Conduct a linear regression predicting variable1 from variable2 and variable3
+lm(variable1 ~ variable2 + variable3, 
+   data) %&gt;%
+  summary()
+
+# Conduct a linear regression predicting variable1 from variable2, variable3, and their interaction
+lm(variable1 ~ variable2 + variable3 + variable2:variable3, 
+   data) %&gt;%
+  summary()
+
+# Conduct a linear regression predicting variable1 from variable2, variable3, and their interaction (with a simplified syntax)
+lm(variable1 ~ variable2*variable3, 
+   data) %&gt;%
+  summary()
+
+</code></pre>
+<h2 id="s-inferential-3" data-k="3"><span class="num">4.3</span> <span class="t">T-test: Comparing means between two groups</span></h2>
+<p>The t-test is a widely used statistical test for comparing a mean to a single value or to that of another group. This section will walk you through the process of performing t-tests in R when comparing a mean to a single value (one-sample), when comparing data that is independent (two-sample / between-participants) and dependent (paired-sample / within-participants).</p>
+<p>You can perform t-tests using the <code>t_test()</code> function from the <code>apa</code> package.</p>
+<pre><code class="language-r"># Load packages
+library(apa)
+
+# Create a data set
+data &lt;- data.frame(condition = c(&quot;high&quot;, &quot;high&quot;, &quot;low&quot;, &quot;high&quot;, &quot;low&quot;, &quot;low&quot;, &quot;low&quot;, &quot;high&quot;),
+                   variable1 = c(9, 15, 9, 11, 4, 6, 4, 12),
+                   variable2 = c(2, 4, 9, 6, 1, 6, 4, 3))
+
+# Conduct a t-test (one-sample) comparing the mean of variable1 to 0
+t_test(data$variable1, 
+       mu = 0,                    # value to be compared to
+       alternative = &quot;two.sided&quot;, # can be edited to one-tailed with either &quot;less&quot; or &quot;greater&quot;
+       conf.level = 0.95)         # can be edited to change confidence level
+
+# Conduct a t-test (two-sample / between-participants) comparing the mean of variable1 in the &quot;high&quot; condition with that of the &quot;low&quot;
+t_test(data$variable1[data$condition==&quot;high&quot;], # statement in square brackets selects values of variable1 in the high condition
+       data$variable1[data$condition==&quot;low&quot;],  # statement in square brackets selects values of variable1 in the low condition
+       alternative = &quot;two.sided&quot;,              # can be edited to one-tailed with either &quot;less&quot; or &quot;greater&quot;
+       paired = FALSE,                         # can be edited to TRUE for paired-sample / within-participants t-test (see below)
+       var.equal = TRUE,                       # can be edited to FALSE for Welch test
+       conf.level = 0.95)                      # can be edited to change confidence level
+
+# Conduct a t-test (paired-sample / within-participants) comparing the mean of variable1 with that of variable2
+t_test(data$variable1,
+       data$variable2,
+       alternative = &quot;two.sided&quot;, # can be edited to one-tailed with either &quot;less&quot; or &quot;greater&quot;
+       paired = TRUE,             # can be edited to FALSE for two-sample / between-participants t-test (see above)
+       conf.level = 0.95)         # can be edited to change confidence level
+
+</code></pre>
+<h2 id="s-inferential-4" data-k="4"><span class="num">4.4</span> <span class="t">ANOVA: Analyzing variance between multiple groups</span></h2>
+<p>Analysis of Variance (ANOVA) is a statistical method used to analyze the differences in means among multiple groups. This section will guide you through conducting ANOVA in R.</p>
+<p>You can perform Analysis of Variance using the <code>aov_ez()</code> function from the <code>afex</code> package.</p>
+<p>Let's start with a simple example where you have a single between-participants factor with three levels (high, medium, low).</p>
+<pre><code class="language-r"># Load packages
+library(afex)
+
+# Create a data set
+data &lt;- data.frame(id = c(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12),
+                   condition1 = c(&quot;high&quot;, &quot;high&quot;, &quot;high&quot;, &quot;high&quot;, &quot;medium&quot;, &quot;medium&quot;, &quot;medium&quot;, &quot;medium&quot;, &quot;low&quot;, &quot;low&quot;, &quot;low&quot;, &quot;low&quot;),
+                   condition2 = c(&quot;active&quot;, &quot;control&quot;, &quot;active&quot;, &quot;control&quot;, &quot;active&quot;, &quot;control&quot;, &quot;active&quot;, &quot;control&quot;, &quot;active&quot;, &quot;control&quot;, &quot;active&quot;, &quot;control&quot;),
+                   positive_score = c(9, 15, 9, 11, 2, 4, 7, 3, 4, 6, 4, 12),
+                   neutral_score = c(5, 6, 9, 11, 2, 4, 7, 3, 7, 6, 6, 4),
+                   negative_score = c(1, 2, 9, 1, 2, 4, 3, 3, 4, 2, 4, 4))
+
+# Conduct an Analysis of Variance comparing positive scores across &quot;high&quot;, &quot;medium&quot;, and &quot;low&quot; condition1 (between participants)
+aov_ez(id = &quot;id&quot;,
+       dv = &quot;positive_score&quot;,
+       between = &quot;condition1&quot;,
+       data = data)
+
+# Conduct an Analysis of Variance comparing positive scores across condition1 (between participants) and condition2 (between participants) 
+aov_ez(id = &quot;id&quot;,
+       dv = &quot;positive_score&quot;,
+       between = c(&quot;condition1&quot;, &quot;condition2&quot;),
+       data = data)
+</code></pre>
+<p>Now let's consider a within-participants comparison with three levels (positive, neutral, negative). It is common for psychological scientists to save such data will as three individual columns, one for positive responses, one for neutral, and one for negative.</p>
+<p>To analyze this via the <code>aov_ez()</code> function we first need to restructure this so that it is in a long format, with each participant represented three times and the levels indicated via a new variable (similar to how between-participants conditions are coded). This can be achieved via the can be done via the <code>melt()</code> function from the <code>reshape2</code> package.</p>
+<pre><code class="language-r"># Load packages
+library(tidyverse)
+library(reshape2)
+library(afex)
+
+# Create a data set
+data &lt;- data.frame(id = c(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12),
+                   condition1 = c(&quot;high&quot;, &quot;high&quot;, &quot;high&quot;, &quot;high&quot;, &quot;medium&quot;, &quot;medium&quot;, &quot;medium&quot;, &quot;medium&quot;, &quot;low&quot;, &quot;low&quot;, &quot;low&quot;, &quot;low&quot;),
+                   condition2 = c(&quot;active&quot;, &quot;control&quot;, &quot;active&quot;, &quot;control&quot;, &quot;active&quot;, &quot;control&quot;, &quot;active&quot;, &quot;control&quot;, &quot;active&quot;, &quot;control&quot;, &quot;active&quot;, &quot;control&quot;),
+                   positive_score = c(9, 15, 9, 11, 2, 4, 7, 3, 4, 6, 4, 12),
+                   neutral_score = c(5, 6, 9, 11, 2, 4, 7, 3, 7, 6, 6, 4),
+                   negative_score = c(1, 2, 9, 1, 2, 4, 3, 3, 4, 2, 4, 4))
+
+# Restructure data set
+restructured_data &lt;- data %&gt;%
+  melt(id.vars = c(&quot;id&quot;, &quot;condition1&quot;, &quot;condition2&quot;),
+       measure.vars = c(&quot;positive_score&quot;, &quot;neutral_score&quot;, &quot;negative_score&quot;),
+       variable.name = &quot;dependent_variable&quot;,
+       value.name = &quot;score&quot;)
+
+# Analysis of Variance comparing scores across dependent variables &quot;positive&quot;, &quot;neutral&quot;, and &quot;negative&quot; (within participants)
+aov_ez(id = &quot;id&quot;,
+       dv = &quot;score&quot;,
+       within = &quot;dependent_variable&quot;,
+       data = restructured_data)
+
+# Analysis of Variance comparing scores across condition1 (between participants) and dependent variables (within participants)
+aov_ez(id = &quot;id&quot;,
+       dv = &quot;score&quot;,
+       between = &quot;condition1&quot;,
+       within = &quot;dependent_variable&quot;,
+       data = restructured_data)
+</code></pre>
+</section>
+
+    <nav class="pager" id="pager" aria-label="Previous and next chapter"></nav>
+    <p class="foot">Data Analysis in R · Dr Stefan Leach · s.leach@soton.ac.uk</p>
+  </main>
+</div>
+<script>
+(function () {
+  // ---- R syntax highlighting (small built-in tokenizer) ----
+  var RX = /(#[^\n]*)|("(?:\\.|[^"\\])*"|'(?:\\.|[^'\\])*')|(`[^`\n]*`|%[^%\n]*%)|(\b\d+(?:\.\d+)?(?:[eE][+-]?\d+)?L?\b)|(\b(?:function|if|else|for|while|in|repeat|break|next|return)\b)|(\b(?:TRUE|FALSE|NULL|NA|NaN|Inf)\b)|([A-Za-z.][\w.]*(?=\s*\())|([A-Za-z.][\w.]*(?=\s*=(?!=)))|(<-|->|==|!=|<=|>=|&&|\|\|)/g;
+  var CLS = [null, 'c', 's', 'o', 'n', 'k', 'l', 'f', 'p', 'o'];
+  function esc(t) { return t.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;'); }
+  function highlight(src) {
+    var out = '', last = 0, m;
+    RX.lastIndex = 0;
+    while ((m = RX.exec(src))) {
+      if (m[0] === '') { RX.lastIndex++; continue; }
+      out += esc(src.slice(last, m.index));
+      for (var g = 1; g < CLS.length; g++) {
+        if (m[g] !== undefined) { out += '<span class="tk-' + CLS[g] + '">' + esc(m[0]) + '</span>'; break; }
+      }
+      last = RX.lastIndex;
+    }
+    return out + esc(src.slice(last));
+  }
+
+  // ---- code blocks: highlight + copy button ----
+  Array.prototype.forEach.call(document.querySelectorAll('pre > code'), function (code) {
+    var src = code.textContent;
+    if (code.className.indexOf('language-r') >= 0) code.innerHTML = highlight(src);
+    var pre = code.parentNode, wrap = document.createElement('div');
+    wrap.className = 'code';
+    pre.parentNode.insertBefore(wrap, pre);
+    wrap.appendChild(pre);
+    var btn = document.createElement('button');
+    btn.type = 'button'; btn.className = 'copy-btn'; btn.textContent = 'Copy';
+    btn.setAttribute('aria-label', 'Copy this code');
+    btn.addEventListener('click', function () {
+      function done(label) { btn.textContent = label; setTimeout(function () { btn.textContent = 'Copy'; }, 1600); }
+      function fallback() {
+        var r = document.createRange(); r.selectNodeContents(code);
+        var sel = window.getSelection(); sel.removeAllRanges(); sel.addRange(r);
+        done('Selected');
+      }
+      try {
+        if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(src).then(function () { done('Copied'); }, fallback);
+        else fallback();
+      } catch (e) { fallback(); }
+    });
+    wrap.appendChild(btn);
+  });
+
+  // ---- chapters and sidebar ----
+  var CH = Array.prototype.map.call(document.querySelectorAll('section.page'), function (sec) {
+    return {
+      id: sec.id.slice(2), n: sec.getAttribute('data-n'), title: sec.getAttribute('data-title'), el: sec,
+      secs: Array.prototype.map.call(sec.querySelectorAll('h2[data-k]'), function (h) {
+        return { k: h.getAttribute('data-k'), html: h.querySelector('.t').innerHTML };
+      })
+    };
+  });
+  var toc = document.getElementById('toc');
+  var t = '<div class="toc">';
+  CH.forEach(function (c) {
+    t += '<a class="ch" href="#' + c.id + '" data-id="' + c.id + '"><span class="n">' + c.n + '</span><span>' + c.title + '</span></a>';
+    if (c.secs.length) {
+      t += '<div class="secs" data-for="' + c.id + '" hidden>';
+      c.secs.forEach(function (s) {
+        t += '<a href="#' + c.id + '.' + s.k + '" data-sec="' + c.id + '.' + s.k + '"><span class="n">' + c.n + '.' + s.k + '</span><span>' + s.html + '</span></a>';
+      });
+      t += '</div>';
+    }
+  });
+  toc.innerHTML = t + '</div>';
+
+  var layout = document.getElementById('layout'), menuBtn = document.getElementById('menu-btn');
+  var pager = document.getElementById('pager'), narrow = window.matchMedia('(max-width: 900px)');
+  function setOpen(open) {
+    if (narrow.matches) layout.classList.toggle('open', open); else layout.classList.toggle('collapsed', !open);
+    menuBtn.setAttribute('aria-expanded', String(open));
+  }
+  menuBtn.addEventListener('click', function () {
+    setOpen(narrow.matches ? !layout.classList.contains('open') : layout.classList.contains('collapsed'));
+  });
+  document.getElementById('scrim').addEventListener('click', function () { setOpen(false); });
+  if (narrow.addEventListener) narrow.addEventListener('change', function () { layout.classList.remove('open', 'collapsed'); });
+  if (narrow.matches) menuBtn.setAttribute('aria-expanded', 'false');
+
+  function show(idx, k) {
+    var c = CH[idx];
+    CH.forEach(function (x) { x.el.hidden = x !== c; });
+    Array.prototype.forEach.call(toc.querySelectorAll('a.ch'), function (a) {
+      if (a.getAttribute('data-id') === c.id) a.setAttribute('aria-current', 'page'); else a.removeAttribute('aria-current');
+    });
+    Array.prototype.forEach.call(toc.querySelectorAll('.secs'), function (d) { d.hidden = d.getAttribute('data-for') !== c.id; });
+    Array.prototype.forEach.call(toc.querySelectorAll('[data-sec]'), function (a) {
+      if (k && a.getAttribute('data-sec') === c.id + '.' + k) a.setAttribute('aria-current', 'true'); else a.removeAttribute('aria-current');
+    });
+    var prev = CH[idx - 1], next = CH[idx + 1], ph = '';
+    if (prev) ph += '<a class="prev" href="#' + prev.id + '"><small>Previous</small><span>' + prev.n + ' ' + prev.title + '</span></a>';
+    if (next) ph += '<a class="next" href="#' + next.id + '"><small>Next</small><span>' + next.n + ' ' + next.title + '</span></a>';
+    pager.innerHTML = ph;
+    if (narrow.matches) setOpen(false);
+    var target = k && document.getElementById('s-' + c.id + '-' + k);
+    if (target) target.scrollIntoView(); else window.scrollTo(0, 0);
+  }
+  function route() {
+    var h = (location.hash || '').slice(1).split('.');
+    var idx = -1;
+    for (var i = 0; i < CH.length; i++) if (CH[i].id === h[0]) idx = i;
+    show(idx < 0 ? 0 : idx, idx < 0 ? null : h[1]);
+  }
+  window.addEventListener('hashchange', route);
+  route();
+})();
+</script>
+</body>
+</html>

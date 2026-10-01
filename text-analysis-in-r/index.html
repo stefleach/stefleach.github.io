@@ -1,0 +1,1253 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="A guide by Dr Stefan Leach to help students and collaborators with quantitative text analysis in R.">
+<title>Text Analysis in R</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Source+Sans+3:wght@400;500;600;700&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&display=swap">
+<style>
+/* Layout: bookdown-style reader. Chapter sidebar on the left (sections of the open chapter nested), one chapter per view, prev/next at the foot. */
+:root {
+  --bg: #fafbfc; --panel: #eff3f5; --fg: #1b2a33; --muted: #56666f; --rule: #d6e0e5;
+  --on-accent: #ffffff;
+  --code-bg: #f1f4f6;
+  --hl-comment: #5f6e77; --hl-string: #2e7a4d; --hl-number: #a8540a; --hl-keyword: #7a3e9c;
+  --hl-literal: #b0353a; --hl-fn: #005c84; --hl-param: #3d6a7a; --hl-op: #56666f;
+  --font-body: "Source Serif 4", Georgia, "Times New Roman", serif;
+  --font-ui: "Source Sans 3", "Segoe UI", system-ui, -apple-system, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, Menlo, Consolas, monospace;
+  --accent: #7a3a6b; --accent-soft: #f3e7f0;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0f1519; --panel: #151e23; --fg: #e2e9ed; --muted: #9aabb4; --rule: #27343c;
+    --on-accent: #0f1519;
+    --code-bg: #141c21;
+    --hl-comment: #8a9ba5; --hl-string: #8fd3a8; --hl-number: #f0a04b; --hl-keyword: #d0a6ec;
+    --hl-literal: #f28b8b; --hl-fn: #6cc3e8; --hl-param: #9fc9d6; --hl-op: #9aabb4;
+    color-scheme: dark;
+    --accent: #e0a6d4; --accent-soft: #2e1b29;
+  }
+}
+:root[data-theme="dark"] {
+    --bg: #0f1519; --panel: #151e23; --fg: #e2e9ed; --muted: #9aabb4; --rule: #27343c;
+    --on-accent: #0f1519;
+    --code-bg: #141c21;
+    --hl-comment: #8a9ba5; --hl-string: #8fd3a8; --hl-number: #f0a04b; --hl-keyword: #d0a6ec;
+    --hl-literal: #f28b8b; --hl-fn: #6cc3e8; --hl-param: #9fc9d6; --hl-op: #9aabb4;
+    color-scheme: dark;
+    --accent: #e0a6d4; --accent-soft: #2e1b29;
+}
+
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+:root { padding-top: env(safe-area-inset-top, 0px); padding-bottom: env(safe-area-inset-bottom, 0px); }
+body { margin: 0; background: var(--bg); color: var(--fg); font-family: var(--font-body); font-size: 17px; line-height: 1.65; }
+[hidden] { display: none !important; }
+img { max-width: 100%; }
+a { color: var(--accent); text-underline-offset: 2px; }
+a:focus-visible, button:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+code { font-family: var(--font-mono); font-size: 0.86em; background: var(--accent-soft); padding: 0.05em 0.35em; border-radius: 4px; }
+
+.topbar { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 30; display: flex; align-items: center; gap: 12px;
+  padding: 10px 16px; background: var(--bg); border-bottom: 1px solid var(--rule); font-family: var(--font-ui); }
+.menu-btn { display: inline-flex; align-items: center; justify-content: center; width: 36px; height: 36px; border: 1px solid var(--rule);
+  border-radius: 8px; background: var(--panel); color: var(--fg); cursor: pointer; flex: none; }
+.menu-btn svg { width: 18px; height: 18px; }
+.book { font-weight: 700; font-size: 15px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; min-width: 0; }
+.book span { color: var(--muted); font-weight: 500; }
+.home-link { margin-left: auto; font-size: 14px; font-weight: 600; text-decoration: none; white-space: nowrap; }
+.home-link:hover { text-decoration: underline; }
+
+.layout { display: grid; grid-template-columns: 300px minmax(0, 1fr); }
+.sidebar { position: sticky; top: calc(env(safe-area-inset-top, 0px) + 57px); height: calc(100vh - 57px - env(safe-area-inset-top, 0px));
+  overflow-y: auto; background: var(--panel); border-right: 1px solid var(--rule); font-family: var(--font-ui); font-size: 15px;
+  line-height: 1.35; padding-block: 16px 32px; }
+.layout.collapsed { grid-template-columns: 0 minmax(0, 1fr); }
+.layout.collapsed .sidebar { visibility: hidden; }
+.toc a { display: grid; grid-template-columns: 2rem minmax(0, 1fr); gap: 4px; align-items: baseline; padding: 7px 16px 7px 20px;
+  color: var(--fg); text-decoration: none; }
+.toc a:hover { background: var(--accent-soft); }
+.toc a.ch[aria-current="page"] { background: var(--accent-soft); color: var(--accent); font-weight: 600; }
+.toc .n { color: var(--muted); font-variant-numeric: tabular-nums; font-size: 13px; }
+.toc a[aria-current] .n { color: var(--accent); }
+.toc .secs { padding-block: 2px 8px; }
+.toc .secs a { grid-template-columns: 2.4rem minmax(0, 1fr); padding: 5px 16px 5px 40px; font-size: 14px; color: var(--muted); }
+.toc .secs a:hover { color: var(--fg); }
+.toc .secs a[aria-current="true"] { color: var(--accent); font-weight: 600; }
+.toc code { font-size: 0.85em; }
+
+main { min-width: 0; padding-block: 40px 64px; padding-inline: clamp(16px, 5vw, 64px); }
+.page { max-width: 46rem; margin-inline: auto; }
+.page > * + * { margin-top: 1rem; }
+.eyebrow { font-family: var(--font-ui); font-size: 13px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent); margin: 0; }
+h1, h2, h3 { font-family: var(--font-ui); text-wrap: balance; line-height: 1.25; }
+h1 { font-size: clamp(1.9rem, 1.4rem + 1.8vw, 2.5rem); font-weight: 700; margin: 0; letter-spacing: -0.01em; }
+.page > .eyebrow + h1 { margin-top: 0.25rem; }
+h2 { font-size: 1.4rem; font-weight: 700; padding-bottom: 0.3rem; border-bottom: 1px solid var(--rule); scroll-margin-top: 76px; }
+.page > h2 { margin-top: 2.6rem; }
+h2 .num { color: var(--accent); margin-right: 0.35em; font-variant-numeric: tabular-nums; }
+h3 { font-size: 1.1rem; font-weight: 700; }
+.page > h3 { margin-top: 1.8rem; }
+p { margin: 0; }
+ul, ol { padding-left: 1.3rem; margin: 0; }
+li + li { margin-top: 0.35rem; }
+li > ul { margin-top: 0.35rem; }
+.lead p { font-size: 1.1rem; }
+.lead p + p { margin-top: 0.8rem; }
+
+.code { position: relative; }
+pre { margin: 0; background: var(--code-bg); border: 1px solid var(--rule); border-radius: 10px; padding: 14px 16px; overflow-x: auto;
+  font-family: var(--font-mono); font-size: 14px; line-height: 1.55; tab-size: 2; }
+pre code { background: none; padding: 0; font-size: inherit; border-radius: 0; color: var(--fg); }
+.copy-btn { position: absolute; top: 8px; right: 8px; font-family: var(--font-ui); font-size: 12.5px; font-weight: 600; color: var(--muted);
+  background: var(--bg); border: 1px solid var(--rule); border-radius: 6px; padding: 3px 9px; cursor: pointer; }
+.copy-btn:hover { color: var(--accent); border-color: var(--accent); }
+.tk-c { color: var(--hl-comment); font-style: italic; }
+.tk-s { color: var(--hl-string); }
+.tk-n { color: var(--hl-number); }
+.tk-k { color: var(--hl-keyword); font-weight: 500; }
+.tk-l { color: var(--hl-literal); }
+.tk-f { color: var(--hl-fn); }
+.tk-p { color: var(--hl-param); }
+.tk-o { color: var(--hl-op); font-weight: 500; }
+
+.outline { list-style: none; padding: 0; display: grid; gap: 12px; }
+.outline > li { margin: 0; border: 1px solid var(--rule); border-radius: 10px; padding: 14px 18px; }
+.outline-title { display: flex; gap: 10px; align-items: baseline; font-family: var(--font-ui); font-weight: 700; font-size: 1.08rem; text-decoration: none; }
+.outline-title:hover { text-decoration: underline; }
+.outline-title .n { color: var(--muted); font-variant-numeric: tabular-nums; }
+.outline ul { margin-top: 6px; color: var(--muted); font-size: 0.97rem; }
+.callout { background: var(--accent-soft); border-radius: 10px; padding: 14px 18px; }
+.callout .label { display: block; font-family: var(--font-ui); font-size: 12.5px; font-weight: 700; letter-spacing: 0.07em; text-transform: uppercase; color: var(--accent); margin-bottom: 4px; }
+
+.pager { max-width: 46rem; margin: 3.5rem auto 0; display: grid; grid-template-columns: 1fr 1fr; gap: 12px; font-family: var(--font-ui); }
+.pager a { display: block; border: 1px solid var(--rule); border-radius: 10px; padding: 12px 16px; text-decoration: none; color: var(--fg); min-width: 0; }
+.pager a:hover { border-color: var(--accent); }
+.pager small { display: block; font-size: 12.5px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.06em; font-weight: 600; }
+.pager .next { text-align: right; grid-column: 2; }
+.pager span { font-weight: 600; color: var(--accent); }
+.foot { max-width: 46rem; margin: 2.5rem auto 0; font-family: var(--font-ui); font-size: 13px; color: var(--muted); }
+
+.scrim { display: none; }
+@media (max-width: 900px) {
+  .layout, .layout.collapsed { grid-template-columns: minmax(0, 1fr); }
+  .sidebar { position: fixed; top: 0; left: 0; bottom: 0; z-index: 50; width: min(86vw, 320px); height: auto;
+    padding-top: calc(env(safe-area-inset-top, 0px) + 16px); transform: translateX(-100%); transition: transform 0.2s ease; visibility: hidden; }
+  .layout.open .sidebar { transform: none; visibility: visible; }
+  .layout.open .scrim { display: block; position: fixed; inset: 0; z-index: 40; background: rgba(0,0,0,0.35); }
+  .book span { display: none; }
+  body { font-size: 16.5px; }
+  pre { font-size: 13px; }
+}
+@media (prefers-reduced-motion: reduce) { .sidebar { transition: none; } }
+</style>
+</head>
+<body>
+<header class="topbar">
+  <button class="menu-btn" id="menu-btn" type="button" aria-label="Show or hide chapters" aria-controls="toc" aria-expanded="true"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M3 5h14M3 10h14M3 15h14"/></svg></button>
+  <div class="book">Text Analysis in R <span>· Dr Stefan Leach</span></div>
+  <a class="home-link" href="../index.html">All resources</a>
+</header>
+<div class="layout" id="layout">
+  <nav class="sidebar" id="toc" aria-label="Chapters"></nav>
+  <div class="scrim" id="scrim"></div>
+  <main id="main">
+<section class="page" id="p-about" data-n="1" data-title="About" hidden>
+<p class="eyebrow">Chapter 1</p>
+<h1>About</h1>
+<div class="lead"><p>Welcome to <strong>Text Analysis in R</strong>, a guide designed to help you process and analyze text in R. The guide is broken into five chapters:</p>
+</div>
+<ol class="outline"><li><a class="outline-title" href="#about"><span class="n">1</span>About</a><ul><li>A brief introduction to the resource</li></ul></li><li><a class="outline-title" href="#frameworks"><span class="n">2</span>Basic Frameworks</a><ul><li>Resources for understanding how psychologists think about text data</li><li>Key definitions and concepts</li></ul></li><li><a class="outline-title" href="#fundamentals"><span class="n">3</span>Fundamental Operations</a><ul><li>Importing different types of text data</li><li>Accessing nested text data</li><li>Dealing with garbled text and different encodings</li><li>Cleaning text data and counting words</li><li>Loops to iterate through large amounts of text data</li></ul></li><li><a class="outline-title" href="#topic-models"><span class="n">4</span>Topic Models</a><ul><li>Pre-processing data for stopword removal, contraction expansion, and lemmatizing</li><li>Exploring word frequencies and term frequency-inverse document frequency (TF-IDF)</li><li>Dealing with computational bottlenecks</li><li>Extracting principal components and interpreting topic models</li></ul></li><li><a class="outline-title" href="#dictionary-methods"><span class="n">5</span>Dictionary Methods</a><ul><li>Loading key word lists with quanteda.dictionaries</li><li>Extracting proportions of key words for each document in a corpus</li><li>Examining and interpreting dictionary scores</li></ul></li></ol>
+<div class="callout"><span class="label">Using the code</span>Every code block has a Copy button. Paste the code into an R script in RStudio and run it line by line to see what each step does.</div>
+</section>
+<section class="page" id="p-frameworks" data-n="2" data-title="Basic Frameworks" hidden>
+<p class="eyebrow">Chapter 2</p>
+<h1>Basic Frameworks</h1>
+<p>The purpose of this chapter is to direct you to seminal articles outlining how psychologists think about text data and to ensure you understand common concepts.</p>
+<h2 id="s-frameworks-1" data-k="1"><span class="num">2.1</span> <span class="t">Theory</span></h2>
+<p>I recommend the following resources for getting to grips with the fundamental ideas behind text analysis and natural language processing in psychology.</p>
+<ul>
+<li>Boyd, R. L., &amp; Markowitz, D. M. (2025). Verbal behavior and the future of social science. <em>American Psychologist</em>, 80(3), 411–433. <a href="https://doi.org/10.1037/amp0001319" target="_blank" rel="noopener">https://doi.org/10.1037/amp0001319</a></li>
+<li>Boyd, R. L., &amp; Schwartz, H. A. (2021). Natural language analysis and the psychology of verbal behavior: The past, present, and future states of the field. <em>Journal of Language and Social Psychology</em>, 40(1), 21-41. <a href="https://doi.org/10.1177/0261927X20967028" target="_blank" rel="noopener">https://doi.org/10.1177/0261927X20967028</a></li>
+<li>Dehghani, M., &amp; Boyd, R. L. (Eds.). (2022). Handbook of language analysis in psychology. <em>Guilford Publications</em>.</li>
+<li>Pennebaker, J. W., Mehl, M. R., &amp; Niederhoffer, K. G. (2003). Psychological aspects of natural language use: Our words, our selves. <em>Annual review of psychology</em>, 54(1), 547-577. <a href="https://doi.org/10.1146/annurev.psych.54.101601.145041" target="_blank" rel="noopener">https://doi.org/10.1146/annurev.psych.54.101601.145041</a></li>
+</ul>
+<h2 id="s-frameworks-2" data-k="2"><span class="num">2.2</span> <span class="t">Definitions</span></h2>
+<ul>
+<li><strong>Character</strong>: The smallest unit in text, such as a letter, digit, or symbol.</li>
+<li><strong>String</strong>: A sequence of characters treated as a single data element, often representing text.</li>
+<li><strong>Word</strong>: A basic unit of language consisting of one or more characters, typically separated by spaces or punctuation.</li>
+<li><strong>Type</strong>: A unique word or token in a text, regardless of how many times it appears.</li>
+<li><strong>Token</strong>: An instance of a sequence of characters grouped as a useful unit, often corresponding to a word, subword, or punctuation.</li>
+<li><strong>Lemma</strong>: The base or dictionary form of a word.</li>
+<li><strong>Term</strong>: A meaningful unit of language, often separated by white space, not necessarily a conventional word.</li>
+<li><strong>Document</strong>: A single unit of text treated as one item for analysis, such as an article, tweet, or email.</li>
+<li><strong>Text</strong>: A general sequence of written characters, ranging from a sentence to a book.</li>
+<li><strong>Corpus</strong>: A structured collection of texts used for training or analyzing language models.</li>
+<li><strong>Vocabulary</strong>: The set of all unique tokens or terms found in a corpus or collection of documents.</li>
+<li><strong>Natural Language Processing (NLP)</strong>: A field of study focused on enabling computers to understand, interpret, and generate human language.</li>
+</ul>
+</section>
+<section class="page" id="p-fundamentals" data-n="3" data-title="Fundamental Operations" hidden>
+<p class="eyebrow">Chapter 3</p>
+<h1>Fundamental Operations</h1>
+<p>The purpose of this chapter is to tackle some basic problems of how to read and manage text data. Below are a number of important R libraries, commands, and functions which you need to be familiar with to effectively process text data. Your first task is to familiarize yourself with these. You are encouraged to copy over the code and run them on your own machines.</p>
+<h2 id="s-fundamentals-1" data-k="1"><span class="num">3.1</span> <span class="t">File Types</span></h2>
+<p>This section provides an overview of common file types (<code>.csv</code>, <code>.xlsx</code>, <code>.rds</code>, <code>.json</code>, <code>.txt</code>) and explains how to open them using conventional Windows programs and R.</p>
+<h3>.csv (Comma-Separated Values)</h3>
+<p>Description: A plain text file where data is stored in a tabular format, with each row on a new line and columns separated by commas.</p>
+<p>How to open in Windows:</p>
+<ul>
+<li><strong>Microsoft Excel:</strong> Right-click the file → Open with Excel. Alternatively, open Excel and import the file through the &quot;Data&quot; tab.</li>
+<li><strong>Notepad/Notepad++:</strong> Right-click → Open with Notepad or another text editor.</li>
+</ul>
+<p>How to open in R:</p>
+<pre><code class="language-r"># Read .csv file
+data &lt;- read.csv(&quot;path/to/file.csv&quot;)
+</code></pre>
+<h3>.xlsx (Excel Spreadsheet)</h3>
+<p>Description: A Microsoft Excel file format that stores data in worksheets with support for formatting, formulas, and multiple sheets.</p>
+<p>How to open in Windows:</p>
+<ul>
+<li><strong>Microsoft Excel:</strong> Double-click the file to open in Excel.</li>
+<li><strong>Google Sheets:</strong> Upload the file to Google Drive and open it in Google Sheets (web-based).</li>
+</ul>
+<p>How to open in R:</p>
+<pre><code class="language-r"># Install required package
+install.packages(&quot;openxlsx&quot;)
+
+# Load required package
+library(openxlsx)
+
+# Read .xlsx file
+data &lt;- read.xlsx(&quot;path/to/file.xlsx&quot;, sheet = 1)  # Specify the sheet if needed
+</code></pre>
+<h3>.rds (R Data File)</h3>
+<p>Description: A file format unique to R that stores R objects in a binary format for efficient storage and loading.</p>
+<p>How to open in Windows:</p>
+<ul>
+<li><strong>Not Directly Openable:</strong> You cannot open <code>.rds</code> files in common Windows programs. They are intended for use within R.</li>
+</ul>
+<p>How to open in R:</p>
+<pre><code class="language-r"># Read .rds file
+data &lt;- readRDS(&quot;path/to/file.rds&quot;)
+</code></pre>
+<h3>.json (JavaScript Object Notation)</h3>
+<p>Description: A lightweight, human-readable format for structuring data, often used in web APIs and configuration files.</p>
+<p>How to open in Windows:</p>
+<ul>
+<li><strong>Notepad/Notepad++:</strong> Right-click → Open with Notepad or another text editor.</li>
+<li><strong>Web Browser:</strong> Drag the file into a browser for a formatted view.</li>
+</ul>
+<p>How to open in R:</p>
+<pre><code class="language-r"># Install required package
+install.packages(&quot;jsonlite&quot;)
+
+# Load required package
+library(jsonlite)
+
+# Read .json file
+data &lt;- fromJSON(&quot;path/to/file.json&quot;)
+</code></pre>
+<h3>.txt (Plain Text File)</h3>
+<p>Description: A basic text file containing unformatted text, often used for simple data storage or documentation.</p>
+<p>How to open in Windows:</p>
+<ul>
+<li><strong>Notepad/Notepad++:</strong> Double-click to open in Notepad or another text editor.</li>
+<li><strong>Microsoft Word:</strong> Open in Word to add formatting or modify the content.</li>
+</ul>
+<p>How to open in R:</p>
+<pre><code class="language-r"># Reading .txt file
+data &lt;- read.table(&quot;path/to/file.txt&quot;, header = FALSE, sep = &quot;\\&quot;, comment.char = &quot;&quot;)
+</code></pre>
+<h2 id="s-fundamentals-2" data-k="2"><span class="num">3.2</span> <span class="t">Accessing Nested Data</span></h2>
+<p>You may find that data formats you encounter will not seamlessly convert into the sorts of R objects you need for further analyses. Often you will find that text data is read into nested lists or dataframes which require further formatting. This is common for .json files.</p>
+<p>Let's emulate such a dataset and see how it operates; and how we can access the nested values in it.</p>
+<pre><code class="language-r"># Install required package
+install.packages(&quot;tidyverse&quot;)
+
+# Load required package
+library(tidyverse)
+
+# Create a dataframe which emulates the nested structure of a .json file
+data &lt;- tibble(name = &quot;John Doe&quot;,
+               age = &quot;30&quot;,
+               address = data.frame(street = &quot;123 Main St&quot;,
+                                    city = &quot;New York&quot;,
+                                    state = &quot;NY&quot;),
+               blog = data.frame(url = &quot;https://johndoe.com&quot;, 
+                                 description = &quot;John's personal blog about tech and coding.&quot;),
+               contacts = list(data.frame(type = c(&quot;email&quot;, &quot;phone&quot;),
+                                          value = c(&quot;johndoe@example.com&quot;, &quot;555-1234&quot;))))
+
+# You will notice that not all variables are fully accessible in this data frame - pay particular attention to the &quot;contacts&quot; variable
+View(data)
+
+# Accessing top-level data (name, age)
+data$name  # Output: &quot;John Doe&quot;
+data$age   # Output: 30
+
+# Accessing nested data (address, blog)
+data$address$street   # Output: &quot;123 Main St&quot;
+data$address$city     # Output: &quot;New York&quot;
+data$address$state    # Output: &quot;NY&quot;
+data$blog$url         # Output: &quot;https://johndoe.com&quot;
+data$blog$description # Output: &quot;John's personal blog about tech and coding.&quot;
+
+# Accessing further nested arrays (e.g., first contact email)
+data$contacts[[1]]$value[1] # Output: &quot;johndoe@example.com&quot;
+data$contacts[[1]]$value[2] # Output: &quot;555-1234&quot;
+
+# Pulling out all relevant details and saving them in a new dataframe
+dataframe &lt;- data.frame(name = data$name,
+                        age = data$age,
+                        street_address = data$address$street,
+                        city_address = data$address$city,
+                        state_address = data$address$state,
+                        blog_url = data$blog$url ,
+                        blog_description = data$blog$description,
+                        email = data$contacts[[1]]$value[1],
+                        phone = data$contacts[[1]]$value[2])
+</code></pre>
+<p><strong>Explanation</strong></p>
+<p>Reading JSON: The <code>fromJSON()</code> function from the <code>jsonlite</code> package is used to read a JSON file into an R object (in this case, json_data).</p>
+<ul>
+<li>Accessing Top-Level Data: You can access simple fields (like name and age) directly using the <code>$</code> operator.</li>
+<li>Accessing Nested Data: For the nested address object, we access it like <code>json_data$address$street</code>.</li>
+<li>For arrays (like contacts), we use <code>[[ ]]</code> indexing to access elements. For example, <code>json_data$contacts[[1]]</code> gives us the first contact, and we can then extract the type and value, as well as focus in on the first or second elements by using <code>[ ]</code></li>
+</ul>
+<h2 id="s-fundamentals-3" data-k="3"><span class="num">3.3</span> <span class="t">Character Encoding</span></h2>
+<p>Character encoding is the process of converting characters, like letters and symbols, into a format that computers can understand and store, typically as numbers. This mapping allows computers to represent and manipulate text data, ensuring that characters are displayed correctly across different systems and platforms. Here are some examples you may have heard of:</p>
+<ul>
+<li><strong>ASCII</strong>: A basic encoding that represents English characters, numbers, and some symbols. It uses 7 bits per character, allowing for 128 characters.</li>
+<li><strong>UTF-8</strong>: A popular encoding that can represent a wide range of characters from different languages, including those outside of the ASCII character set.</li>
+<li><strong>UTF-16</strong>: Another Unicode encoding, capable of representing a vast number of characters, using either two or four bytes per character.</li>
+</ul>
+<p>Broadly speaking, R tends to use UTF-8. Reading text encoded in other formats will often result in text appearing as garbled characters or question marks. Likewise, many R packages will write special characters as their unicode - e.g., you may find <code>©</code> written as <code>&lt;U+00A9&gt;</code> in your text file. Similar issues can arise with xml and html codes - e.g., <code>&amp;</code> might come up as <code>&amp;amp;</code>.</p>
+<p>Here are a number of functions which can help to translate garbled, unicode, html, and xml text back to interpretable strings.</p>
+<pre><code class="language-r"># Load required package
+library(stringi)
+
+# Define functions to convert garbled and unicode text back to interpretable strings
+unescape_uni &lt;- function(x) {
+  x &lt;- gsub(&quot;&gt;&quot;, &quot;&quot;, gsub(&quot;&lt;U\\+&quot;, &quot;\\\\u&quot;, x))
+  stringi::stri_unescape_unicode(x)
+}
+
+unescape_xml &lt;- function(str){
+  xml2::xml_text(xml2::read_xml(paste0(&quot;&lt;x&gt;&quot;, str, &quot;&lt;/x&gt;&quot;)))
+}
+
+unescape_html &lt;- function(str){
+  xml2::xml_text(xml2::read_html(paste0(&quot;&lt;x&gt;&quot;, str, &quot;&lt;/x&gt;&quot;)))
+}
+
+# Define a toy dataset with unicode strings
+data &lt;- data.frame(id = c(1, 2),
+                   text = c(&quot;Just do it!&lt;U+00A9&gt;&quot;,
+                            &quot;I love chips &amp;amp; curry sauce!&quot;))
+                   
+# Apply functions to a dataframe of texts
+for (i in 1:nrow(data)) {
+  data$text[i] &lt;-  unescape_uni(data$text[i])
+  data$text[i] &lt;-  unescape_xml(data$text[i])
+  data$text[i] &lt;-  unescape_html(data$text[i])
+}
+
+# Check converted text
+data$text
+
+</code></pre>
+<h2 id="s-fundamentals-4" data-k="4"><span class="num">3.4</span> <span class="t">Cleaning Data</span></h2>
+<p>Many types of text data have characters or strings in them which may be irrelevant or undesirable to the quantitative researcher. Corpora can have metadata and tags which you may wish to remove prior to your analyses (e.g., “Start:” to indicate where a speech begins). Similarly, you may wish to remove certain information from social media texts prior to your analyses, like hashtags or URLs. Many of these operations rely on regular expressions--a formal language for specifying text strings. If you are curious, here is a short video: <a href="https://www.youtube.com/watch?v=UbIQxT3bApU" target="_blank" rel="noopener">https://www.youtube.com/watch?v=UbIQxT3bApU</a></p>
+<p>Below are a number of common functions in R which can help you clean your data. Try running them to see how they work.</p>
+<pre><code class="language-r"># Sample string
+text &lt;- &quot;Start: Hello world! Check out this link: https://example.com #excited&quot;
+
+# Remove the first 6 characters
+text_without_first_6 &lt;- substr(text, 7, nchar(text))
+print(text_without_first_6)  # Output: &quot; Hello world! Check out this link: https://example.com #excited&quot;
+
+# Remove hashtags
+text_no_hashtags &lt;- gsub(&quot;#\\w+&quot;, &quot;&quot;, text_without_first_6)
+print(text_no_hashtags)  # Output: &quot; Hello world! Check out this link: https://example.com &quot;
+
+# Remove URLs
+text_no_hashtags_urls &lt;- gsub(&quot;https?://\\S+&quot;, &quot;&quot;, text_no_hashtags)
+print(text_no_hashtags_urls)  # Output: &quot; Hello world! Check out this link:  &quot;
+
+# Remove leading and trailing spaces
+text_cleaned &lt;- trimws(text_no_hashtags_urls)
+print(text_cleaned)  # Output: &quot;Hello world! Check out this link:&quot;
+
+</code></pre>
+<p><strong>Explanation</strong></p>
+<ul>
+<li>Removing the first 6 characters: The <code>substr()</code> function removes letters in the string. We pass it the ‘text’ object to tell it which string to operate on, <em>6</em> to tell it the position to start deleting from, and <code>nchar(text)</code> to tell it to delete all the way to the last position of the text–which is equal to the total number of characters in the string, given by <code>nchar(text)</code>.</li>
+<li>Removing hashtags: The <code>gsub()</code> function matches and replaces strings. We pass the regular expression <em>#\w+</em> to match any word following a <em>#</em> symbol and &quot;&quot; to replace it with nothing (effectively deleting it). Finally, we pass the <code>text_without_first_6</code> object to tell it which string to operate on.</li>
+<li>Removing URLs: We use the <code>gsub()</code> function again but this time with the regular expression <em>https?://\S+</em> to match URLs that start with <em>http://</em> or <em>https://</em>. We replace these with nothing &quot;&quot; and the <code>text_without_first_6</code> object.</li>
+<li>Removing leading and trailing spaces: We use the <code>trimws()</code> to remove leading and trailing spaces.</li>
+</ul>
+<h2 id="s-fundamentals-5" data-k="5"><span class="num">3.5</span> <span class="t">Concatenating Strings</span></h2>
+<p>An additional step you may have to take in some cases is to concatenate strings of text into larger units. For example, sometimes texts will be by-word, but you may wish to analyze them as full sentences of texts.</p>
+<p>Below are two examples using the <code>paste()</code> function to concatenate words.</p>
+<pre><code class="language-r"># Individual words
+word1 &lt;- &quot;Data&quot;
+word2 &lt;- &quot;Science&quot;
+word3 &lt;- &quot;is&quot;
+word4 &lt;- &quot;fun!&quot;
+
+# Concatenate words using paste() with a space separator
+sentence &lt;- paste(word1, word2, word3, word4)
+
+# Print the sentence
+print(sentence)
+
+# Vector of words
+words_vector &lt;- c(&quot;Data&quot;, &quot;Science&quot;, &quot;is&quot;, &quot;amazing!&quot;)
+
+# Concatenate words with spaces using collapse
+sentence &lt;- paste(words_vector, collapse = &quot; &quot;)
+
+# Print the sentence
+print(sentence)
+</code></pre>
+<h2 id="s-fundamentals-6" data-k="6"><span class="num">3.6</span> <span class="t">Counting Words</span></h2>
+<p>In many cases it will be important for you to know how many words each of your texts contains. As it turns out, it is quite difficult to define exactly what constitutes a word. For example, is <em>?</em> a word? Is <em>never-ending</em> one or two words? If you are curious to know more, this short video may be illuminating: <a href="https://www.youtube.com/watch?v=em0ePorcp48" target="_blank" rel="noopener">https://www.youtube.com/watch?v=em0ePorcp48</a></p>
+<p>For the purposes of this workshop, we'll define a word as a string of characters separated from another string by at least 1 space.</p>
+<p>Knowing how many words each string contains has many practical benefits, the most obvious is to filter out data which contains little or no content of interest. For example, it is often reasonably to filter out strings which have no words in them.</p>
+<p>Here is an example which uses a simple function to count the number of words in a string, relying on the <code>wordcount()</code> function from the <code>ngram</code> library.</p>
+<pre><code class="language-r"># Install the required packages
+install.packages(&quot;tidyverse&quot;)
+install.packages(&quot;ngram&quot;)
+
+# Load required packages
+library(tidyverse)
+library(ngram)
+
+# Define a text string
+text &lt;- &quot;Data Science is fun!&quot;
+
+# Apply the wordcount function to the string
+wordcount(text, sep = &quot; &quot;) # the sep = &quot; &quot; tells the function to identify strings as words on the basis of whether they are separated from other string by at least 1 space
+
+# Define a dataframe with a vector of text strings and an empty vector for wordcounts
+data &lt;- data.frame(texts = c(&quot;Data Science is fun!&quot;, &quot;Learn R Programming.&quot;, &quot;:)!&quot;, &quot;Analysis with R&quot;),
+                   wordcount = NA)
+
+# Apply the wordcount function to each string in the dataframe and save the output to the corresponding vector
+data$wordcount[1] &lt;- wordcount(data$texts[1], sep = &quot; &quot;)
+data$wordcount[2] &lt;- wordcount(data$texts[2], sep = &quot; &quot;)
+data$wordcount[3] &lt;- wordcount(data$texts[3], sep = &quot; &quot;)
+data$wordcount[4] &lt;- wordcount(data$texts[4], sep = &quot; &quot;)
+
+# Print the data
+print(data)
+
+# Filter out strings which have fewer than 2 words
+data_filtered &lt;- data %&gt;%
+  filter(wordcount &gt;= 2)
+
+# Print the filtered data
+print(data_filtered)
+</code></pre>
+<p><strong>Explanation</strong></p>
+<ul>
+<li>After loading the required packages, we define a dataframe with four texts and an empty column to hold their word counts.</li>
+<li>We apply the <code>wordcount()</code> function to each text in <code>data$texts</code> and save the result in the matching row of <code>data$wordcount</code>.</li>
+<li>We use the pipe operator <code>%&gt;%</code> and the <code>filter()</code> function to keep only texts with at least 2 words, <code>filter(wordcount &gt;= 2)</code>. In this case, that removes the row <em>:)!</em>, which counts as a single word.</li>
+</ul>
+<h2 id="s-fundamentals-7" data-k="7"><span class="num">3.7</span> <span class="t">Identifying specific instances</span></h2>
+<p>For many types of analyses you will want to identify specific types of text data either because they are relevant or irrelevant to your analyses. The most basic way of doing this is via key-word searches.</p>
+<p>The <code>grepl()</code> function is used to search for patterns or keywords within a string and returns <code>TRUE</code> or <code>FALSE</code> depending on whether the pattern is found.</p>
+<pre><code class="language-r"># Example text data
+data &lt;- data.frame(texts = c(&quot;Data Science is fun!&quot;, &quot;Learn R Programming.&quot;, &quot;Python is great.&quot;, &quot;R is powerful.&quot;))
+
+# Print the data
+print(data)
+
+# Search for the word &quot;python&quot;
+result &lt;- grepl(&quot;python&quot;, data$texts, ignore.case = TRUE)
+
+# Print the result
+print(result)
+
+# Select only cases with the word &quot;python&quot;
+data_python &lt;- data %&gt;%
+  filter(grepl(&quot;python&quot;, texts, ignore.case = TRUE))
+  
+# Print the data only with cases with the word &quot;python&quot; 
+print(data_python)
+</code></pre>
+<p><strong>Explanation</strong></p>
+<ul>
+<li>The <code>grepl(&quot;Programming&quot;, data$texts, ignore.case = TRUE)</code> function checks each string in the <code>data$texts</code> to see if it contains the string <em>python</em>.</li>
+<li>Note that we defined <code>ignore.case = TRUE</code> in the <code>grepl()</code> function to allow <em>python</em> to match to <em>Python</em>. Try setting <code>ignore.case = FALSE</code> and see how this changes the output.</li>
+<li>We can combine <code>grepl()</code> with <code>filter()</code> to remove rows which do now contain <em>python</em> in <code>data$texts</code>.</li>
+</ul>
+<h2 id="s-fundamentals-8" data-k="8"><span class="num">3.8</span> <span class="t">Loops</span></h2>
+<p>Now that you have learnt how to read and process individual files and examples, its time to learn how to automate this process for large amounts of data. Loops are indispensable for this. They are used to repeat a block of code multiple times. This is helpful when you need to perform repetitive tasks, like iterating over many data files or instances of text. The most common type of loop in R is the <code>for</code> loop which iterates through a sequence of specified values.</p>
+<pre><code class="language-r"># Example of a 'for' loop in R
+for (i in 1:5) {
+  print(paste(&quot;Iteration number:&quot;, i))
+}
+</code></pre>
+<p><strong>Explanation</strong></p>
+<ul>
+<li>The for loop will iterate over the sequence 1:5 (numbers 1 through 5).</li>
+<li>For each iteration, it will print &quot;Iteration number:&quot; followed by the current value of i.</li>
+</ul>
+<p>Let's see the value of looping over numerous texts to quickly clean and save them.</p>
+<pre><code class="language-r"># Sample text data with 3 values
+text_data &lt;- c(&quot;  Hello World!  &quot;, &quot;  R is great! &quot;, &quot;  CLEANING text DATA.  &quot;)
+
+# Initialize an empty dataframe with 3 rows to store the cleaned text
+cleaned_data &lt;- data.frame(id = 1:3,
+                           cleaned_text = NA)
+
+# For loop from 1:3 to clean the text
+for (i in 1:3) {
+  cleaned_data$cleaned_text[i] &lt;- trimws(text_data[i])  # Remove extra spaces
+}
+
+# Print cleaned data
+print(cleaned_data)
+
+</code></pre>
+<p><strong>Explanation</strong></p>
+<ul>
+<li>The for loop will iterate over each text in <code>text_data</code> in the sequence 1:3 by replacing the value i in <code>text_data[i]</code> (e.g., the first iteration pulls <code>&quot;  Hello World!  &quot;</code> by calling <code>text_data[1]</code>)</li>
+<li>For each iteration, it uses <code>trimws()</code> to remove leading and trailing spaces.</li>
+<li>Each cleaned text is saved in the initialized dataframe <code>cleaned_data</code> by placing it in the <code>$cleaned_text</code> vector in the cell defined by <code>[i]</code> (e.g., the third iteration assigns the cleaned text <code>&quot;CLEANING text DATA.&quot;</code> to the third row of via <code>cleaned_data$cleaned_text[3]</code>)</li>
+</ul>
+</section>
+<section class="page" id="p-topic-models" data-n="4" data-title="Topic Models" hidden>
+<p class="eyebrow">Chapter 4</p>
+<h1>Topic Models</h1>
+<p>The purpose of this chapter is to guide you through some essential techniques for processing and exploring text data. This includes stopword removal, contraction expansion, lemmatizing, word frequency analysis, term frequency-inverse document frequency (TF-IDF), term-document matrices, and topic modelling.</p>
+<p>The approach to topic modelling outlined below follows the <strong>Meaning Extraction Method</strong> (Chung &amp; Pennebaker, 2008) to identify clusters of words which tend to co-occur and are therefore indicative of topic. Conceptually, the method is akin to extracting latent factors from item scores by examining the correlations among them. Here, the method is applied to word frequencies across texts (instead of item scores across people). This is an established approach common to exploratory text analysis in psychological science, having been applied in a wide range of areas including: interpersonal communication (Entwistle et al., 2021), discussion of food and diets (Gregson et al., 2023), and climate change debate (Shah et al., 2021). For further discussion, we refer readers to Boyd and Pennebaker (2016) and Markowitz (2021).</p>
+<p>Key references are:</p>
+<ul>
+<li>Chung, C. K., &amp; Pennebaker, J. W. (2008). Revealing dimensions of thinking in open-ended self-descriptions: An automated meaning extraction method for natural language. <em>Journal of Research in Personality</em>, 42(1), 96–132. <a href="https://doi.org/10.1016/j.jrp.2007.04.006" target="_blank" rel="noopener">https://doi.org/10.1016/j.jrp.2007.04.006</a></li>
+<li>Markowitz, D. M. (2021). The meaning extraction method: An approach to evaluate content patterns from large-scale language data. <em>Frontiers in Communication</em>, 6, 588823. <a href="https://doi.org/10.3389/fcomm.2021.588823" target="_blank" rel="noopener">https://doi.org/10.3389/fcomm.2021.588823</a></li>
+</ul>
+<p>Below are a number of important R libraries, commands, and functions which will help you process and explore text, as well as fit topic models.</p>
+<h2 id="s-topic-models-1" data-k="1"><span class="num">4.1</span> <span class="t">Pre-Processing</span></h2>
+<p>The first step to fitting topic models is to conduct a number of basic operations on your text data to ensure it is processed in the most robust manner.</p>
+<h3>Case</h3>
+<p>It can be a good idea to set your text to lower case prior to any analysis. This ensures that text identification, conversions, and mappings are most likely to be robust. Many functions include operators which make them case insensitive, but some do not. It would be unfortunate if, for example, a function you applied correctly identified &quot;let's go!&quot; but not &quot;Let's go!&quot;. We can use the <code>tolower()</code> function to easily do this.</p>
+<pre><code class="language-r"># Define a vector with three text strings
+text = c(&quot;Text analysis in R is interesting.&quot;, 
+         &quot;We're learning NLP.&quot;, 
+         &quot;After this workshop, I'll know how to explore text data and fit topic models&quot;)
+
+# Convert the texts to lowercase
+text_lower &lt;- tolower(text)
+
+# Print the texts to confirm they are now all in lowercase
+print(text_lower)
+</code></pre>
+<h3>Contractions</h3>
+<p>Contractions should typically be expanded prior to further analysis (e.g., &quot;we're&quot; → &quot;we are&quot;). We can use the <code>replace_contraction()</code> function to handle this. It contains a large number of ‘hard-coded’ mappings between contractions (e.g., &quot;I'll&quot;) and expansions (&quot;I will&quot;). It effectively finds all contractions in its vocabulary, in either a single string or vector of strings, and replaces them with the corresponding expansion.</p>
+<pre><code class="language-r"># Load required package
+library(textclean)
+
+# Define a vector with three text strings
+text = c(&quot;text analysis in r is interesting.&quot;, 
+         &quot;we're learning nlp.&quot;, 
+         &quot;after this workshop, i'll know how to explore text data and fit topic models&quot;)
+ 
+# Expand contractions
+text_expanded &lt;- replace_contraction(text)
+
+# Print the texts to confirm all contractions are now expanded
+print(text_expanded)
+</code></pre>
+<h3>Lemmatizing</h3>
+<p>Lemmatizing reduces words to their base forms (e.g., &quot;running&quot; → &quot;run&quot;). We can use the <code>lemmatize_words()</code> function from the <code>textstem</code> package to do this. It looks up each word in a large dictionary of word forms and their lemmas, and replaces any word it finds with its lemma. Words that are not in the dictionary are left unchanged.</p>
+<pre><code class="language-r"># Load required package
+library(textstem)
+
+# Define a vector with three words
+text &lt;- c(&quot;running&quot;, &quot;jumps&quot;, &quot;doggies&quot;)
+
+# Lemmatize words
+text_lemmatized &lt;- lemmatize_words(text)
+
+# Confirm words are now lemmatized
+print(text_lemmatized)
+
+# Define another vector with four more words
+text &lt;- c(&quot;girlies&quot;, &quot;goods&quot;, &quot;better&quot;, &quot;joyfully&quot;)
+
+# Lemmatize words
+text_lemmatized &lt;- lemmatize_words(text)
+
+# Confirm words are now lemmatized. Note how some convertions may not be as expected and so must be applied with care
+# &quot;girlies&quot; is not lemmatized to &quot;girl&quot; because it is not in the lemma vocabulary
+# &quot;goods&quot; is lemmatized to &quot;good&quot;, despite &quot;goods&quot; potentially denoting merchandise (and not the plural of good)
+# &quot;better&quot; is lemmatized to &quot;good&quot;
+# &quot;joyfully&quot; is not lemmatized to &quot;joy&quot; (despite being semantically related)
+print(text_lemmatized)
+</code></pre>
+<h3>Stopwords</h3>
+<p>Stopwords are common words (e.g., &quot;the&quot;, &quot;is&quot;) that are typically considered to be devoid of substantive meaning We can remove them using an established stopword list provided by the <code>tidytext</code> package. You can call this list and examine it by running <code>View(stop_words)</code>. We can use the <code>anti_join()</code> function to remove any and all stopwords in our data.</p>
+<pre><code class="language-r"># Load required packages
+library(tidyverse)
+library(tidytext)
+
+# Examine the stop_word list to understand which words are identified as meaningless and for removal.
+# Note there are multiple sub-lists contained within these which are more, and less, comprehensive
+View(stop_words)
+
+# Define a dataframe with words
+data &lt;- data.frame(
+  word = c(&quot;after&quot;, &quot;this&quot;, &quot;workshop&quot;, &quot;i&quot;, &quot;will&quot;, &quot;know&quot;, &quot;how&quot;, &quot;to&quot;, &quot;explore&quot;, &quot;text&quot;, &quot;data&quot;)
+)
+
+# Remove rows with stopwords by using the anti_join() function. 
+# This function matches and removes cases in two dataframes. 
+# Note, the column names must be identical in both. 
+# The function succeeds because both relevant columns are denoted &quot;word&quot;.
+data_nostopwords &lt;- anti_join(data,
+                              stop_words,
+                              by = &quot;word&quot;)
+
+# Confirm the stop words have been removed
+View(data_nostopwords)
+</code></pre>
+<p>It is important to note that some stopwords may be relevant to your analysis. As an example, psychological scientists have expressed an interest in first-person pronoun use as an indicator of self-focus, perhaps being more prevalent in those who are narcissistic (see e.g., Carey et al., 2015). &quot;I&quot; and &quot;me&quot; are typically included in lists of stopwords and so would be removed when applying them. This would preclude analyses of them.</p>
+<p>Carey, A. L., Brucks, M. S., Küfner, A. C., Holtzman, N. S., Back, M. D., Donnellan, M. B., ... &amp; Mehl, M. R. (2015). Narcissism and the use of personal pronouns revisited. Journal of personality and social psychology, 109(3), e1.</p>
+<p>If you find yourself in the position of being interested in words which feature in stopword lists (you are encouraged to check <code>stopwords()</code>), you have two options. The first is to skip the removal of stopwords entirely. The second is to remove specific words from the <code>stopwords()</code> list. This can be achieved as follows.</p>
+<pre><code class="language-r"># Load required package
+library(tidytext)
+
+# Define a dataframe with stop words you wish to retain
+meaningful_stopwords &lt;- data.frame(
+  word = c(&quot;i&quot;, &quot;me&quot;, &quot;myself&quot;, &quot;mine&quot;)
+  )
+
+# Create a new set of stopwords from the established one (stop_word)
+# But without the ones you wished to retain, again using the anti_join() function
+my_stop_words &lt;- 
+  anti_join(stop_words, 
+            meaningful_stopwords, 
+            by = &quot;word&quot;)
+
+# Confirm your new stopword list does not contain the words you wish to retain
+# This can be done by scrolling down to confirm that, for example, &quot;i&quot; is no longer in the list
+View(my_stop_words)
+</code></pre>
+<h2 id="s-topic-models-2" data-k="2"><span class="num">4.2</span> <span class="t">Unnesting Tokens</span></h2>
+<p>An early step you will almost always need to take is to split your data into word tokens. This can be done via the <code>unnest_tokens()</code> function. It will identify all tokens, separated by white space or delineators (e.g., &quot;.&quot;), in a vector of strings, pull them out and place them into individual cells for further analyses. This step will enable many functions which operate on single tokens, as opposed to longer strings.</p>
+<pre><code class="language-r"># Load required packages
+library(tidyverse)
+library(tidytext)
+
+# Define a dataframe with three text strings
+data &lt;- data.frame(
+  text = c(&quot;Text analysis in R is interesting.&quot;, 
+           &quot;We are learning NLP.&quot;,
+           &quot;After this workshop, I will know how to explore text data and fit topic models&quot;)
+)
+
+# Unnest the tokens from all the strings so that each word is represented 
+data_tokens &lt;- data %&gt;% 
+  unnest_tokens(input = text,  # Input column from which tokens are unnested
+                output = word) # Output column to be created to store unnested tokens
+
+# Examine the new dataframe where each word is saved on a single row
+View(data_tokens)
+</code></pre>
+<h2 id="s-topic-models-3" data-k="3"><span class="num">4.3</span> <span class="t">Word Frequencies and TF-IDF</span></h2>
+<p>Let’s apply all of the previous operations to a dataset to examine relevant word frequencies and TF-IDF scores.</p>
+<p>It is recommended that you explore your dataset by examining how often each unique word occurs. This can be done via the functions provided by the <code>tidytext</code> package, and supported by the <code>tidyverse</code> package. It first involves calling the <code>count()</code> function to derive the frequency with which words occur.</p>
+<p>TF-IDF helps highlight important words. To remind you, TF-IDF stands for Term Frequency - Inverse Document Frequency. TF captures the frequency with terms (or words) occur in each document. IDF captures how frequently terms (or words) occur throughout a corpus. Words which occur in many documents are given a low IDF score, whilst those which occur in very few are given a high IDF score. TF-IDF is the product of TF and IDF. The final score therefore captures how frequent and unique words are.</p>
+<pre><code class="language-r"># Load required packages
+library(tidyverse)
+library(tidytext)
+library(textclean)
+library(textstem)
+
+# Define a dataframe with five text strings, labelled as documents 1-5
+data &lt;- data.frame(
+  document = c(1, 2, 3, 4, 5),
+  text = c(&quot;Text analysis in R is interesting.&quot;, 
+           &quot;We're learning NLP and text analysis.&quot;, 
+           &quot;After this workshop, I'll know how to explore text data and fit topic models to text.&quot;,
+           &quot;This will help me get a sense of what is going in my own data.&quot;,
+           &quot;And get the best possible grade for my project.&quot;)
+  )
+
+# Convert the text to lower case
+data$text &lt;- tolower(data$text)
+
+# Expand contractions
+data$text &lt;- replace_contraction(data$text)
+
+# Unnest tokens
+data_tokens &lt;- data %&gt;% 
+  unnest_tokens(input = text,  # Input column from which tokens are unnested
+                output = word) # Output column to be created to store unnested tokens
+
+# Lemmatize words
+data_tokens$word &lt;- lemmatize_words(data_tokens$word) 
+
+# Remove stop words
+data_tokens_nostopwords &lt;- 
+  anti_join(data_tokens, 
+            stop_words, 
+            by = &quot;word&quot;)
+
+# Count the number of times each word occurs in each document
+word_counts &lt;- data_tokens_nostopwords %&gt;% 
+  count(document,
+        word, 
+        sort = TRUE)
+
+# View the word counts
+View(word_counts)
+
+# Add the TF-IDF scores via the bind_tf_idf() function
+tf_idf &lt;- word_counts %&gt;% 
+  bind_tf_idf(word,
+              document, 
+              n)
+
+# View the word counts and TF-IDF scores. 
+# Notice how &quot;text&quot; has some of the lowest scores becuase it is the most common across documents
+# Whilst &quot;grade&quot; has one of the highest because it is the least common.
+View(tf_idf)
+</code></pre>
+<h2 id="s-topic-models-4" data-k="4"><span class="num">4.4</span> <span class="t">Interpretability and Computational Bottlenecks</span></h2>
+<p>Dealing with large corpora of text can result in intractably large datasets of term frequencies. Many of these terms may only be used in a single document. Moreover, despite our attempts to clean and lemmatize the data, most approaches to topic modelling with be plagued by large numbers of idiosyncratic terms. This can make the approach of principal components difficult, computationally-heavy, and difficult-to-interpret.</p>
+<p>Two steps can make this more manageable:</p>
+<ul>
+<li>Remove terms which do not occur in more that 10% of documents (see Chung &amp; Pennebaker, 2008; Markowitz, 2021)</li>
+<li>Remove terms which are not among the ~120,000 most common to the English language (assuming you are analyzing English language texts)</li>
+</ul>
+<h3>Select terms common to your corpus</h3>
+<p>Here is a method for selecting only terms which are common to your corpus, by calculating the number of non-zero values in each column of a DTM, reflecting the number of documents which where each term is present. From this, we can select all which occur over a certain threshold (e.g., 10 or more). This will depend on the overall size of your corpus.</p>
+<pre><code class="language-r"># Load required package
+library(tidyverse)
+
+# Create a vector with words which appear in more than 10% of texts
+words_to_keep &lt;- 
+  word_counts %&gt;%
+  group_by(word) %&gt;%
+  summarize(n = n()) %&gt;%
+  filter(n &gt; 2000) %&gt;% # set this to 10% of your dataset
+  pull(word)
+
+# Select only words which are are in the words_to_keep vector
+words_to_keep &lt;- 
+  word_counts %&gt;%
+  filter(word %in% words_to_keep)
+</code></pre>
+<h3>Selecting words common to the English language</h3>
+<p>Here is a method for selecting only words common to the English language, by removing any term which does not feature in Grady Ward's English words augmented with proper nouns (U.S. States, Countries, Mark Kantrowitz's Names List, and months) and contractions. The dataset contains 122'806 terms and is provided by the <code>qdapDictionaries</code> package and can be loaded by calling the <code>GradyAugmented</code> dataset.</p>
+<pre><code class="language-r"># Load required packages
+library(tidyverse)
+library(qdapDictionaries)
+
+# Load word list
+data(GradyAugmented)
+
+# Select only words which appear in Grady Ward's English word list
+word_counts_to_keep &lt;- 
+  word_counts %&gt;%
+  filter(word %in% GradyAugmented)
+</code></pre>
+<h2 id="s-topic-models-5" data-k="5"><span class="num">4.5</span> <span class="t">Document-Term Matrices (DTM)</span></h2>
+<p>We can further explore our data by examining how often each word in your corpus appears in each document (or text). This will allow us to see how words tend to co-occur across documents, and if there are any systematic correlations between them indicative of latent themes or topics. The first step to doing this requires that we compute a document-term matrix. This can be achieved by applying the <code>cast_dfm()</code> function on a dataframe of wordcounts.</p>
+<pre><code class="language-r"># Load required packages
+library(tidyverse)
+library(tidytext)
+
+# Define a dataframe with five text strings, labelled as documents 1-5
+data &lt;- data.frame(
+  document = c(1, 2, 3, 4, 5),
+  text = c(&quot;Text analysis in R is interesting.&quot;, 
+           &quot;We're learning NLP and text analysis.&quot;, 
+           &quot;After this workshop, I'll know how to explore text data and fit topic models to text.&quot;,
+           &quot;This will help me get a sense of what is going in my own data.&quot;,
+           &quot;And get the best possible grade for my project.&quot;)
+  )
+
+# Unnest tokens
+data_tokens &lt;- data %&gt;% 
+  unnest_tokens(input = text,  # Input column from which tokens are unnested
+                output = word) # Output column to be created to store unnested tokens
+
+# Count the number of times each word occurs in each document
+word_counts &lt;- data_tokens %&gt;% 
+  count(document, 
+        word, 
+        sort = TRUE)
+
+# Convert to a document-term matrix via the cast_dfm() function. 
+# We then use the convert() function to make the output into a data.frame for easier processing
+dtm &lt;- word_counts %&gt;%
+  cast_dfm(document, 
+           word, 
+           n) %&gt;%
+  convert(to = &quot;data.frame&quot;)
+
+# Examine the final document-term matrix
+View(dtm)
+
+</code></pre>
+<h2 id="s-topic-models-6" data-k="6"><span class="num">4.6</span> <span class="t">Principal Component Analysis</span></h2>
+<p>Now we can apply a dimension reduction technique to the DTM to examine if there is systematic variance in the way words tend to co-occur, potentially revealing underlying themes. The <code>fa.parallel()</code> function provides scree plots to help interpret how substantial each component is. The <code>principal()</code> function conducts the principal component analysis on a DTM.</p>
+<pre><code class="language-r"># Load required packages
+library(tidyverse)
+library(psych)
+
+# Define a DFM dataframe with eight numeric variables, and a single id string variable
+dtm &lt;- data.frame(
+  doc_id = c(&quot;1&quot;, &quot;2&quot;, &quot;3&quot;, &quot;4&quot;, &quot;5&quot;, &quot;6&quot;, &quot;7&quot;, &quot;8&quot;, &quot;9&quot;),
+  friendly = c(4, 2, 7, 3, 5, 3, 7, 4, 2),
+  sociable = c(3, 2, 5, 1, 6, 2, 3, 4, 1),
+  outgoing = c(4, 1, 7, 4, 5, 3, 8, 4, 2),
+  talkative = c(3, 2, 7, 1, 5, 3, 7, 4, 2),
+  diligent = c(1, 6, 7, 4, 2, 5, 5, 4, 9),
+  hard_working = c(2, 6, 4, 4, 4, 5, 5, 4, 9),
+  responsible = c(2, 4, 7, 6, 2, 6, 5, 4, 9),
+  strict = c(1, 6, 7, 6, 4, 5, 5, 4, 6)
+)
+
+# Remove the id variable to prepare the DFM dataframe for further analyses. 
+# The functions we will call in the next parts requires a DTM that contains only the term frequency counts.
+# It will not run if the dataframe contains id or document indicators.
+dtm_4_pca &lt;- dtm %&gt;% 
+  select(!doc_id) # Adding ! before doc_id translates to selecting all columns except for doc_id
+
+# Get the scree plot to get a sense of how many compenents (themes) there could be in the DFM
+# There is clear sign of two components with large eigenvalues
+fa.parallel(dtm_4_pca, 
+            main=&quot;Scree Plot&quot;, 
+            fa = &quot;pc&quot;,
+            sim = F)
+
+# Conduct a principal compenent analysis whilst extracting two components
+pca &lt;- principal(dtm_4_pca,
+                 nfactors = 2,
+                 residuals = FALSE,
+                 rotate = &quot;varimax&quot;, 
+                 method = &quot;regression&quot;)
+
+# Examine the component loadings to gain a sense of which words are most closley associated with each component.
+# You can click on the column headings to sort them by size
+pca$loadings %&gt;%                          # get the component loadings
+  tibble(word = colnames(dtm_4_pca)) %&gt;%  # add in the word labels to enable interpretation
+  View()
+</code></pre>
+<h2 id="s-topic-models-7" data-k="7"><span class="num">4.7</span> <span class="t">Topic Model Pipeline</span></h2>
+<p>Here is a full pipeline from a raw text data frame to topic components. Also includes how to create a component table and save compenent loadings for further analyses.</p>
+<pre><code class="language-r"># Load required packages
+library(tidyverse)
+library(tidytext)
+library(textclean)
+library(textstem)
+library(tm)
+library(quanteda)
+library(psych)
+library(topicmodels)
+library(stringi)
+library(qdapDictionaries)
+
+#define %ni% function
+`%ni%` &lt;- Negate(`%in%`)
+
+# Define a dataframe with five text strings, labelled as documents 1-5
+data &lt;- data.frame(
+  document = c(1, 2, 3, 4, 5),
+  text = c(&quot;Text analysis in R is interesting.&quot;, 
+           &quot;We're learning NLP and text analysis.&quot;, 
+           &quot;After this workshop, I'll know how to explore text data and fit topic models to text.&quot;,
+           &quot;This will help me get a sense of what is going in my own data.&quot;,
+           &quot;And get the best possible grade for my project.&quot;)
+)
+
+# Convert the texts to lowercase
+data$text &lt;- tolower(data$text)
+
+# Expand contractions
+data$text &lt;- replace_contraction(data$text)
+
+# Lemmatize words
+data$text &lt;- lemmatize_strings(data$text)
+
+# Unnest tokens
+data_tokens &lt;- data %&gt;% 
+  unnest_tokens(input = text,  # Input column from which tokens are unnested
+                output = word) # Output column to be created to store unnested tokens
+
+# Count the number of times each word occurs in each document
+word_counts &lt;- data_tokens %&gt;% 
+  count(document, 
+        word, 
+        sort = TRUE)
+
+# Remove stopwords function
+word_counts &lt;- anti_join(word_counts,
+                         stop_words,
+                         by = &quot;word&quot;)
+
+# Get all words which feature in more than a single document and remove those which don't
+words_to_keep &lt;- 
+  word_counts %&gt;%
+  group_by(word) %&gt;%
+  summarize(n = n()) %&gt;%
+  filter(n &gt; 1) %&gt;%
+  pull(word)
+
+word_counts_to_keep &lt;- 
+  word_counts %&gt;%
+  filter(word %in% words_to_keep)
+
+# Remove words which do not feature in Grady Ward's English word list
+word_counts_to_keep &lt;- 
+  word_counts_to_keep %&gt;%
+  filter(word %in% GradyAugmented)
+
+# Add back in any document which has been fully removed, so that it is still considered with 0 values for all retained words
+for(i in unique(data$document)) {
+  if(i %ni% word_counts_to_keep$document) {
+    temp &lt;- word_counts_to_keep[1, ]
+    temp$document &lt;- i
+    temp$n &lt;- 0
+    word_counts_to_keep &lt;- rbind(word_counts_to_keep, temp)
+  }
+}
+
+# Convert to a document-term matrix function
+dtm &lt;- 
+  word_counts_to_keep %&gt;%
+  cast_dfm(document, 
+           word, 
+           n) %&gt;%
+  convert(to = &quot;data.frame&quot;)
+
+# Remove doc_id string to prepare for pca
+dtm &lt;- dtm %&gt;% dplyr::select(!doc_id)
+
+# Check scree plot to get a sense of how many components there are
+fa.parallel(dtm, 
+            main=&quot;Scree Plot&quot;, 
+            fa = &quot;pc&quot;,
+            sim = F)
+
+# Extract n components via principal component analysis
+n_to_extract &lt;- 2
+
+pca &lt;- principal(dtm, 
+                 nfactors = n_to_extract,  
+                 residuals = FALSE, 
+                 rotate = &quot;varimax&quot;, 
+                 method = &quot;regression&quot;,
+                 scores = T)
+
+# Examine word component loadings to interpret themes components. 
+pca$loadings %&gt;%
+  tibble(word = colnames(dtm)) %&gt;%
+  View()
+
+# Save compenents for further analyses
+data$comp_1 &lt;- pca$scores[, &quot;RC1&quot;]
+data$comp_2 &lt;- pca$scores[, &quot;RC2&quot;]
+
+# Create table of component loaders for reporting
+component_table &lt;- pca$loadings[, 1:n_to_extract] %&gt;% as.data.frame()
+
+# Suppress components smaller than +/- .20
+for(i in 1:n_to_extract) {
+  component_table[, i][component_table[, i] &lt; .2 &amp; !component_table[, i] &lt; -.2] &lt;- NA
+  component_table[, i][component_table[, i] &gt; -.2 &amp; !component_table[, i] &gt; .2] &lt;- NA
+  component_table[, i] &lt;- sprintf(&quot;%.2f&quot;, round(component_table[, i], 2))
+  component_table[, i] &lt;- gsub(&quot;0\\.&quot;, &quot;.&quot;, as.character(component_table[, i]))
+  component_table[, i][component_table[, i]==&quot;NA&quot;] &lt;- &quot;&quot;
+}
+
+# View component table
+component_table %&gt;%
+  View()
+</code></pre>
+</section>
+<section class="page" id="p-dictionary-methods" data-n="5" data-title="Dictionary Methods" hidden>
+<p class="eyebrow">Chapter 5</p>
+<h1>Dictionary Methods</h1>
+<p>The purpose of this chapter is to introduce tools for text classification using predefined dictionaries. A serious debt of gratitude is owed to the developers of Linguistic Inquiry and Word Count, among others James Pennebaker and Ryan Boyd. LIWC is the culmination of decades of work establishing and validating dictionaries for psychological analyses of text. It is a user friendly software for their application. Further information can be found here <a href="https://www.liwc.app/download" target="_blank" rel="noopener">https://www.liwc.app/download</a> and <a href="https://www.youtube.com/watch?v=IGBI8LnYGNs&amp;ab_channel=JamesPennebaker" target="_blank" rel="noopener">https://www.youtube.com/watch?v=IGBI8LnYGNs&amp;ab_channel=JamesPennebaker</a></p>
+<p>LIWC is not free to use and, as such, many will not have the means to access to it. For this reason, I think it is valuable to also introduce R packages which can apply dictionary methods to texts. These packages mirror LIWC in many ways, but differ in an important one. The R packages do not have any predefined dictionaries, including those which come with LIWC. Note, LIWC dictionaries are proprietary and you will need a license key to download and use them. They cannot be shared without violating their terms of service. There are, however, many other dictionaries out there which are not part of explicitly part of the LIWC ecosystem. There is a decent chance of finding a dictionary which captures a construct of interest without having to rely on LIWC.</p>
+<p>A key reference is:</p>
+<ul>
+<li>Boyd, R. L., Ashokkumar, A., Seraj, S., &amp; Pennebaker, J. W. (2022). The development and psychometric properties of LIWC-22. <em>Austin, TX: University of Texas at Austin</em>, 10, 1-47.</li>
+</ul>
+<h2 id="s-dictionary-methods-1" data-k="1"><span class="num">5.1</span> <span class="t">Quanteda Dictionaries</span></h2>
+<p>First, we need to install and load the necessary packages: <code>quanteda</code> and <code>quanteda.dictionaries</code> for working with dictionaries. <code>quanteda.dictionaries</code> is not currently available on CRAN and so must be installed from a github repository. This will require the <code>devtools</code> package to call the <code>install_github()</code> function.</p>
+<pre><code class="language-r"># Install devtools and quanteda (if not already installed)
+install.packages(&quot;quanteda&quot;)
+install.packages(&quot;devtools&quot;)
+
+# Load devtools and quanteda
+library(devtools)
+library(quanteda)
+
+# Install quanteda.dictionaries package from github
+devtools::install_github(&quot;kbenoit/quanteda.dictionaries&quot;) 
+
+# Load quanteda.dictionaries
+library(quanteda.dictionaries)
+</code></pre>
+<h2 id="s-dictionary-methods-2" data-k="2"><span class="num">5.2</span> <span class="t">Importing Dictionaries</span></h2>
+<p>Now that we have the required packages installed, it’s time to start working with some predefined dictionaries. These are what make the wheels turn - they provide the roadmap indicating which words to search for and identify in your texts.</p>
+<h3>Loading</h3>
+<p>Dictionaries are typically saved as .dic text files. They are first formatted with a key denoting what the dimension captured by the dictionary (delineated by %%). Each dictionary word is then listed one-by-one on a new line.</p>
+<p>A number of non-LIWC dictionary files can be accessed here: <a href="https://drive.google.com/drive/folders/1oDkTuzzgcsnt87JpblL8vtidmFo11PMl?usp=sharing" target="_blank" rel="noopener">https://drive.google.com/drive/folders/1oDkTuzzgcsnt87JpblL8vtidmFo11PMl?usp=sharing</a></p>
+<p>These include .dic files with dictionaries capturing:</p>
+<ul>
+<li><strong>first-person singular pronouns</strong> includes words denoting the self (e.g., me, my)</li>
+<li><strong>first-person plural pronouns</strong> includes words denoting collectives one is a part of (e.g., we, us)</li>
+<li><strong>prosocial</strong> includes words capturing cooperation and helping (e.g., charity, donation)</li>
+<li><strong>care</strong> includes words capturing the moral foundation of care (e.g., help, harm)</li>
+<li><strong>fairness</strong> includes words capturing the moral foundation of fairness (e.g., equity, reciprocity)</li>
+<li><strong>threat</strong> includes words capturing psychological danger and threat (e.g., afraid, risk)</li>
+<li><strong>moral-emotional</strong> includes words denoting emotional and moral terms (e.g., abandon, kill)</li>
+<li><strong>communion</strong> includes words capturing interpersonal warmth (e.g., love, friend)</li>
+<li><strong>agency</strong> includes words capturing goal-striving (e.g., want, achieve)</li>
+</ul>
+<p>To read these into R, you can run the <code>read_dict_liwc()</code> function as follows (make sure the .dic files are in your working folder).</p>
+<pre><code class="language-r"># Load the communion.dic file into R
+communion_dictionary &lt;- quanteda:::read_dict_liwc(&quot;communion.dic&quot;)
+
+# Load the threat.dic file into R
+threat_dictionary &lt;- quanteda:::read_dict_liwc(&quot;threat.dic&quot;)
+
+# Load the moral-emotional.dic file into R
+moral_emotional_dictionary &lt;- quanteda:::read_dict_liwc(&quot;moral-emotional.dic&quot;)
+
+</code></pre>
+<h3>Validating</h3>
+<p>It is typically a good idea to get a sense of the words in your dictionary. You can do this by simply opening the .dic files in Notepad. You will also want to confirm that they have been correctly read into R.</p>
+<p>You can examine your dictionaries in R via the following commands:</p>
+<pre><code class="language-r"># Examine the communion_dictionary
+communion_dictionary$Communion
+
+# Examine the threat dictionary
+threat_dictionary$Threat
+
+# Examine the moral-emotional dictionary
+moral_emotional_dictionary$Moral_Emotional
+</code></pre>
+<p>Notice how some of the words in the moral-emotional dictionary are followed by *. This operator is used as a wildcard character to match any words that start with a given prefix. This allows for flexible pattern matching in dictionaries, enabling you to capture related terms that share the same root or beginning part of the word.</p>
+<p>When using * in a dictionary file, it will match any word that begins with the specified prefix. For example, if you have an entry like abandon* in a dictionary, it will match words such as:</p>
+<ul>
+<li>abandon</li>
+<li>abandoned</li>
+<li>abandonment</li>
+<li>abandons</li>
+<li>abandoning</li>
+</ul>
+<h3>Binding</h3>
+<p>The individual word lists we have need to be explicitly denoted as a dictionary class. It can also be convenient to bind them together into a single object which can be applied to derive dictionary scores all at once.</p>
+<p>This can be achieved in the following manner:</p>
+<pre><code class="language-r"># Define a dictionary object with the three word lists, communion, threat, and moral-emotional
+dictionaries &lt;- 
+  quanteda::dictionary(
+    list(
+      communion = communion_dictionary$Communion,
+      threat = threat_dictionary$Threat,
+      moral_emotional = moral_emotional_dictionary$Moral_Emotional
+    )
+  )
+
+# View the dictionaries
+View(dictionaries)
+</code></pre>
+<h2 id="s-dictionary-methods-3" data-k="3"><span class="num">5.3</span> <span class="t">Extracting Dictionary Scores</span></h2>
+<p>We are now ready to apply our dictionaries to a set of texts to classify them in terms of the appearance of keywords. This can be done by calling the <code>liwcalike()</code> function - named in acknowledgment to the LIWC software which inspired the package.</p>
+<p>This can be achieved in the following manner:</p>
+<pre><code class="language-r"># Define an example vector of four texts
+texts &lt;- c(&quot;The company had terrible financial performance.&quot;,
+           &quot;We felt entirley abondoned by upper management.&quot;,
+           &quot;It was really a horrible situation with no compassion.&quot;,
+           &quot;I don't know what I'm going to do, my whole livlihood is udner attack.&quot;)
+
+# Apply the liwcalike() function to calculate dictionary scores
+dictionary_scores &lt;- liwcalike(texts, 
+                               dictionaries)
+</code></pre>
+<p>Accessing your newly-created dataframe <code>dictionary_scores</code> reveals the score provided <code>liwcalike()</code>. These are modeled very closely on LIWC's outputs.</p>
+<pre><code class="language-r"># View the outputs of the dictionary analysis
+View(dictionary_scores)
+</code></pre>
+<p>You will immediately notice that several new scores (columns) have been added for each text (rows). Many of these provide general information about the texts, for example:</p>
+<ul>
+<li><strong>WC</strong> indicates the total number of words in each text</li>
+<li><strong>Dic</strong> indicates the percent of words in each text which are in any of the applied dictionaries</li>
+<li><strong>AllPunc</strong> indicates the percent of the text which is comprised punctuation</li>
+<li><strong>Comma</strong>, <strong>Punc</strong>, etc. indicates the percent of the text which is comprised of each type of punctuation</li>
+</ul>
+<p>You will also notice columns corresponding to the applied dictionaries - in this example <em>communion</em>, <em>threat</em>, and <em>moral_emotional</em>. Scores in these columns indicate the percent of words in each text which are present in each dictionary.</p>
+<pre><code class="language-r"># Access the communion scores
+dictionary_scores$communion
+
+# Access the communion scores
+dictionary_scores$threat
+
+# Access the communion scores
+dictionary_scores$moral_emotional
+
+</code></pre>
+<h2 id="s-dictionary-methods-4" data-k="4"><span class="num">5.4</span> <span class="t">Dictionary Word Counts</span></h2>
+<p>For some analyses, you may wish to examine the frequency with which dictionary words occur (as opposed to the proportion of the total words they makeup). This score is not directly provided to you by <code>liwcalike()</code>, but can easily be derived from the relevant dictionary score and the estimate of the total number of words in each document - providing in the variable <code>WC</code>.</p>
+<pre><code class="language-r"># Compute the frequency of communion words in each text
+dictionary_scores$communion_count &lt;- ((dictionary_scores$communion/100)*dictionary_scores$WC) %&gt;% round(0)
+</code></pre>
+<h2 id="s-dictionary-methods-5" data-k="5"><span class="num">5.5</span> <span class="t">Tidying Data</span></h2>
+<p>As you may have noticed, the <code>liwcalike()</code> function creates an entirely new dataframe when calculating word frequencies. Oftentimes you will apply this function to a dataset which includes your texts and many other indices, such as who produced them and when. If you wish to analyze dictionary scores as a function of such indices, you will  need to incorporate the dictionary scores provided by <code>liwcalike()</code> back into your original dataset.</p>
+<p>This can be done as follows:</p>
+<pre><code class="language-r"># Define an example dataframe with four texts from two groups recorded on certain dates
+text_data &lt;- data.frame(author = c(&quot;employee 1&quot;, &quot;employee 2&quot;, &quot;employee 3&quot;, &quot;employee 4&quot;),
+                        group = c(&quot;HR&quot;, &quot;HR&quot;, &quot;Sales&quot;, &quot;Sales&quot;),
+                        date = c(&quot;01/04/2022&quot;, &quot;02/04/2022&quot;, &quot;03/04/2022&quot;, &quot;04/04/2022&quot;),
+                        text = c(&quot;The company had terrible financial performance.&quot;,
+                                 &quot;We felt entirley abondoned by upper management.&quot;,
+                                 &quot;It was really a horrible situation with no compassion.&quot;,
+                                 &quot;I don't know what I'm going to do, my whole livlihood is udner attack.&quot;))
+
+
+# Apply the liwcalike() function to calculate dictionary scores
+dictionary_scores &lt;- liwcalike(text_data$text, 
+                               dictionaries)
+
+# Attach the communion, threat, and moral_emotion dictionary scores to the original dataset
+text_data$communion &lt;- dictionary_scores$communion
+text_data$threat &lt;- dictionary_scores$threat
+text_data$moral_emotional &lt;- dictionary_scores$moral_emotional
+
+# View the original dataset, now with dictionary scores
+View(text_data)
+</code></pre>
+</section>
+
+    <nav class="pager" id="pager" aria-label="Previous and next chapter"></nav>
+    <p class="foot">Text Analysis in R · Dr Stefan Leach · s.leach@soton.ac.uk</p>
+  </main>
+</div>
+<script>
+(function () {
+  // ---- R syntax highlighting (small built-in tokenizer) ----
+  var RX = /(#[^\n]*)|("(?:\\.|[^"\\])*"|'(?:\\.|[^'\\])*')|(`[^`\n]*`|%[^%\n]*%)|(\b\d+(?:\.\d+)?(?:[eE][+-]?\d+)?L?\b)|(\b(?:function|if|else|for|while|in|repeat|break|next|return)\b)|(\b(?:TRUE|FALSE|NULL|NA|NaN|Inf)\b)|([A-Za-z.][\w.]*(?=\s*\())|([A-Za-z.][\w.]*(?=\s*=(?!=)))|(<-|->|==|!=|<=|>=|&&|\|\|)/g;
+  var CLS = [null, 'c', 's', 'o', 'n', 'k', 'l', 'f', 'p', 'o'];
+  function esc(t) { return t.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;'); }
+  function highlight(src) {
+    var out = '', last = 0, m;
+    RX.lastIndex = 0;
+    while ((m = RX.exec(src))) {
+      if (m[0] === '') { RX.lastIndex++; continue; }
+      out += esc(src.slice(last, m.index));
+      for (var g = 1; g < CLS.length; g++) {
+        if (m[g] !== undefined) { out += '<span class="tk-' + CLS[g] + '">' + esc(m[0]) + '</span>'; break; }
+      }
+      last = RX.lastIndex;
+    }
+    return out + esc(src.slice(last));
+  }
+
+  // ---- code blocks: highlight + copy button ----
+  Array.prototype.forEach.call(document.querySelectorAll('pre > code'), function (code) {
+    var src = code.textContent;
+    if (code.className.indexOf('language-r') >= 0) code.innerHTML = highlight(src);
+    var pre = code.parentNode, wrap = document.createElement('div');
+    wrap.className = 'code';
+    pre.parentNode.insertBefore(wrap, pre);
+    wrap.appendChild(pre);
+    var btn = document.createElement('button');
+    btn.type = 'button'; btn.className = 'copy-btn'; btn.textContent = 'Copy';
+    btn.setAttribute('aria-label', 'Copy this code');
+    btn.addEventListener('click', function () {
+      function done(label) { btn.textContent = label; setTimeout(function () { btn.textContent = 'Copy'; }, 1600); }
+      function fallback() {
+        var r = document.createRange(); r.selectNodeContents(code);
+        var sel = window.getSelection(); sel.removeAllRanges(); sel.addRange(r);
+        done('Selected');
+      }
+      try {
+        if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(src).then(function () { done('Copied'); }, fallback);
+        else fallback();
+      } catch (e) { fallback(); }
+    });
+    wrap.appendChild(btn);
+  });
+
+  // ---- chapters and sidebar ----
+  var CH = Array.prototype.map.call(document.querySelectorAll('section.page'), function (sec) {
+    return {
+      id: sec.id.slice(2), n: sec.getAttribute('data-n'), title: sec.getAttribute('data-title'), el: sec,
+      secs: Array.prototype.map.call(sec.querySelectorAll('h2[data-k]'), function (h) {
+        return { k: h.getAttribute('data-k'), html: h.querySelector('.t').innerHTML };
+      })
+    };
+  });
+  var toc = document.getElementById('toc');
+  var t = '<div class="toc">';
+  CH.forEach(function (c) {
+    t += '<a class="ch" href="#' + c.id + '" data-id="' + c.id + '"><span class="n">' + c.n + '</span><span>' + c.title + '</span></a>';
+    if (c.secs.length) {
+      t += '<div class="secs" data-for="' + c.id + '" hidden>';
+      c.secs.forEach(function (s) {
+        t += '<a href="#' + c.id + '.' + s.k + '" data-sec="' + c.id + '.' + s.k + '"><span class="n">' + c.n + '.' + s.k + '</span><span>' + s.html + '</span></a>';
+      });
+      t += '</div>';
+    }
+  });
+  toc.innerHTML = t + '</div>';
+
+  var layout = document.getElementById('layout'), menuBtn = document.getElementById('menu-btn');
+  var pager = document.getElementById('pager'), narrow = window.matchMedia('(max-width: 900px)');
+  function setOpen(open) {
+    if (narrow.matches) layout.classList.toggle('open', open); else layout.classList.toggle('collapsed', !open);
+    menuBtn.setAttribute('aria-expanded', String(open));
+  }
+  menuBtn.addEventListener('click', function () {
+    setOpen(narrow.matches ? !layout.classList.contains('open') : layout.classList.contains('collapsed'));
+  });
+  document.getElementById('scrim').addEventListener('click', function () { setOpen(false); });
+  if (narrow.addEventListener) narrow.addEventListener('change', function () { layout.classList.remove('open', 'collapsed'); });
+  if (narrow.matches) menuBtn.setAttribute('aria-expanded', 'false');
+
+  function show(idx, k) {
+    var c = CH[idx];
+    CH.forEach(function (x) { x.el.hidden = x !== c; });
+    Array.prototype.forEach.call(toc.querySelectorAll('a.ch'), function (a) {
+      if (a.getAttribute('data-id') === c.id) a.setAttribute('aria-current', 'page'); else a.removeAttribute('aria-current');
+    });
+    Array.prototype.forEach.call(toc.querySelectorAll('.secs'), function (d) { d.hidden = d.getAttribute('data-for') !== c.id; });
+    Array.prototype.forEach.call(toc.querySelectorAll('[data-sec]'), function (a) {
+      if (k && a.getAttribute('data-sec') === c.id + '.' + k) a.setAttribute('aria-current', 'true'); else a.removeAttribute('aria-current');
+    });
+    var prev = CH[idx - 1], next = CH[idx + 1], ph = '';
+    if (prev) ph += '<a class="prev" href="#' + prev.id + '"><small>Previous</small><span>' + prev.n + ' ' + prev.title + '</span></a>';
+    if (next) ph += '<a class="next" href="#' + next.id + '"><small>Next</small><span>' + next.n + ' ' + next.title + '</span></a>';
+    pager.innerHTML = ph;
+    if (narrow.matches) setOpen(false);
+    var target = k && document.getElementById('s-' + c.id + '-' + k);
+    if (target) target.scrollIntoView(); else window.scrollTo(0, 0);
+  }
+  function route() {
+    var h = (location.hash || '').slice(1).split('.');
+    var idx = -1;
+    for (var i = 0; i < CH.length; i++) if (CH[i].id === h[0]) idx = i;
+    show(idx < 0 ? 0 : idx, idx < 0 ? null : h[1]);
+  }
+  window.addEventListener('hashchange', route);
+  route();
+})();
+</script>
+</body>
+</html>
