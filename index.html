@@ -1,0 +1,1224 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="PSYC3085 Empirical Project: guide for the ESS supervision group, 2026/27.">
+<title>PSYC3085 Project Guide</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Source+Sans+3:wght@400;500;600;700&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&display=swap">
+<style>
+/* Layout: bookdown/gitbook reader. Fixed chapter sidebar on the left, one chapter per view, prev/next at the foot. */
+:root {
+  --bg: #fafbfc;
+  --panel: #eff3f5;
+  --fg: #1b2a33;
+  --muted: #56666f;
+  --rule: #d6e0e5;
+  --accent: #005c84;
+  --accent-soft: #e2edf2;
+  --band: #e9eff2;
+  --deadline: #a8540a;
+  --deadline-soft: #fbeedd;
+  --done: #2e7a4d;
+  --done-soft: #e3f2e8;
+  --on-accent: #ffffff;
+  --aut: #f3e3d3; --aut-soft: #faf2ea; --aut-ink: #8a4a18;
+  --spr: #d9ecdf; --spr-soft: #eef7f1; --spr-ink: #2c6a41;
+  --sum: #d9e8f4; --sum-soft: #eef5fb; --sum-ink: #2a5f88;
+  --font-body: "Source Serif 4", Georgia, "Times New Roman", serif;
+  --font-ui: "Source Sans 3", "Segoe UI", system-ui, -apple-system, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, Menlo, Consolas, monospace;
+  --sidebar-w: 300px;
+  --measure: 42rem;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0f1519; --panel: #151e23; --fg: #e2e9ed; --muted: #9aabb4; --rule: #27343c;
+    --accent: #6cc3e8; --accent-soft: #16303c; --band: #17222a;
+    --deadline: #f0a04b; --deadline-soft: #33251a; --done: #6fcb8f; --done-soft: #183024;
+    --on-accent: #0f1519; color-scheme: dark;
+    --aut: #3a2a1d; --aut-soft: #241c15; --aut-ink: #eab88c;
+    --spr: #1f3a29; --spr-soft: #16241b; --spr-ink: #8fd3a8;
+    --sum: #1d3446; --sum-soft: #152330; --sum-ink: #93c6ec;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0f1519; --panel: #151e23; --fg: #e2e9ed; --muted: #9aabb4; --rule: #27343c;
+  --accent: #6cc3e8; --accent-soft: #16303c; --band: #17222a;
+  --deadline: #f0a04b; --deadline-soft: #33251a; --done: #6fcb8f; --done-soft: #183024;
+  --on-accent: #0f1519; color-scheme: dark;
+  --aut: #3a2a1d; --aut-soft: #241c15; --aut-ink: #eab88c;
+  --spr: #1f3a29; --spr-soft: #16241b; --spr-ink: #8fd3a8;
+  --sum: #1d3446; --sum-soft: #152330; --sum-ink: #93c6ec;
+}
+
+* { box-sizing: border-box; }
+body { background: var(--bg); color: var(--fg); font-family: var(--font-body); font-size: 17px; line-height: 1.65; }
+a { color: var(--accent); text-underline-offset: 2px; }
+a:focus-visible, button:focus-visible, input:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+code, .mono { font-family: var(--font-mono); font-size: 0.86em; background: var(--accent-soft); padding: 0.05em 0.35em; border-radius: 4px; }
+
+/* top bar */
+.topbar {
+  position: sticky; top: env(safe-area-inset-top, 0px); z-index: 30;
+  display: flex; align-items: center; gap: 12px;
+  padding: 10px 16px; background: var(--bg); border-bottom: 1px solid var(--rule);
+  font-family: var(--font-ui);
+}
+.menu-btn {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 36px; height: 36px; border: 1px solid var(--rule); border-radius: 8px;
+  background: var(--panel); color: var(--fg); cursor: pointer; flex: none;
+}
+.menu-btn svg { width: 18px; height: 18px; }
+.topbar .book { font-weight: 700; font-size: 15px; letter-spacing: 0.01em; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; min-width: 0; }
+.topbar .book span { color: var(--muted); font-weight: 500; }
+.home-link { margin-left: 16px; font-size: 14px; font-weight: 600; text-decoration: none; white-space: nowrap; }
+.home-link:hover { text-decoration: underline; }
+.topbar .where { margin-left: auto; font-size: 13px; color: var(--muted); white-space: nowrap; }
+
+/* layout */
+.layout { display: grid; grid-template-columns: var(--sidebar-w) minmax(0, 1fr); }
+.sidebar {
+  position: sticky; top: calc(env(safe-area-inset-top, 0px) + 57px);
+  height: calc(100vh - 57px - env(safe-area-inset-top, 0px));
+  overflow-y: auto; background: var(--panel); border-right: 1px solid var(--rule);
+  font-family: var(--font-ui); font-size: 15px; line-height: 1.35;
+  padding-block: 16px 32px;
+}
+.layout.collapsed { grid-template-columns: 0 minmax(0, 1fr); }
+.layout.collapsed .sidebar { visibility: hidden; }
+.toc-part { padding: 14px 20px 6px; font-size: 12px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); }
+.toc a {
+  display: grid; grid-template-columns: 2.4rem minmax(0, 1fr) auto; gap: 4px; align-items: baseline;
+  padding: 7px 16px 7px 20px; color: var(--fg); text-decoration: none;
+}
+.toc a:hover { background: var(--accent-soft); }
+.toc a[aria-current="page"] { background: var(--accent-soft); color: var(--accent); font-weight: 600; }
+.toc .n { color: var(--muted); font-variant-numeric: tabular-nums; font-size: 13px; }
+.toc a[aria-current="page"] .n { color: var(--accent); }
+.toc .prog { font-size: 12px; color: var(--muted); font-variant-numeric: tabular-nums; white-space: nowrap; }
+.toc .prog.all { color: var(--done); font-weight: 600; }
+.toc .now { font-size: 11px; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; color: var(--on-accent); background: var(--accent); padding: 1px 6px; border-radius: 99px; }
+.toc .sub { display: block; font-size: 12.5px; color: var(--muted); font-weight: 400; margin-top: 1px; }
+
+/* main */
+main { min-width: 0; padding-block: 40px 64px; padding-inline: clamp(16px, 5vw, 64px); }
+.page { max-width: var(--measure); margin-inline: auto; }
+.page > * + * { margin-top: 1rem; }
+.eyebrow { font-family: var(--font-ui); font-size: 13px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent); margin: 0; }
+h1, h2, h3 { font-family: var(--font-ui); text-wrap: balance; line-height: 1.2; }
+h1 { font-size: clamp(1.9rem, 1.4rem + 1.8vw, 2.5rem); font-weight: 700; margin: 0.25rem 0 0; letter-spacing: -0.01em; }
+h2 { font-size: 1.35rem; font-weight: 700; padding-bottom: 0.3rem; border-bottom: 1px solid var(--rule); }
+h3 { font-size: 1.08rem; font-weight: 700; }
+.page > h2 { margin-top: 2.4rem; }
+.page > h3 { margin-top: 1.6rem; }
+.page > .eyebrow + h1 { margin-top: 0.25rem; }
+p { margin: 0; }
+.page p + p { margin-top: 0.85rem; }
+.lead { font-size: 1.12rem; color: var(--fg); }
+ul, ol { padding-left: 1.3rem; margin: 0; }
+li + li { margin-top: 0.35rem; }
+li > ul { margin-top: 0.35rem; }
+.meta { display: flex; flex-wrap: wrap; gap: 8px; font-family: var(--font-ui); font-size: 14px; margin-top: 0.9rem; }
+.chip { display: inline-flex; align-items: center; gap: 6px; padding: 3px 10px; border-radius: 99px; background: var(--accent-soft); color: var(--fg); font-variant-numeric: tabular-nums; }
+.chip.date { background: var(--accent); color: var(--on-accent); font-weight: 600; }
+.chip.warn { background: var(--deadline-soft); color: var(--deadline); font-weight: 600; }
+
+.callout { background: var(--accent-soft); border-radius: 10px; padding: 14px 18px; }
+.callout.warn { background: var(--deadline-soft); }
+.callout.done { background: var(--done-soft); }
+.callout .label { display: block; font-family: var(--font-ui); font-size: 12.5px; font-weight: 700; letter-spacing: 0.07em; text-transform: uppercase; color: var(--accent); margin-bottom: 4px; }
+.callout.warn .label { color: var(--deadline); }
+.callout.done .label { color: var(--done); }
+.callout a.go { font-family: var(--font-ui); font-weight: 600; }
+
+/* to-do list */
+.todo { list-style: none; padding: 0; border: 1px solid var(--rule); border-radius: 10px; overflow: hidden; }
+.todo li { margin: 0; border-top: 1px solid var(--rule); }
+.todo li:first-child { border-top: 0; }
+.todo label { display: grid; grid-template-columns: 22px minmax(0, 1fr); gap: 12px; align-items: start; padding: 12px 16px; cursor: pointer; }
+.todo input { width: 18px; height: 18px; margin: 4px 0 0; accent-color: var(--done); cursor: pointer; }
+.todo li.checked { background: var(--done-soft); }
+.todo li.checked span { color: var(--muted); }
+.todo .due { display: block; font-family: var(--font-ui); font-size: 13.5px; color: var(--deadline); font-weight: 600; margin-top: 2px; }
+.todo-head { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 8px; }
+.todo-count { font-family: var(--font-ui); font-size: 14px; color: var(--muted); font-variant-numeric: tabular-nums; }
+.todo-note { font-family: var(--font-ui); font-size: 13.5px; color: var(--muted); }
+
+/* goals */
+.goals { list-style: none; padding: 0; display: grid; gap: 8px; }
+.goals li { margin: 0; display: grid; grid-template-columns: 1.6rem minmax(0, 1fr); gap: 8px; }
+.goals li::before { content: counter(goal); counter-increment: goal; font-family: var(--font-ui); font-weight: 700; font-size: 14px; color: var(--on-accent); background: var(--accent); width: 1.5rem; height: 1.5rem; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; margin-top: 3px; }
+.goals { counter-reset: goal; }
+
+/* tables */
+.table-wrap { overflow-x: auto; border: 1px solid var(--rule); border-radius: 10px; }
+table { border-collapse: collapse; width: 100%; font-family: var(--font-ui); font-size: 15px; line-height: 1.45; }
+th, td { text-align: left; vertical-align: top; padding: 9px 14px; border-top: 1px solid var(--rule); }
+thead th { border-top: 0; background: var(--panel); font-size: 13px; letter-spacing: 0.04em; text-transform: uppercase; color: var(--muted); }
+td.when { white-space: nowrap; font-variant-numeric: tabular-nums; font-weight: 600; }
+tr.deadline td.when { color: var(--deadline); }
+tr.past td { color: var(--muted); }
+.caption { font-family: var(--font-ui); font-size: 13.5px; color: var(--muted); }
+tbody.aut { --t: var(--aut); --t-soft: var(--aut-soft); --t-ink: var(--aut-ink); }
+tbody.spr { --t: var(--spr); --t-soft: var(--spr-soft); --t-ink: var(--spr-ink); }
+tbody.sum { --t: var(--sum); --t-soft: var(--sum-soft); --t-ink: var(--sum-ink); }
+tbody.brk { --t: var(--panel); --t-soft: var(--bg); --t-ink: var(--muted); }
+tbody.term td { background: var(--t-soft); }
+tr.term-head th { background: var(--t); color: var(--t-ink); font-size: 13px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; }
+tr.term-head th span { margin-left: 10px; font-weight: 500; letter-spacing: 0; text-transform: none; color: var(--fg); opacity: 0.75; }
+
+/* things you can set aside */
+.skip { list-style: none; padding: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(12rem, 1fr)); gap: 12px; }
+.skip li { margin: 0; border: 1px solid var(--rule); border-radius: 10px; padding: 14px 16px; background: var(--bg); min-width: 0; }
+.skip b { display: block; font-family: var(--font-ui); font-size: 1rem; margin-bottom: 4px; }
+.skip span { display: block; font-size: 0.95rem; line-height: 1.5; color: var(--muted); }
+
+/* two-column facts */
+.facts { display: grid; grid-template-columns: repeat(auto-fit, minmax(12rem, 1fr)); gap: 12px; }
+.fact { border: 1px solid var(--rule); border-radius: 10px; padding: 12px 16px; font-family: var(--font-ui); min-width: 0; }
+.fact b { display: block; font-size: 1.5rem; line-height: 1.2; color: var(--accent); font-variant-numeric: tabular-nums; }
+.fact span { font-size: 14px; color: var(--muted); }
+
+/* flow of meeting */
+.steps { list-style: none; padding: 0; display: grid; gap: 10px; counter-reset: step; }
+.steps li { margin: 0; display: grid; grid-template-columns: 7.2rem minmax(0, 1fr); gap: 12px; }
+.steps b { font-family: var(--font-ui); font-size: 15px; }
+.steps .t { display: block; font-family: var(--font-ui); font-size: 13px; color: var(--muted); }
+
+/* timeline */
+.timeline { overflow-x: auto; border: 1px solid var(--rule); border-radius: 10px; padding: 8px 0; background: var(--bg); }
+.timeline svg { display: block; width: 100%; min-width: 680px; height: auto; font-family: var(--font-ui); }
+.tl-band { fill: var(--band); }
+.tl-band.aut { fill: var(--aut-soft); } .tl-band.spr { fill: var(--spr-soft); } .tl-band.sum { fill: var(--sum-soft); }
+.tl-term.aut { fill: var(--aut-ink); } .tl-term.spr { fill: var(--spr-ink); } .tl-term.sum { fill: var(--sum-ink); }
+.tl-ws rect { fill: var(--muted); }
+.tl-ws text { fill: var(--fg); font-size: 12px; }
+.tl-ws:hover text, .tl-ws:focus text { fill: var(--accent); text-decoration: underline; }
+.tl-drop rect { fill: var(--muted); fill-opacity: 0.22; stroke: var(--muted); stroke-width: 1; }
+.tl-drop text { fill: var(--fg); font-size: 12px; }
+.tl-drop:hover text, .tl-drop:focus text { fill: var(--accent); text-decoration: underline; }
+.tl-grid { stroke: var(--rule); stroke-width: 1; }
+.tl-axis { stroke: var(--muted); stroke-width: 1; }
+.tl-tick { fill: var(--muted); font-size: 12px; }
+.tl-term { fill: var(--muted); font-size: 12px; font-weight: 600; }
+.tl-mtg circle { fill: var(--bg); stroke: var(--accent); stroke-width: 1.5; }
+.tl-mtg text { fill: var(--accent); font-size: 12px; font-weight: 700; }
+.tl-mtg:hover circle, .tl-mtg:focus circle { fill: var(--accent); }
+.tl-mtg:hover text, .tl-mtg:focus text { fill: var(--on-accent); }
+.tl-mtg.now circle { fill: var(--accent); }
+.tl-mtg.now text { fill: var(--on-accent); }
+.tl-dl path { fill: var(--deadline); }
+.tl-dl text { fill: var(--deadline); font-size: 12px; font-weight: 600; }
+.tl-row { fill: var(--muted); font-size: 12px; }
+.tl-today line { stroke: var(--fg); stroke-width: 1; stroke-dasharray: 3 3; }
+.tl-today text { fill: var(--fg); font-size: 11px; font-weight: 600; }
+
+/* pager */
+.pager { max-width: var(--measure); margin: 3.5rem auto 0; display: grid; grid-template-columns: 1fr 1fr; gap: 12px; font-family: var(--font-ui); }
+.pager a { display: block; border: 1px solid var(--rule); border-radius: 10px; padding: 12px 16px; text-decoration: none; color: var(--fg); min-width: 0; }
+.pager a:hover { border-color: var(--accent); }
+.pager small { display: block; font-size: 12.5px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.06em; font-weight: 600; }
+.pager .next { text-align: right; grid-column: 2; }
+.pager span { font-weight: 600; color: var(--accent); }
+
+.sources { font-family: var(--font-ui); font-size: 14.5px; }
+.foot { max-width: var(--measure); margin: 2.5rem auto 0; font-family: var(--font-ui); font-size: 13px; color: var(--muted); }
+
+/* narrow screens: sidebar becomes a drawer */
+.scrim { display: none; }
+@media (max-width: 900px) {
+  .layout, .layout.collapsed { grid-template-columns: minmax(0, 1fr); }
+  .sidebar {
+    position: fixed; top: 0; left: 0; bottom: 0; z-index: 50; width: min(86vw, 320px); height: auto;
+    padding-top: calc(env(safe-area-inset-top, 0px) + 16px);
+    transform: translateX(-100%); transition: transform 0.2s ease; visibility: hidden;
+  }
+  .layout.open .sidebar { transform: none; visibility: visible; }
+  .layout.open .scrim { display: block; position: fixed; inset: 0; z-index: 40; background: rgba(0,0,0,0.35); }
+  .topbar .where, .topbar .book span { display: none; }
+  .home-link { margin-left: auto; }
+  .steps li { grid-template-columns: minmax(0, 1fr); gap: 2px; }
+  body { font-size: 16.5px; }
+}
+@media (prefers-reduced-motion: reduce) { .sidebar { transition: none; } }
+</style>
+<style>
+html { -webkit-text-size-adjust: 100%; }
+:root { padding-top: env(safe-area-inset-top, 0px); padding-bottom: env(safe-area-inset-bottom, 0px); }
+body { margin: 0; }
+img { max-width: 100%; }
+[hidden] { display: none !important; }
+</style>
+</head>
+<body>
+<header class="topbar">
+  <button class="menu-btn" id="menu-btn" type="button" aria-label="Show or hide chapters" aria-controls="toc" aria-expanded="true">
+    <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M3 5h14M3 10h14M3 15h14"/></svg>
+  </button>
+  <div class="book">PSYC3085 Empirical Project <span>· ESS group 2026/27</span></div>
+  <div class="where" id="where"></div>
+  <a class="home-link" href="../index.html">All resources</a>
+</header>
+
+<div class="layout" id="layout">
+  <nav class="sidebar" id="toc" aria-label="Chapters"></nav>
+  <div class="scrim" id="scrim"></div>
+  <main id="main">
+
+<!-- ============ WELCOME ============ -->
+<section class="page" id="p-home">
+  <p class="eyebrow">Welcome</p>
+  <h1>Your dissertation with the European Social Survey</h1>
+  <p class="lead">This site is your guide to the PSYC3085 Empirical Project in our supervision group. Each of you will ask your own question and answer it with data from the European Social Survey (ESS). You'll finish the year with a 5,000-word research paper.</p>
+
+  <div class="callout" id="now-callout">
+    <span class="label">This fortnight</span>
+    <span id="now-text">Meeting 1 · Kick-off and meeting the ESS</span>
+  </div>
+
+  <h2>How to use this site</h2>
+  <p>Chapters 1–3 cover the module, how supervision works and the ESS. Read them before Meeting 1. After that there is one page per group meeting, in order. Each meeting page tells you:</p>
+  <ul>
+    <li><strong>Goals</strong>: what you should be able to do by the end of the meeting.</li>
+    <li><strong>Bring with you</strong>: what to have ready, usually last meeting's to-do list.</li>
+    <li><strong>In the meeting</strong>: what we'll cover together.</li>
+    <li><strong>To do before the next meeting</strong>: a checklist. Your ticks are saved in this browser only, so they won't appear on another device or for anyone else.</li>
+  </ul>
+  <p>Use the menu on the left, or the links at the bottom of each page, to move between chapters. The label <span class="chip date" style="font-size:12px;padding:1px 8px">Now</span> in the menu marks the current fortnight.</p>
+
+  <h2>The year at a glance</h2>
+  <p>We meet as a group every other week in term time. The four module workshops at the start of the year are on here too.</p>
+  <div class="timeline" id="timeline" role="img" aria-label="Timeline of 4 module workshops, drop-in sessions with PhD students, 10 group meetings and 4 deadlines from September 2026 to April 2027"></div>
+  <p class="caption">Circles are group meetings: select one to open its page. Squares are module workshops and the grey bar shows the drop-in sessions with PhD students (March–April): select either to open the module's Blackboard page. Diamonds are deadlines. Shaded columns are term time.</p>
+
+  <h2>The route through the year</h2>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Stage</th><th>Meetings</th><th>What you'll have at the end</th></tr></thead>
+      <tbody>
+        <tr><td>Choose a question</td><td>1–3</td><td>A research question, a variable map and a set of key papers</td></tr>
+        <tr><td>Plan the study</td><td>4–5</td><td>Hypotheses, an analysis plan and a submitted proposal</td></tr>
+        <tr><td>Analyse the data</td><td>6–7</td><td>A clean dataset, syntax and results for every hypothesis</td></tr>
+        <tr><td>Write up</td><td>8–9</td><td>A full draft by Fri 19 Mar</td></tr>
+        <tr><td>Revise and submit</td><td>10</td><td>Your research paper, due Thu 29 Apr, 4pm</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ============ 1 MODULE ============ -->
+<section class="page" id="p-module" hidden>
+  <p class="eyebrow">Chapter 1</p>
+  <h1>About PSYC3085</h1>
+  <p class="lead">PSYC3085 is a 30-credit, year-long module. You plan and carry out an independent empirical study that tests one or more hypotheses, then write it up as a journal article.</p>
+
+  <div class="facts">
+    <div class="fact"><b>30</b><span>credits, running across both semesters</span></div>
+    <div class="fact"><b>20%</b><span>Project proposal, due Wed 2 Dec 2026, 4pm</span></div>
+    <div class="fact"><b>80%</b><span>Research paper, due Thu 29 Apr 2027, 4pm</span></div>
+  </div>
+
+  <h2>Learning objectives</h2>
+  <p>By the end of the module you should be able to:</p>
+  <ul>
+    <li>conduct a comprehensive, critical literature review</li>
+    <li>develop at least one novel, meaningful, informed and testable hypothesis or research question, and choose a suitable design and method</li>
+    <li>demonstrate practical research skills</li>
+    <li>carry out suitable statistical analyses</li>
+    <li>interpret and critically discuss your findings</li>
+    <li>communicate your findings in a full research paper</li>
+  </ul>
+
+  <h2>Assessment 1: Project proposal (20%)</h2>
+  <p>Due <strong>Wednesday 2 December 2026, 4pm</strong> (UK time). Use the module template. It has three parts:</p>
+  <ul>
+    <li><strong>500 words:</strong> background and rationale, literature review.</li>
+    <li><strong>500 words:</strong> study aims and hypotheses, and methodology.</li>
+    <li><strong>250 words:</strong> a reflection on the ethical challenges of your project.</li>
+  </ul>
+  <p>Your supervisor marks the proposal and gives written feedback to use in your research paper.</p>
+
+  <h2>Assessment 2: Research paper (80%)</h2>
+  <p>Due <strong>Thursday 29 April 2027, 4pm</strong> (UK time). It's a 5,000-word paper following the author guidelines of the <em>Journal of Southampton School of Psychology</em> (JSSP). A template is provided. The paper is double-marked.</p>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Section</th><th>Word count</th></tr></thead>
+      <tbody>
+        <tr><td>Abstract (250 words max)</td><td>Not counted</td></tr>
+        <tr><td>Acknowledgments</td><td>Not counted</td></tr>
+        <tr><td>Introduction - Literature review</td><td>Counted</td></tr>
+        <tr><td>Introduction - Study aims and hypotheses</td><td>Counted</td></tr>
+        <tr><td>Methods</td><td>Counted</td></tr>
+        <tr><td>Results</td><td>Counted</td></tr>
+        <tr><td>Discussion</td><td>Counted</td></tr>
+        <tr><td>Conclusion</td><td>Counted</td></tr>
+        <tr><td>References</td><td>Not counted</td></tr>
+        <tr><td>Supplementary materials</td><td>Not counted</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h2>Feedback you'll get</h2>
+  <ul>
+    <li><strong>Proposal:</strong> verbal feedback in supervision meetings, and answers to questions by email before you submit. Supervisors aim to reply within 3–4 working days.</li>
+    <li><strong>Research paper:</strong> formative feedback on <em>one</em> full draft. Introduction, Methods and Results each get one high-level comment on strengths and weaknesses, plus two brief comments per page. The Discussion gets one high-level comment.</li>
+    <li>Supervisors don't edit text, add tracked changes or suggest rewrites. These rules keep feedback equal for every student, so send your most complete draft.</li>
+  </ul>
+
+  <h2>Module workshops</h2>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>When</th><th>Workshop</th></tr></thead>
+      <tbody>
+        <tr><td class="when">Mon 21 Sep</td><td><a href="https://blackboard.soton.ac.uk/ultra/courses/_239657_1/outline" target="_blank" rel="noopener">Workshop 1: Introduction</a></td></tr>
+        <tr><td class="when">Mon 28 Sep</td><td><a href="https://blackboard.soton.ac.uk/ultra/courses/_239657_1/outline" target="_blank" rel="noopener">Workshop 2: Literature Reviews</a></td></tr>
+        <tr><td class="when">Mon 5 Oct</td><td><a href="https://blackboard.soton.ac.uk/ultra/courses/_239657_1/outline" target="_blank" rel="noopener">Workshop 3: Proposal &amp; Ethics</a></td></tr>
+        <tr><td class="when">Mon 12 Oct</td><td><a href="https://blackboard.soton.ac.uk/ultra/courses/_239657_1/outline" target="_blank" rel="noopener">Workshop 4: Statistical Software</a></td></tr>
+        <tr><td class="when">Semester 2</td><td>Workshop 5: Research Paper, date to be confirmed</td></tr>
+        <tr><td class="when">Mar–Apr</td><td>Data analysis drop-in sessions with PhD students</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h2>Ethics</h2>
+  <p>Projects in this group are covered by a <strong>blanket ethics approval to use the ESS</strong>, so you don't need to submit your own ERGO application. You still need to think through the ethics of your project. The proposal includes a 250-word reflection on its ethical challenges, which we prepare for in <a href="#meeting-5">Meeting 5</a>.</p>
+
+  <h2>Open science</h2>
+  <ul>
+    <li><strong>Data sharing:</strong> at the end of the project you share your data and analysis syntax with your supervisor.</li>
+    <li><strong>Open software:</strong> you can use SPSS, or free tools such as R or JASP.</li>
+  </ul>
+  <p>Each student also has a £100 research budget. ESS data are free, so you probably won't need it. Talk to your supervisor if you think you do.</p>
+
+  <h2>Who to contact</h2>
+  <p>For your project, talk to your supervisor, Dr Stefan Leach, in the group meetings or via: <span class="mono">s.leach@soton.ac.uk</span> (Office B44-4005). For questions about how the module is organised, contact the module convenor, Dr Dan Powell: <span class="mono">daniel.powell@soton.ac.uk</span> (Office B44-4114).</p>
+</section>
+
+<!-- ============ 2 SUPERVISION ============ -->
+<section class="page" id="p-supervision" hidden>
+  <p class="eyebrow">Chapter 2</p>
+  <h1>How supervision works</h1>
+  <p class="lead">We meet as a group every other week in term time, for 30–60 minutes. Individual meetings are available on request.</p>
+
+  <h2>What happens in a group meeting</h2>
+  <ol class="steps">
+    <li><b>Teach<span class="t">10–20 min</span></b><span>Your supervisor covers that meeting's topic, usually live in the ESS documentation or your analysis software.</span></li>
+    <li><b>Round-robin<span class="t">2–3 min each</span></b><span>Each of you says what you've done, what's next and where you're stuck.</span></li>
+    <li><b>Clinic<span class="t">rest of the time</span></b><span>The group works through one or two people's problems. Everyone learns from these.</span></li>
+    <li><b>Next steps<span class="t">last few min</span></b><span>We confirm the to-do list for the next meeting, which is on the meeting's page here.</span></li>
+  </ol>
+  <p>We'll agree a regular day and time in Meeting 1.</p>
+
+  <h2>Individual meetings</h2>
+  <p>Individual meetings are available on request via email: <span class="mono">s.leach@soton.ac.uk</span>.</p>
+
+  <h2>Working together, working independently</h2>
+  <p>You share a dataset and the teaching, and you're encouraged to talk ideas through with each other. But your research question, analysis syntax and writing must be your own. Don't share syntax files or drafts.</p>
+
+  <h2>What we expect from each other</h2>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>You can expect</th><th>We expect you to</th></tr></thead>
+      <tbody>
+        <tr><td>Fortnightly group meetings with a clear plan</td><td>Come with the previous to-do list done, or say what got in the way</td></tr>
+        <tr><td>Replies to messages within 3–4 working days</td><td>Reply to emails, and inform the group if you cannot make a meeting</td></tr>
+        <tr><td>Verbal feedback on your proposal before you submit</td><td>Arrange one-to-one slots when you need them</td></tr>
+        <tr><td>Written feedback on one full draft of your paper</td><td>Send that draft by Fri 19 Mar</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ============ 3 ESS ============ -->
+<section class="page" id="p-ess" hidden>
+  <p class="eyebrow">Chapter 3</p>
+  <h1>Your dataset: the European Social Survey</h1>
+  <p class="lead">The ESS is a cross-national survey that has run every two years since 2002. The most recent round is <a href="https://ess.sikt.no/en/study/412db4fe-c77a-4e98-8ea4-6c19007f551b" target="_blank" rel="noopener">ESS Round 11</a>, fielded in 2023. You can use whichever round, or rounds, best suit your question.</p>
+
+  <div class="facts">
+    <div class="fact"><b>30</b><span>countries in the Round 11 integrated file, including the UK</span></div>
+    <div class="fact"><b>~200</b><span>core questions, asked in every round</span></div>
+    <div class="fact"><b>2</b><span>rotating modules: gender in Europe and inequalities in health</span></div>
+  </div>
+
+  <h2>What's in Round 11</h2>
+  <p>Each round has a <strong>core questionnaire</strong> plus two <strong>rotating modules</strong>, which change from round to round. The Round 11 core covers topics including:</p>
+  <ul>
+    <li>health and wellbeing</li>
+    <li>trust in people and institutions</li>
+    <li>human values</li>
+    <li>immigration, discrimination and identity</li>
+    <li>climate change</li>
+    <li>religion, politics and political participation</li>
+    <li>media use</li>
+    <li>crime and justice</li>
+    <li>sociodemographics: education, work, income, household</li>
+  </ul>
+  <p>The two rotating modules are <strong>Gender in contemporary Europe</strong> (feminine and masculine identities, sexism, gender discrimination and equality) and <strong>Social inequalities in health and their determinants</strong>. Earlier rounds repeat most of the core questions but have different rotating modules.</p>
+  <p>The <a href="https://www.europeansocialsurvey.org/news/article/round-11-questionnaire-and-provisional-release-dates" target="_blank" rel="noopener">ESS11 main questionnaire</a> is a good place to start. To explore the questions more easily, including those from other rounds, <a href="https://ess.sikt.no/en/series/321b06ad-1b98-4b7d-93ad-ca8a24e8788a?tab=themes" target="_blank" rel="noopener">browse them by theme in the ESS Data Portal</a>.</p>
+
+  <h2>Access and ethics</h2>
+  <div class="callout">
+    <span class="label">Ethics: blanket approval</span>
+    Our group is covered by a blanket ethics approval to use the ESS, so you don't need to submit your own ERGO application.
+  </div>
+  <p>The data are <a href="https://www.europeansocialsurvey.org/about/faq" target="_blank" rel="noopener">free for non-commercial use</a> and can be downloaded from the <a href="https://ess.sikt.no/" target="_blank" rel="noopener">ESS Data Portal</a> after a short registration. When you download, record the <strong>edition number</strong> of the file, because you'll need it to cite the data.</p>
+
+  <h2>Building a variable map</h2>
+  <p>A variable map links each idea in your research question to the exact ESS item that measures it. You'll build one in Meeting 2.</p>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Construct</th><th>ESS variable</th><th>Question (short)</th><th>Scale</th><th>Asked of</th></tr></thead>
+      <tbody>
+        <tr><td>Life satisfaction</td><td><code>stflife</code></td><td>How satisfied with life as a whole nowadays</td><td>0–10</td><td>Everyone</td></tr>
+        <tr><td>Social trust</td><td><code>ppltrst</code></td><td>Most people can be trusted, or you can't be too careful</td><td>0–10</td><td>Everyone</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="caption">These are example rows. Check every name, wording and scale against the documentation for the round you use.</p>
+  <p>Watch out for items that were asked only in some countries, or only of some people (for example, only those in paid work). Also watch for single items standing in for complex constructs, and for subgroups too small to analyse.</p>
+
+  <h2>Three things to know about ESS data</h2>
+  <h3>1. Missing values</h3>
+  <p>Refusals, "Don't know" and "No answer" have their own codes. For 0–10 items these are usually 77, 88 and 99. If you leave them in, they'll be treated as real scores. Check each variable in the documentation and set these codes as missing.</p>
+  <h3>2. Weights</h3>
+  <p>The ESS data file includes survey weights. They adjust for how each country's sample was drawn and for who didn't respond, so that figures such as a country's average life satisfaction match its whole population. You don't need them in this project, for two reasons:</p>
+  <ul>
+    <li>Your project tests relationships between variables, such as whether trust predicts wellbeing. Weights matter most when you estimate population averages, and they usually change relationships between variables only a little.</li>
+    <li>In SPSS, <em>Weight Cases</em> treats a weight as a count of people. With survey weights, that gives misleading standard errors and p-values. Handling them properly needs specialist tools that go beyond this project.</li>
+  </ul>
+  <p>Analyse the data unweighted, and say so in one sentence in your Methods.</p>
+  <h3>3. Syntax</h3>
+  <p>Do everything through syntax, using SPSS <em>Paste</em>, an R script or a JASP file, and add comments as you go. This makes your results reproducible, makes your Methods easy to write, and makes the end-of-project data handover simple. Keep an untouched copy of the raw download.</p>
+
+  <h2>What you don't need to worry about</h2>
+  <p>These don't apply to our group, so you can set them aside.</p>
+  <ul class="skip">
+    <li><b>ERGO approval</b><span>Our ESS projects are covered by a blanket ethics approval, so you don't submit your own ERGO application. You still write the 250-word ethics reflection in your proposal.</span></li>
+    <li><b>Pre-registration</b><span>You don't need to pre-register your study.</span></li>
+    <li><b>Applying weights</b><span>You don't need to apply the ESS survey weights in your analyses.</span></li>
+  </ul>
+</section>
+
+<!-- ============ MEETING 1 ============ -->
+<section class="page" id="p-meeting-1" hidden>
+  <p class="eyebrow">Meeting 1</p>
+  <h1>Kick-off and meeting the ESS</h1>
+  <div class="meta"><span class="chip date">w/c 28 Sep 2026</span><span class="chip">Autumn week 2</span><span class="chip">60 min</span></div>
+  <p>Workshops 1 and 2 have introduced the module and literature reviews. This is our first group meeting: we set up how we'll work, and you get your first look at the dataset you'll use all year.</p>
+
+  <h2>Goals</h2>
+  <ul class="goals">
+    <li><span>Know how supervision runs this year and what we expect from each other.</span></li>
+    <li><span>Understand what the ESS is and what it measures.</span></li>
+    <li><span>Know how to find the ESS documentation and get access to the data.</span></li>
+  </ul>
+
+  <h2>Bring with you</h2>
+  <ul>
+    <li>Any questions about the module or the project.</li>
+  </ul>
+
+  <h2>In the meeting</h2>
+  <ul>
+    <li><strong>Ground rules:</strong> the meeting format, individual meetings, communication and working independently (<a href="#supervision">Chapter 2</a>).</li>
+    <li><strong>The year at a glance:</strong> the three deadlines, and how the meetings build towards them.</li>
+    <li><strong>A tour of the ESS:</strong> the core questionnaire and rotating modules, and how to find questions and variable details in the Data Portal.</li>
+    <li><strong>Ethics:</strong> our ESS projects are covered by a blanket approval, so there's no ERGO application to write.</li>
+    <li><strong>From interest to question:</strong> interest, then ESS measures, then literature, then your question.</li>
+  </ul>
+
+  <h2 class="todo-head">To do before Meeting 2 <span class="todo-count" data-count="meeting-1"></span></h2>
+  <ul class="todo">
+    <li><label><input type="checkbox" id="m1-1"><span>Register on the ESS Data Portal.</span></label></li>
+    <li><label><input type="checkbox" id="m1-3"><span>Browse the ESS questions <a href="https://ess.sikt.no/en/series/321b06ad-1b98-4b7d-93ad-ca8a24e8788a?tab=themes" target="_blank" rel="noopener">by theme</a> or in the <a href="https://www.europeansocialsurvey.org/news/article/round-11-questionnaire-and-provisional-release-dates" target="_blank" rel="noopener">ESS11 main questionnaire</a>. Note 3–5 constructs that interest you, with their variable names or question numbers.</span></label></li>
+    <li><label><input type="checkbox" id="m1-4"><span>For your top two, write one sentence each on why they interest you.</span></label></li>
+    <li><label><input type="checkbox" id="m1-5"><span>Attend <a href="https://blackboard.soton.ac.uk/ultra/courses/_239657_1/outline" target="_blank" rel="noopener">Workshop 3: Proposal &amp; Ethics</a>.<span class="due">Mon 5 Oct</span></span></label></li>
+    <li><label><input type="checkbox" id="m1-6"><span>Attend <a href="https://blackboard.soton.ac.uk/ultra/courses/_239657_1/outline" target="_blank" rel="noopener">Workshop 4: Statistical Software</a>.<span class="due">Mon 12 Oct</span></span></label></li>
+  </ul>
+  <div class="callout done"><span class="label">By Meeting 2</span>An interest list of 3–5 ESS constructs.</div>
+</section>
+
+<!-- ============ MEETING 2 ============ -->
+<section class="page" id="p-meeting-2" hidden>
+  <p class="eyebrow">Meeting 2</p>
+  <h1>From interest to a researchable question</h1>
+  <div class="meta"><span class="chip date">w/c 12 Oct 2026</span><span class="chip">Autumn week 4</span><span class="chip">45–60 min</span></div>
+  <p>You've browsed the questionnaire and have a shortlist of interests. Now we turn them into questions the ESS can actually answer.</p>
+
+  <h2>Goals</h2>
+  <ul class="goals">
+    <li><span>Turn a broad interest into a question the ESS can answer.</span></li>
+    <li><span>Link each construct in your question to specific ESS variables.</span></li>
+    <li><span>Spot feasibility problems before you've invested in an idea.</span></li>
+  </ul>
+
+  <h2>Bring with you</h2>
+  <ul>
+    <li>Two candidate ideas, and the ESS questions that could measure them (question numbers and wording).</li>
+  </ul>
+
+  <h2>In the meeting</h2>
+  <ul>
+    <li><strong>Pitches (2–3 min each):</strong> your two ideas, how you'd measure them and why they matter.</li>
+    <li><strong>What the ESS can answer:</strong> associations between variables, differences between groups, moderation by demographics or country, and change across rounds.</li>
+    <li><strong>What it can't answer:</strong> causal or experimental questions, or anything about constructs it doesn't measure.</li>
+    <li><strong>Mapping constructs to variables:</strong> from a questionnaire item to its variable name, response scale and who was asked (<a href="#ess">Chapter 3</a>).</li>
+    <li><strong>Feasibility traps:</strong> items asked only in some countries or of some people, single items for complex ideas, and tiny subgroups.</li>
+    <li><strong>A quick check against the FINER criteria:</strong> is the question feasible, interesting, novel, ethical and relevant?</li>
+  </ul>
+
+  <h2 class="todo-head">To do before Meeting 3 <span class="todo-count" data-count="meeting-2"></span></h2>
+  <ul class="todo">
+    <li><label><input type="checkbox" id="m2-1"><span>Choose one topic and write your research question in one sentence.</span></label></li>
+    <li><label><input type="checkbox" id="m2-2"><span>Build your variable map: construct, ESS variable, question wording, scale and who was asked.</span></label></li>
+    <li><label><input type="checkbox" id="m2-3"><span>Search the literature using the Workshop 2 skills. Save at least 5 relevant papers, including at least one that used ESS data.</span></label></li>
+    <li><label><input type="checkbox" id="m2-4"><span>Set up a reference manager, such as Zotero, and add your papers to it.</span></label></li>
+  </ul>
+  <div class="callout done"><span class="label">By Meeting 3</span>A provisional research question and a variable map.</div>
+</section>
+
+<!-- ============ MEETING 3 ============ -->
+<section class="page" id="p-meeting-3" hidden>
+  <p class="eyebrow">Meeting 3</p>
+  <h1>Literature review and finding the gap</h1>
+  <div class="meta"><span class="chip date">w/c 26 Oct 2026</span><span class="chip">Autumn week 6</span><span class="chip">45–60 min</span></div>
+  <p>You have a provisional question. Now you find out what's already known, so your study adds something new.</p>
+
+  <h2>Goals</h2>
+  <ul class="goals">
+    <li><span>Search the literature systematically, including earlier studies that used ESS data.</span></li>
+    <li><span>Turn a pile of papers into an argument that leads to your question.</span></li>
+    <li><span>Refine your question so it fills a real gap.</span></li>
+  </ul>
+
+  <h2>Bring with you</h2>
+  <ul>
+    <li>Your research question and variable map.</li>
+    <li>The 2–3 papers that matter most to your question.</li>
+  </ul>
+
+  <h2>In the meeting</h2>
+  <ul>
+    <li><strong>One minute each:</strong> your question and your key papers.</li>
+    <li><strong>Search strategy:</strong> database search strings (e.g., in PsycINFO or Web of Science). Also search "European Social Survey" together with your construct to see what's been done with these data.</li>
+    <li><strong>From summary to argument:</strong> start with the broad problem, then what's known, then the gap, then your study's aim.</li>
+    <li><strong>A synthesis table:</strong> for each paper, the sample, measures, findings and limitations.</li>
+    <li><strong>Where novelty comes from with ESS data:</strong>
+      <ul>
+        <li>the newest round</li>
+        <li>a new pairing of predictor and outcome</li>
+        <li>a new moderator</li>
+        <li>a comparison across countries</li>
+        <li>a psychological theory tested at population scale</li>
+      </ul>
+    </li>
+  </ul>
+
+  <h2 class="todo-head">To do before Meeting 4 <span class="todo-count" data-count="meeting-3"></span></h2>
+  <ul class="todo">
+    <li><label><input type="checkbox" id="m3-1"><span>Complete a synthesis table of 8–10 papers.</span></label></li>
+    <li><label><input type="checkbox" id="m3-2"><span>Write a 500-word outline of your proposal's background and rationale.</span></label></li>
+    <li><label><input type="checkbox" id="m3-3"><span>Draft 1–3 hypotheses, each linked to the literature that predicts it.</span></label></li>
+    <li><label><input type="checkbox" id="m3-4"><span>Update your variable map for any change to your question.</span></label></li>
+  </ul>
+  <div class="callout done"><span class="label">By Meeting 4</span>A refined question and draft hypotheses.</div>
+</section>
+
+<!-- ============ MEETING 4 ============ -->
+<section class="page" id="p-meeting-4" hidden>
+  <p class="eyebrow">Meeting 4</p>
+  <h1>Hypotheses and analysis plan</h1>
+  <div class="meta"><span class="chip date">w/c 9 Nov 2026</span><span class="chip">Autumn week 8</span><span class="chip">60 min</span></div>
+  <p>This is where your proposal's Methods section takes shape. The decisions you make here go straight into your proposal.</p>
+
+  <h2>Goals</h2>
+  <ul class="goals">
+    <li><span>Write hypotheses that are directional, testable and grounded in the literature.</span></li>
+    <li><span>Match each hypothesis to the right statistical test.</span></li>
+    <li><span>Decide your sample and covariates in advance.</span></li>
+  </ul>
+
+  <h2>Bring with you</h2>
+  <ul>
+    <li>Your draft hypotheses.</li>
+    <li>Your synthesis table and your 500-word background outline.</li>
+  </ul>
+
+  <h2>In the meeting</h2>
+  <ul>
+    <li><strong>Hypothesis check:</strong> is each one directional, testable with ESS variables and grounded in the literature?</li>
+    <li><strong>Matching tests to hypotheses:</strong> correlation, t-test or ANOVA, multiple regression, moderation with an interaction term, or logistic regression for yes/no outcomes.</li>
+    <li><strong>Sample:</strong> one country, a set of countries, or all countries with country as a control. Decide age limits and exclusions now.</li>
+    <li><strong>Covariates:</strong> chosen in advance, each with a reason, for example age, gender, education or income.</li>
+    <li><strong>Large samples:</strong> almost every effect will be statistically significant. So decide which effect size would matter, and plan to report confidence intervals.</li>
+  </ul>
+
+  <h3>Your analysis plan table</h3>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Hypothesis</th><th>Variables</th><th>Test</th><th>Covariates</th><th>Sample</th></tr></thead>
+      <tbody>
+        <tr><td>H1: …</td><td>Outcome, predictor</td><td>Multiple regression</td><td>Age, gender, education</td><td>Countries, ages</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="caption">Copy this layout and add one row per hypothesis.</p>
+
+  <h2 class="todo-head">To do before Meeting 5 <span class="todo-count" data-count="meeting-4"></span></h2>
+  <ul class="todo">
+    <li><label><input type="checkbox" id="m4-1"><span>Complete your analysis plan table, with one row per hypothesis.</span></label></li>
+    <li><label><input type="checkbox" id="m4-2"><span>Write a full proposal draft on the module template: 1,000 words plus a 250-word ethics reflection. Save it in your project folder before the meeting.</span></label></li>
+  </ul>
+  <div class="callout done"><span class="label">By Meeting 5</span>A full proposal draft.</div>
+</section>
+
+<!-- ============ MEETING 5 ============ -->
+<section class="page" id="p-meeting-5" hidden>
+  <p class="eyebrow">Meeting 5</p>
+  <h1>Proposal and ethics clinic</h1>
+  <div class="meta"><span class="chip date">w/c 23 Nov 2026</span><span class="chip">Autumn week 10</span><span class="chip">60 min</span><span class="chip warn">Proposal due Wed 2 Dec</span></div>
+  <p>This is your last group meeting before the proposal deadline, and the last one of the autumn term. We use it for feedback on your proposal and its ethics reflection, and to plan your work over the break.</p>
+
+  <h2>Goals</h2>
+  <ul class="goals">
+    <li><span>Get verbal feedback on your proposal's aims, hypotheses and methods.</span></li>
+    <li><span>Understand the ethical issues in analysing secondary survey data.</span></li>
+    <li><span>Leave with a plan for handling the data and writing over the Christmas break.</span></li>
+  </ul>
+
+  <h2>Bring with you</h2>
+  <ul>
+    <li>Your full proposal draft, including the 250-word ethics reflection.</li>
+  </ul>
+
+  <h2>In the meeting</h2>
+  <ul>
+    <li><strong>Proposal feedback:</strong> 5 minutes each on aims, hypotheses and methods, plus questions from the group.</li>
+    <li><strong>Ethics in this group:</strong> our ESS projects are covered by a blanket approval, so there's no ERGO application to write. You still write the 250-word ethics reflection.</li>
+    <li><strong>Material for your ethics reflection:</strong>
+      <ul>
+        <li>re-identification risk in small subgroups, even in anonymised data</li>
+        <li>the ESS conditions of use: non-commercial use, and citing the data correctly</li>
+        <li>storing data securely on university systems</li>
+        <li>respondents consented to take part in the survey, not to your specific question</li>
+        <li>reporting differences between groups (e.g., gender, ethnicity, migration) without stigmatising anyone</li>
+      </ul>
+    </li>
+    <li><strong>Handling the data:</strong> download the data for the ESS round or rounds you're using, and note the edition number. Store it on university systems, keep an untouched copy of the raw download, and work in syntax from day one (<a href="#ess">Chapter 3</a>).</li>
+    <li><strong>Your Christmas writing plan.</strong></li>
+  </ul>
+
+  <h2 class="todo-head">To do before Meeting 6 <span class="todo-count" data-count="meeting-5"></span></h2>
+  <ul class="todo">
+    <li><label><input type="checkbox" id="m5-1"><span>Revise your proposal using the feedback.</span></label></li>
+    <li><label><input type="checkbox" id="m5-2"><span>Submit your project proposal.<span class="due">Wed 2 Dec, 4pm</span></span></label></li>
+    <li><label><input type="checkbox" id="m5-3"><span>Download the data for the ESS round or rounds you're using. Note the edition number and keep an untouched copy of the raw file.</span></label></li>
+    <li><label><input type="checkbox" id="m5-4"><span>Expand your proposal background into the paper's literature review. It needs to be at least 1,500 words.</span></label></li>
+    <li><label><input type="checkbox" id="m5-5"><span>Draft the parts of the Methods you can write now: the ESS design, your sample and your measures.</span></label></li>
+    <li><label><input type="checkbox" id="m5-6"><span>Write a syntax skeleton: each step you'll run, as comments.</span></label></li>
+  </ul>
+  <div class="callout"><span class="label">Christmas break</span>There are no group meetings in December or early January. They start again in w/c 25 Jan, the first week of spring teaching. If you need help in the meantime, email to arrange a one-to-one meeting.</div>
+</section>
+
+<!-- ============ MEETING 6 ============ -->
+<section class="page" id="p-meeting-6" hidden>
+  <p class="eyebrow">Meeting 6</p>
+  <h1>Getting the data ready</h1>
+  <div class="meta"><span class="chip date">w/c 25 Jan 2027</span><span class="chip">Spring week 1</span><span class="chip">60 min</span></div>
+  <p>The spring term starts with the data. Careful preparation now saves you from redoing analyses later.</p>
+
+  <h2>Goals</h2>
+  <ul class="goals">
+    <li><span>Produce a clean analysis dataset from your ESS data file.</span></li>
+    <li><span>Describe your sample and variables.</span></li>
+    <li><span>Record every decision you make along the way.</span></li>
+  </ul>
+
+  <h2>Bring with you</h2>
+  <ul>
+    <li>The ESS data file you downloaded, and its edition number.</li>
+    <li>Your syntax skeleton and your literature review draft.</li>
+  </ul>
+
+  <h2>In the meeting</h2>
+  <ul>
+    <li><strong>Check your setup:</strong> the raw file stored safely, your syntax file started, and missing-value codes understood (<a href="#ess">Chapter 3</a>).</li>
+    <li><strong>Preparation steps:</strong>
+      <ul>
+        <li>select your cases, such as countries and age range</li>
+        <li>set missing-value codes to missing</li>
+        <li>reverse-score items where needed</li>
+        <li>compute composite scores and check their reliability (alpha or omega)</li>
+      </ul>
+    </li>
+    <li><strong>Descriptives:</strong> N, means, SDs, frequencies and distributions.</li>
+    <li><strong>A decision log:</strong> every exclusion and recode, with the reason. This feeds your Methods and supplementary materials.</li>
+  </ul>
+
+  <h2 class="todo-head">To do before Meeting 7 <span class="todo-count" data-count="meeting-6"></span></h2>
+  <ul class="todo">
+    <li><label><input type="checkbox" id="m6-1"><span>Produce a clean dataset, with commented syntax that recreates it from the raw file.</span></label></li>
+    <li><label><input type="checkbox" id="m6-2"><span>Make a descriptives table and a correlation matrix for your variables.</span></label></li>
+    <li><label><input type="checkbox" id="m6-4"><span>Finish your literature review draft.</span></label></li>
+  </ul>
+  <div class="callout done"><span class="label">By Meeting 7</span>Analysis-ready data, descriptives and a finished literature review draft.</div>
+</section>
+
+<!-- ============ MEETING 7 ============ -->
+<section class="page" id="p-meeting-7" hidden>
+  <p class="eyebrow">Meeting 7</p>
+  <h1>Running the main analyses</h1>
+  <div class="meta"><span class="chip date">w/c 8 Feb 2027</span><span class="chip">Spring week 3</span><span class="chip">60 min</span></div>
+  <p>You test your hypotheses exactly as your proposal said you would. Anything beyond that is fine, but it's labelled exploratory.</p>
+
+  <h2>Goals</h2>
+  <ul class="goals">
+    <li><span>Run the analyses you planned in your proposal.</span></li>
+    <li><span>Interpret effects by their size, not by p-values alone.</span></li>
+  </ul>
+
+  <h2>Bring with you</h2>
+  <ul>
+    <li>Your clean dataset and syntax.</li>
+    <li>Your descriptives table and correlation matrix.</li>
+  </ul>
+
+  <h2>In the meeting</h2>
+  <ul>
+    <li><strong>Planned vs exploratory analyses:</strong> what counts as each, and how to report both.</li>
+    <li><strong>Interactions:</strong> interpreting and decomposing interaction effects.</li>
+    <li><strong>Effect sizes in large samples:</strong> standardised coefficients, R² and confidence intervals.</li>
+    <li><strong>Extra help:</strong> the PhD data-analysis drop-in sessions run in March and April.</li>
+  </ul>
+
+  <h2 class="todo-head">To do before Meeting 8 <span class="todo-count" data-count="meeting-7"></span></h2>
+  <ul class="todo">
+    <li><label><input type="checkbox" id="m7-1"><span>Run every analysis in your plan.</span></label></li>
+    <li><label><input type="checkbox" id="m7-2"><span>For each hypothesis, write one plain-English sentence: supported or not, and how strongly.</span></label></li>
+    <li><label><input type="checkbox" id="m7-3"><span>Note any departures from your plan, and why, in your decision log.</span></label></li>
+  </ul>
+  <div class="callout done"><span class="label">By Meeting 8</span>Results for every hypothesis.</div>
+</section>
+
+<!-- ============ MEETING 8 ============ -->
+<section class="page" id="p-meeting-8" hidden>
+  <p class="eyebrow">Meeting 8</p>
+  <h1>Writing Methods and Results</h1>
+  <div class="meta"><span class="chip date">w/c 22 Feb 2027</span><span class="chip">Spring week 5</span><span class="chip">45–60 min</span></div>
+  <p>You have results. Now you write them up clearly, and describe the ESS well enough that a reader could repeat your analysis.</p>
+
+  <h2>Goals</h2>
+  <ul class="goals">
+    <li><span>Write a Methods section that describes a secondary dataset properly.</span></li>
+    <li><span>Report your results in APA style, hypothesis by hypothesis.</span></li>
+    <li><span>Make clear tables and figures.</span></li>
+  </ul>
+
+  <h2>Bring with you</h2>
+  <ul>
+    <li>Your analysis output and your one-line summaries of each hypothesis.</li>
+  </ul>
+
+  <h2>In the meeting</h2>
+  <ul>
+    <li><strong>Methods for secondary data:</strong>
+      <ul>
+        <li>the ESS design: sampling, fieldwork mode and country coverage</li>
+        <li>your analytic sample and exclusions</li>
+        <li>your measures, with item wording and response scales</li>
+        <li>your analysis plan</li>
+      </ul>
+    </li>
+    <li><strong>Citing the dataset:</strong> as the ESS requires, including the edition number.</li>
+    <li><strong>Results in APA style:</strong> descriptives first, then each hypothesis in order, with one clear table or figure per key finding.</li>
+    <li><strong>Departures from the plan:</strong> report them openly, with the reasons.</li>
+    <li><strong>Formatting:</strong> the JSSP author guidelines and the module template.</li>
+  </ul>
+
+  <h2 class="todo-head">To do before Meeting 9 <span class="todo-count" data-count="meeting-8"></span></h2>
+  <ul class="todo">
+    <li><label><input type="checkbox" id="m8-1"><span>Complete a draft of your Methods.</span></label></li>
+    <li><label><input type="checkbox" id="m8-2"><span>Complete a draft of your Results.</span></label></li>
+    <li><label><input type="checkbox" id="m8-3"><span>Make your tables and figures in APA format.</span></label></li>
+  </ul>
+  <div class="callout done"><span class="label">By Meeting 9</span>Drafts of Methods and Results.</div>
+</section>
+
+<!-- ============ MEETING 9 ============ -->
+<section class="page" id="p-meeting-9" hidden>
+  <p class="eyebrow">Meeting 9</p>
+  <h1>Discussion and assembling the draft</h1>
+  <div class="meta"><span class="chip date">w/c 8 Mar 2027</span><span class="chip">Spring week 7</span><span class="chip">45–60 min</span><span class="chip warn">Full draft due Fri 19 Mar</span></div>
+  <p>The last big section to write. Then you put the whole paper together for feedback.</p>
+
+  <h2>Goals</h2>
+  <ul class="goals">
+    <li><span>Structure a Discussion that interprets your findings, rather than repeating them.</span></li>
+    <li><span>Name the limitations that come with ESS data.</span></li>
+    <li><span>Assemble a complete draft within the word limit.</span></li>
+  </ul>
+
+  <h2>Bring with you</h2>
+  <ul>
+    <li>Your Methods and Results drafts.</li>
+    <li>Notes on what your findings mean.</li>
+  </ul>
+
+  <h2>In the meeting</h2>
+  <ul>
+    <li><strong>Discussion structure:</strong> main findings, links back to the literature, implications, limitations, future research and conclusion.</li>
+    <li><strong>ESS-specific limitations:</strong>
+      <ul>
+        <li>cross-sectional data, so no causal claims</li>
+        <li>self-report and single-item measures</li>
+        <li>whether translated items mean the same across countries</li>
+        <li>non-response</li>
+        <li>constructs the ESS doesn't measure</li>
+      </ul>
+    </li>
+    <li><strong>Word budget:</strong> 5,000 words. The abstract, references and supplementary materials don't count.</li>
+    <li><strong>What feedback covers:</strong> one high-level comment per section and two brief comments per page, with no editing. That's why the draft you send should be as complete as you can make it.</li>
+  </ul>
+
+  <h2 class="todo-head">To do before Meeting 10 <span class="todo-count" data-count="meeting-9"></span></h2>
+  <ul class="todo">
+    <li><label><input type="checkbox" id="m9-1"><span>Draft your Discussion and Conclusion.</span></label></li>
+    <li><label><input type="checkbox" id="m9-2"><span>Write your abstract (250 words max) and title.</span></label></li>
+    <li><label><input type="checkbox" id="m9-3"><span>Assemble the full paper in the JSSP template and check the word count.</span></label></li>
+    <li><label><input type="checkbox" id="m9-4"><span>Send your full draft to your supervisor.<span class="due">Fri 19 Mar</span></span></label></li>
+    <li><label><input type="checkbox" id="m9-5"><span>Read your feedback when it arrives and list the changes you'll make.<span class="due">By Fri 26 Mar</span></span></label></li>
+    <li><label><input type="checkbox" id="m9-6"><span>Revise your paper over the Easter break.</span></label></li>
+  </ul>
+  <div class="callout done"><span class="label">By Fri 19 Mar</span>A complete draft with your supervisor.</div>
+  <div class="callout"><span class="label">Easter break</span>The spring term ends Sat 20 Mar and the summer term starts Mon 12 Apr. Feedback on your draft comes back by Fri 26 Mar, so use the break to revise.</div>
+</section>
+
+<!-- ============ MEETING 10 ============ -->
+<section class="page" id="p-meeting-10" hidden>
+  <p class="eyebrow">Meeting 10</p>
+  <h1>Final check-in</h1>
+  <div class="meta"><span class="chip date">w/c 12 Apr 2027</span><span class="chip">Summer week 1</span><span class="chip">30 min</span><span class="chip warn">Paper due Thu 29 Apr</span></div>
+  <p>This is our last group meeting before you submit.</p>
+
+  <h2>Goals</h2>
+  <ul class="goals">
+    <li><span>Clear up any last questions about acting on your feedback.</span></li>
+    <li><span>Know exactly what a complete submission includes.</span></li>
+  </ul>
+
+  <h2>Bring with you</h2>
+  <ul>
+    <li>Your revised paper, and any questions about the feedback.</li>
+  </ul>
+
+  <h2>In the meeting</h2>
+  <ul>
+    <li><strong>Questions about the feedback.</strong> Supervisors can't read a second draft, but we can talk through how to respond.</li>
+    <li><strong>The submission checklist</strong>, below.</li>
+  </ul>
+
+  <h2 class="todo-head">Before you submit <span class="todo-count" data-count="meeting-10"></span></h2>
+  <ul class="todo">
+    <li><label><input type="checkbox" id="m10-1"><span>Your paper is within 5,000 words.</span></label></li>
+    <li><label><input type="checkbox" id="m10-2"><span>Your abstract is 250 words or fewer.</span></label></li>
+    <li><label><input type="checkbox" id="m10-3"><span>The paper follows the JSSP author guidelines and uses the module template.</span></label></li>
+    <li><label><input type="checkbox" id="m10-4"><span>Your supplementary materials are attached.</span></label></li>
+    <li><label><input type="checkbox" id="m10-5"><span>Your data and syntax are shared with your supervisor.</span></label></li>
+    <li><label><input type="checkbox" id="m10-6"><span>Submit your research paper.<span class="due">Thu 29 Apr, 4pm</span></span></label></li>
+  </ul>
+</section>
+
+<!-- ============ A DATES ============ -->
+<section class="page" id="p-dates" hidden>
+  <p class="eyebrow">Appendix A</p>
+  <h1>Key dates and links</h1>
+  <p class="lead">All dates are in the 2026/27 academic year. Deadlines are in orange.</p>
+
+  <div class="table-wrap">
+    <table id="dates-table">
+      <thead><tr><th>Date</th><th>What</th></tr></thead>
+      <tbody class="term aut">
+        <tr class="term-head"><th colspan="2">Autumn term<span>Mon 21 Sep – Sat 12 Dec</span></th></tr>
+        <tr data-date="2026-09-21"><td class="when">Mon 21 Sep</td><td><a href="https://blackboard.soton.ac.uk/ultra/courses/_239657_1/outline" target="_blank" rel="noopener">Workshop 1: Introduction</a></td></tr>
+        <tr data-date="2026-09-28"><td class="when">Mon 28 Sep</td><td><a href="https://blackboard.soton.ac.uk/ultra/courses/_239657_1/outline" target="_blank" rel="noopener">Workshop 2: Literature Reviews</a></td></tr>
+        <tr data-date="2026-09-28"><td class="when">w/c 28 Sep</td><td><a href="#meeting-1">Meeting 1</a></td></tr>
+        <tr data-date="2026-10-05"><td class="when">Mon 5 Oct</td><td><a href="https://blackboard.soton.ac.uk/ultra/courses/_239657_1/outline" target="_blank" rel="noopener">Workshop 3: Proposal &amp; Ethics</a></td></tr>
+        <tr data-date="2026-10-12"><td class="when">Mon 12 Oct</td><td><a href="https://blackboard.soton.ac.uk/ultra/courses/_239657_1/outline" target="_blank" rel="noopener">Workshop 4: Statistical Software</a></td></tr>
+        <tr data-date="2026-10-12"><td class="when">w/c 12 Oct</td><td><a href="#meeting-2">Meeting 2</a></td></tr>
+        <tr data-date="2026-10-26"><td class="when">w/c 26 Oct</td><td><a href="#meeting-3">Meeting 3</a></td></tr>
+        <tr data-date="2026-11-09"><td class="when">w/c 9 Nov</td><td><a href="#meeting-4">Meeting 4</a></td></tr>
+        <tr data-date="2026-11-23"><td class="when">w/c 23 Nov</td><td><a href="#meeting-5">Meeting 5</a></td></tr>
+        <tr data-date="2026-12-02" class="deadline"><td class="when">Wed 2 Dec, 4pm</td><td>Project proposal due (20%)</td></tr>
+      </tbody>
+      <tbody class="term spr">
+        <tr class="term-head"><th colspan="2">Spring term<span>Mon 25 Jan – Sat 20 Mar</span></th></tr>
+        <tr data-date="2027-01-25"><td class="when">w/c 25 Jan</td><td><a href="#meeting-6">Meeting 6</a></td></tr>
+        <tr data-date="2027-02-08"><td class="when">w/c 8 Feb</td><td><a href="#meeting-7">Meeting 7</a></td></tr>
+        <tr data-date="2027-02-22"><td class="when">w/c 22 Feb</td><td><a href="#meeting-8">Meeting 8</a></td></tr>
+        <tr data-date="2027-03-08"><td class="when">w/c 8 Mar</td><td><a href="#meeting-9">Meeting 9</a></td></tr>
+        <tr data-date="2027-03-19" class="deadline"><td class="when">Fri 19 Mar</td><td>Full draft to your supervisor</td></tr>
+      </tbody>
+      <tbody class="term brk">
+        <tr class="term-head"><th colspan="2">Easter break<span>Sun 21 Mar – Sun 11 Apr</span></th></tr>
+        <tr data-date="2027-03-26"><td class="when">Fri 26 Mar</td><td>Feedback on your draft returned</td></tr>
+      </tbody>
+      <tbody class="term sum">
+        <tr class="term-head"><th colspan="2">Summer term<span>from Mon 12 Apr</span></th></tr>
+        <tr data-date="2027-04-12"><td class="when">w/c 12 Apr</td><td><a href="#meeting-10">Meeting 10</a></td></tr>
+        <tr data-date="2027-04-29" class="deadline"><td class="when">Thu 29 Apr, 4pm</td><td>Research paper due (80%)</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="caption">Rows are shaded by term, and past dates turn grey. Workshop links open the module's Blackboard page. Workshop 5 (Research Paper) and the online drop-in sessions are still to be confirmed. The PhD data-analysis drop-ins run in March and April.</p>
+
+  <h2>Links</h2>
+  <ul class="sources">
+    <li><a href="https://blackboard.soton.ac.uk/ultra/courses/_239657_1/outline" target="_blank" rel="noopener">PSYC3085 on Blackboard</a>: workshops and module materials</li>
+    <li><a href="https://ess.sikt.no/" target="_blank" rel="noopener">ESS Data Portal</a>: register, browse variables and download</li>
+    <li><a href="https://ess.sikt.no/en/series/321b06ad-1b98-4b7d-93ad-ca8a24e8788a?tab=themes" target="_blank" rel="noopener">ESS questions by theme</a>: explore questions across rounds</li>
+    <li><a href="https://ess.sikt.no/en/study/412db4fe-c77a-4e98-8ea4-6c19007f551b" target="_blank" rel="noopener">ESS Round 11 study page</a> (most recent round)</li>
+    <li><a href="https://www.europeansocialsurvey.org/news/article/round-11-questionnaire-and-provisional-release-dates" target="_blank" rel="noopener">ESS Round 11 questionnaire</a></li>
+    <li><a href="https://www.europeansocialsurvey.org/news/article/final-release-round-11-data" target="_blank" rel="noopener">Final release of Round 11 data</a> (countries and modules)</li>
+    <li><a href="https://www.europeansocialsurvey.org/about/faq" target="_blank" rel="noopener">ESS FAQ</a>: data access and conditions</li>
+    <li><a href="https://www.southampton.ac.uk/about/term-dates" target="_blank" rel="noopener">University of Southampton term dates</a></li>
+  </ul>
+
+  <h2>Further reading from the module</h2>
+  <ul class="sources">
+    <li>Bell, J., &amp; Waters, S. (2014). <em>Doing your research project: A guide for first-time researchers</em> (6th ed.). McGraw-Hill Education.</li>
+    <li>Haslam, S. A., &amp; McGarty, C. (2019). <em>Research methods and statistics in psychology</em> (3rd ed.). SAGE.</li>
+    <li>Reardon, D. (2006). <em>Doing your undergraduate project</em>. SAGE.</li>
+  </ul>
+</section>
+
+    <nav class="pager" id="pager" aria-label="Previous and next chapter"></nav>
+    <p class="foot">PSYC3085 Empirical Project · ESS supervision group · 2026/27. Your ticks are saved in this browser only.</p>
+  </main>
+</div>
+
+<script>
+(function () {
+  var PAGES = [
+    { id: 'home', n: '', label: 'Welcome', part: '' },
+    { id: 'module', n: '1', label: 'About PSYC3085', part: 'I · Getting started' },
+    { id: 'supervision', n: '2', label: 'How supervision works', part: 'I · Getting started' },
+    { id: 'ess', n: '3', label: 'Your dataset: the ESS', part: 'I · Getting started' },
+    { id: 'meeting-1', n: 'M1', label: 'Kick-off and meeting the ESS', part: 'II · Autumn term', date: '2026-09-28', sub: 'w/c 28 Sep' },
+    { id: 'meeting-2', n: 'M2', label: 'From interest to a question', part: 'II · Autumn term', date: '2026-10-12', sub: 'w/c 12 Oct' },
+    { id: 'meeting-3', n: 'M3', label: 'Literature review and the gap', part: 'II · Autumn term', date: '2026-10-26', sub: 'w/c 26 Oct' },
+    { id: 'meeting-4', n: 'M4', label: 'Hypotheses and analysis plan', part: 'II · Autumn term', date: '2026-11-09', sub: 'w/c 9 Nov' },
+    { id: 'meeting-5', n: 'M5', label: 'Proposal and ethics clinic', part: 'II · Autumn term', date: '2026-11-23', sub: 'w/c 23 Nov' },
+    { id: 'meeting-6', n: 'M6', label: 'Getting the data ready', part: 'III · Spring and summer', date: '2027-01-25', sub: 'w/c 25 Jan' },
+    { id: 'meeting-7', n: 'M7', label: 'Running the main analyses', part: 'III · Spring and summer', date: '2027-02-08', sub: 'w/c 8 Feb' },
+    { id: 'meeting-8', n: 'M8', label: 'Writing Methods and Results', part: 'III · Spring and summer', date: '2027-02-22', sub: 'w/c 22 Feb' },
+    { id: 'meeting-9', n: 'M9', label: 'Discussion and the full draft', part: 'III · Spring and summer', date: '2027-03-08', sub: 'w/c 8 Mar' },
+    { id: 'meeting-10', n: 'M10', label: 'Final check-in', part: 'III · Spring and summer', date: '2027-04-12', sub: 'w/c 12 Apr' },
+    { id: 'dates', n: 'A', label: 'Key dates and links', part: 'Appendix' }
+  ];
+  var DEADLINES = [
+    { date: '2026-12-02', label: 'Proposal', dx: -4, anchor: 'end' },
+    { date: '2027-03-19', label: 'Full draft', dx: -4, anchor: 'end' },
+    { date: '2027-03-26', label: 'Feedback', dx: 0, anchor: 'middle', below: true },
+    { date: '2027-04-29', label: 'Paper due', dx: -4, anchor: 'end' }
+  ];
+  var TERMS = [
+    { start: '2026-09-21', end: '2026-12-12', label: 'Autumn term', cls: 'aut' },
+    { start: '2027-01-25', end: '2027-03-20', label: 'Spring term', cls: 'spr' },
+    { start: '2027-04-12', end: '2027-05-01', label: 'Summer', cls: 'sum' }
+  ];
+  var BLACKBOARD = 'https://blackboard.soton.ac.uk/ultra/courses/_239657_1/outline';
+  var WORKSHOPS = [
+    { date: '2026-09-21', label: 'Workshop 1: Introduction' },
+    { date: '2026-09-28', label: 'Workshop 2: Literature Reviews' },
+    { date: '2026-10-05', label: 'Workshop 3: Proposal &amp; Ethics' },
+    { date: '2026-10-12', label: 'Workshop 4: Statistical Software' }
+  ];
+  var MONTHS = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+
+  function pad(n) { return (n < 10 ? '0' : '') + n; }
+  var now = new Date();
+  var TODAY = now.getFullYear() + '-' + pad(now.getMonth() + 1) + '-' + pad(now.getDate());
+
+  // ---------- storage (per viewer, optional) ----------
+  var KEY = 'psyc3085-ess-todos-v1';
+  var ticks = {};
+  try { ticks = JSON.parse(localStorage.getItem(KEY) || '{}') || {}; } catch (e) { ticks = {}; }
+  function save() { try { localStorage.setItem(KEY, JSON.stringify(ticks)); } catch (e) {} }
+
+  // ---------- current meeting ----------
+  var meetings = PAGES.filter(function (p) { return p.date; });
+  function addDays(iso, n) { return new Date(Date.parse(iso + 'T00:00:00Z') + n * 864e5).toISOString().slice(0, 10); }
+  function currentMeeting() {
+    var cur = null;
+    for (var i = 0; i < meetings.length; i++) {
+      if (meetings[i].date <= TODAY) cur = meetings[i];
+    }
+    if (!cur) return { m: meetings[0], mode: 'next' };
+    var nxt = meetings[meetings.indexOf(cur) + 1];
+    if (nxt) return TODAY < addDays(cur.date, 14) ? { m: cur, mode: 'now' } : { m: nxt, mode: 'next' };
+    return TODAY <= '2027-04-29' ? { m: cur, mode: 'now' } : { m: null, mode: 'done' };
+  }
+  var CUR = currentMeeting();
+
+  // ---------- sidebar ----------
+  var toc = document.getElementById('toc');
+  var html = '';
+  var lastPart = null;
+  PAGES.forEach(function (p) {
+    if (p.part !== lastPart) {
+      if (lastPart !== null) html += '</div>';
+      html += (p.part ? '<div class="toc-part">' + p.part + '</div>' : '') + '<div class="toc">';
+      lastPart = p.part;
+    }
+    var tag = '';
+    if (CUR.m && CUR.m.id === p.id && CUR.mode === 'now') tag = '<span class="now">Now</span>';
+    else if (p.date) tag = '<span class="prog" data-prog="' + p.id + '"></span>';
+    html += '<a href="#' + p.id + '" data-id="' + p.id + '"><span class="n">' + p.n + '</span><span>' + p.label +
+      (p.sub ? '<span class="sub">' + p.sub + '</span>' : '') + '</span>' + tag + '</a>';
+  });
+  html += '</div>';
+  toc.innerHTML = html;
+
+  // ---------- to-dos ----------
+  function refreshCounts() {
+    PAGES.forEach(function (p) {
+      if (!p.date) return;
+      var sec = document.getElementById('p-' + p.id);
+      var boxes = sec.querySelectorAll('.todo input');
+      var done = 0;
+      boxes.forEach(function (b) { if (b.checked) done++; });
+      var label = done + ' of ' + boxes.length + ' done';
+      var c = sec.querySelector('[data-count="' + p.id + '"]');
+      if (c) c.textContent = label;
+      var pr = toc.querySelector('[data-prog="' + p.id + '"]');
+      if (pr) {
+        pr.textContent = done ? done + '/' + boxes.length : '';
+        pr.classList.toggle('all', done === boxes.length && done > 0);
+      }
+    });
+  }
+  document.querySelectorAll('.todo input').forEach(function (b) {
+    b.checked = !!ticks[b.id];
+    b.closest('li').classList.toggle('checked', b.checked);
+    b.addEventListener('change', function () {
+      if (b.checked) ticks[b.id] = true; else delete ticks[b.id];
+      b.closest('li').classList.toggle('checked', b.checked);
+      save();
+      refreshCounts();
+    });
+  });
+  refreshCounts();
+
+  // ---------- this-fortnight callout ----------
+  var nowText = document.getElementById('now-text');
+  var nowLabel = document.querySelector('#now-callout .label');
+  if (CUR.mode === 'done') {
+    nowLabel.textContent = 'All done';
+    nowText.textContent = 'All group meetings are finished. The research paper was due Thu 29 Apr 2027, 4pm.';
+  } else {
+    var m = CUR.m;
+    nowLabel.textContent = CUR.mode === 'now' ? 'This fortnight' : 'Next meeting';
+    nowText.innerHTML = '<a class="go" href="#' + m.id + '">Meeting ' + m.n.slice(1) + ': ' +
+      document.querySelector('#p-' + m.id + ' h1').textContent + '</a> · ' + m.sub;
+  }
+
+  // ---------- past dates ----------
+  document.querySelectorAll('#dates-table tr[data-date]').forEach(function (tr) {
+    if (tr.getAttribute('data-date') < TODAY) tr.classList.add('past');
+  });
+
+  // ---------- timeline ----------
+  (function drawTimeline() {
+    var W = 820, H = 272, x0 = 24, x1 = 800;
+    var day = function (d) { return Date.parse(d + 'T00:00:00Z') / 864e5; };
+    var lo = day('2026-09-21'), hi = day('2027-05-01');
+    var X = function (d) { return x0 + (day(d) - lo) / (hi - lo) * (x1 - x0); };
+    var yAxis = 40, yWs = 86, yMtg = 180, yDl = 232;
+    var s = '<svg viewBox="0 0 ' + W + ' ' + H + '" aria-hidden="true">';
+    TERMS.forEach(function (t) {
+      s += '<rect class="tl-band ' + t.cls + '" x="' + X(t.start) + '" y="' + (yAxis + 6) + '" width="' + (X(t.end) - X(t.start)) + '" height="' + (H - yAxis - 14) + '" rx="4"/>';
+      s += '<text class="tl-term ' + t.cls + '" x="' + (X(t.start) + 8) + '" y="' + (yAxis + 24) + '">' + t.label + '</text>';
+    });
+    for (var i = 0; i < 8; i++) {
+      var m = 9 + i, y = 2026 + Math.floor(m / 12), mm = (m % 12) + 1;
+      var d = y + '-' + pad(mm) + '-01';
+      var xx = X(d);
+      s += '<line class="tl-grid" x1="' + xx + '" x2="' + xx + '" y1="' + (yAxis) + '" y2="' + (H - 8) + '"/>';
+      if (i < 7) s += '<text class="tl-tick" x="' + xx + '" y="' + (yAxis - 10) + '" text-anchor="middle">' + MONTHS[mm - 1] + (mm === 1 ? ' 2027' : '') + '</text>';
+    }
+    s += '<line class="tl-axis" x1="' + x0 + '" x2="' + x1 + '" y1="' + yAxis + '" y2="' + yAxis + '"/>';
+    if (TODAY >= '2026-09-21' && TODAY <= '2027-05-01') {
+      var tx = X(TODAY);
+      s += '<g class="tl-today"><line x1="' + tx + '" x2="' + tx + '" y1="' + (yMtg - 22) + '" y2="' + (H - 8) + '"/><text x="' + (tx + 4) + '" y="' + (H - 12) + '">Today</text></g>';
+    }
+    WORKSHOPS.forEach(function (w, i) {
+      var wx = X(w.date), wy = yWs + i * 18;
+      s += '<a class="tl-ws" href="' + BLACKBOARD + '" target="_blank" rel="noopener"><rect x="' + (wx - 5) + '" y="' + (wy - 5) + '" width="10" height="10" rx="2"/><text x="' + (wx + 11) + '" y="' + (wy + 4) + '">' + w.label + '</text></a>';
+    });
+    var dx0 = X('2027-03-01'), dx1 = X('2027-04-30'), dy = yWs + 18;
+    s += '<a class="tl-drop" href="' + BLACKBOARD + '" target="_blank" rel="noopener"><text x="' + (dx0 + dx1) / 2 + '" y="' + (dy - 8) + '" text-anchor="middle">Drop-in sessions with PhD students</text><rect x="' + dx0 + '" y="' + dy + '" width="' + (dx1 - dx0) + '" height="10" rx="5"/></a>';
+    meetings.forEach(function (p) {
+      var cx = X(addDays(p.date, 4)); // Friday of the meeting week
+      var cls = 'tl-mtg' + (CUR.m && CUR.m.id === p.id && CUR.mode === 'now' ? ' now' : '');
+      s += '<a href="#' + p.id + '" class="' + cls + '" aria-label="Meeting ' + p.n.slice(1) + '"><circle cx="' + cx + '" cy="' + yMtg + '" r="14"/><text x="' + cx + '" y="' + (yMtg + 4) + '" text-anchor="middle">' + p.n.slice(1) + '</text></a>';
+    });
+    DEADLINES.forEach(function (d) {
+      var cx = X(d.date);
+      s += '<g class="tl-dl"><path d="M' + cx + ' ' + (yDl - 7) + 'l7 7l-7 7l-7 -7z"/><text x="' + (cx + (d.dx > 0 ? 10 : d.dx < 0 ? -10 : 0)) + '" y="' + (d.below ? yDl + 24 : yDl + 4) + '" text-anchor="' + d.anchor + '">' + d.label + '</text></g>';
+    });
+    s += '</svg>';
+    document.getElementById('timeline').innerHTML = s;
+  })();
+
+  // ---------- routing ----------
+  var layout = document.getElementById('layout');
+  var menuBtn = document.getElementById('menu-btn');
+  var pager = document.getElementById('pager');
+  var where = document.getElementById('where');
+  var narrow = window.matchMedia('(max-width: 900px)');
+
+  function show(id) {
+    var idx = PAGES.findIndex(function (p) { return p.id === id; });
+    if (idx < 0) { idx = 0; id = 'home'; }
+    PAGES.forEach(function (p) { document.getElementById('p-' + p.id).hidden = p.id !== id; });
+    toc.querySelectorAll('a').forEach(function (a) {
+      if (a.getAttribute('data-id') === id) a.setAttribute('aria-current', 'page'); else a.removeAttribute('aria-current');
+    });
+    var prev = PAGES[idx - 1], next = PAGES[idx + 1];
+    var ph = '';
+    if (prev) ph += '<a class="prev" href="#' + prev.id + '"><small>Previous</small><span>' + (prev.n && prev.n[0] === 'M' ? 'Meeting ' + prev.n.slice(1) + ': ' : '') + prev.label + '</span></a>';
+    if (next) ph += '<a class="next" href="#' + next.id + '"><small>Next</small><span>' + (next.n && next.n[0] === 'M' ? 'Meeting ' + next.n.slice(1) + ': ' : '') + next.label + '</span></a>';
+    pager.innerHTML = ph;
+    var p = PAGES[idx];
+    where.textContent = p.part ? p.part.replace(/^[IV]+ · /, '') : '';
+    if (narrow.matches) setOpen(false);
+    window.scrollTo(0, 0);
+  }
+  function setOpen(open) {
+    if (narrow.matches) {
+      layout.classList.toggle('open', open);
+    } else {
+      layout.classList.toggle('collapsed', !open);
+    }
+    menuBtn.setAttribute('aria-expanded', String(open));
+  }
+  menuBtn.addEventListener('click', function () {
+    var open = narrow.matches ? !layout.classList.contains('open') : layout.classList.contains('collapsed');
+    setOpen(open);
+  });
+  document.getElementById('scrim').addEventListener('click', function () { setOpen(false); });
+  narrow.addEventListener('change', function () { layout.classList.remove('open', 'collapsed'); menuBtn.setAttribute('aria-expanded', String(!narrow.matches)); });
+  if (narrow.matches) menuBtn.setAttribute('aria-expanded', 'false');
+
+  function route() { show((location.hash || '#home').slice(1)); }
+  window.addEventListener('hashchange', route);
+  route();
+})();
+</script>
+</body>
+</html>
